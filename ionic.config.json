@@ -1,0 +1,7 @@
+{
+  "name": "empanadus-Stock",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
