@@ -1,0 +1,35 @@
+<app-toolbar [tittleToolbar]="tittleToolbar" [urlBack]="urlBack"></app-toolbar>
+
+<ion-content>
+    <ion-slides>
+
+        <ion-slide [formGroup]="stockForm">
+            <ion-list formArrayName="stockItems">
+                <ion-item color="light" *ngFor="let control of stockItems.controls; let i = index" [formGroupName]="i">
+                  <ion-label>{{control.value.name}}</ion-label>
+                  <ion-input type="number" inputmode="numeric" formControlName="inputQuantity" (ionChange)="inputChange(i)"></ion-input>
+                  <ion-range color="danger" pin="true" min="0" max="20" step="1" snaps="true" formControlName="sliderQuantity" (ionChange)="sliderChange(i)"></ion-range>
+                </ion-item>
+              </ion-list>
+        </ion-slide>
+    
+        <ion-slide>
+          <img src="./slide-2.png"/>
+          <h2>What is Ionic?</h2>
+          <p><b>Ionic Framework</b> is an open source SDK that enables developers to build high quality mobile apps with web technologies like HTML, CSS, and JavaScript.</p>
+        </ion-slide>
+    
+        <ion-slide>
+          <img src="./slide-3.png"/>
+          <h2>What is Appflow?</h2>
+          <p><b>Appflow</b> is a powerful set of services and features built on top of Ionic Framework that brings a totally new level of app development agility to mobile dev teams.</p>
+        </ion-slide>
+    
+        <ion-slide>
+          <img src="./slide-4.png"/>
+          <h2>Ready to Play?</h2>
+          <ion-button fill="clear">Continue <ion-icon slot="end" name="arrow-forward"></ion-icon></ion-button>
+        </ion-slide>
+    
+      </ion-slides>
+</ion-content>

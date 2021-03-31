@@ -1,0 +1,24 @@
+
+<ion-content [fullscreen]="true" [formGroup]="stockForm">
+
+
+  <!-- List of Input Items -->
+  <ion-list formArrayName="stockItems">
+    <ion-item color="light" *ngFor="let control of stockItems.controls; let i = index" [formGroupName]="i">
+      <ion-label>{{control.value.name}}</ion-label>
+      <ion-input type="number" inputmode="numeric" formControlName="inputQuantity" (ionChange)="inputChange(i)"></ion-input>
+      <ion-range color="danger" pin="true" min="0" max="20" step="1" snaps="true" formControlName="sliderQuantity" (ionChange)="sliderChange(i)"></ion-range>
+    </ion-item>
+  </ion-list>
+  <!-- <hr>
+  <pre>
+    Estado del formulario: {{ stockForm.valid }}
+    <br>
+    Status: {{ stockForm.status }}
+  </pre>
+  
+  <pre>
+  
+    {{ stockForm.value | json }}
+  </pre> -->
+</ion-content>

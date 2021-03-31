@@ -24,3 +24,15 @@
 @import "~@ionic/angular/css/text-alignment.css";
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
+
+ion-content {
+    --background: #f1f0f0;
+}
+
+ion-toolbar {
+    --background: #f4f5f8;
+}
+
+ion-menu {
+    --background: #f4f5f8;
+}

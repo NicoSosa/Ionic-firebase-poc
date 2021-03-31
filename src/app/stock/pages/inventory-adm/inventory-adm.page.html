@@ -1,0 +1,30 @@
+<app-toolbar [tittleToolbar]="tittleToolbar"></app-toolbar>
+
+<ion-content fullscreen class="ion-padding" scroll-y="false">
+    <!-- <form [formGroup]="formGrp" class="animated fadeInDown fast"> -->
+    <form  class="animated fadeInDown fast">
+        <ion-item color="light">
+            <ion-label>Store:</ion-label>
+            <!-- [interfaceOptions]="customAlertOptions" interface="alert" placeholder="Select One" -->
+            <ion-select>
+                <ion-select-option>All</ion-select-option>
+                <ion-select-option>Riverside</ion-select-option>
+                <ion-select-option>Homewood</ion-select-option>
+                <ion-select-option>La Grange</ion-select-option>
+            </ion-select>
+            <!-- <ion-select multiple="true" cancelText="Cancelar" okText="Aceptar" [value]=filterArray #asd (ionChange)="onChange(asd.value)">
+                <ion-select-option *ngFor="let item of filterArray; let i = index">{{item}}</ion-select-option>
+            </ion-select> -->
+        </ion-item>
+        <ion-item color="light">
+            <ion-label>From:</ion-label>
+            <!-- <ion-datetime (ionChange)="filterBehaviors()"></ion-datetime> -->
+            <!-- <ion-datetime formControlName="MinDate" monthShortNames='Ene, Feb, Mar, Abr, May, Jun, Jul, Ago, Sep, Oct, Nov, Dic' (ionChange)="filterBehaviors()" displayFormat="DD MMM YYYY"></ion-datetime> -->
+        </ion-item>
+        <ion-item color="light">
+            <ion-label>To:</ion-label>
+            <!-- <ion-datetime (ionChange)="filterBehaviors()" ></ion-datetime> -->
+            <!-- <ion-datetime formControlName="MaxDate" monthShortNames='Ene, Feb, Mar, Abr, May, Jun, Jul, Ago, Sep, Oct, Nov, Dic' (ionChange)="filterBehaviors()" displayFormat="DD MMM YYYY"></ion-datetime> -->
+        </ion-item>
+    </form>
+</ion-content>
