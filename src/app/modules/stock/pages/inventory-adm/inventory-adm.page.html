@@ -1,0 +1,20 @@
+<app-toolbar [tittleToolbar]="tittleToolbar"></app-toolbar>
+
+<ion-content fullscreen class="ion-padding" scroll-y="false">
+    <ion-segment (ionChange)="segmentChanged($event)" value="0">
+
+        <ion-segment-button *ngFor="let store of storeList; let i = index" [value]="i">
+            <ion-label>{{store.name}}</ion-label>
+        </ion-segment-button>
+    </ion-segment>
+
+
+
+
+    <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+        <ion-fab-button color="success" (click)="goToStockForm()">
+            <ion-icon name="add-outline" size="large"></ion-icon>
+            <!-- <ion-icon name="duplicate-outline" size="large"></ion-icon> -->
+        </ion-fab-button>
+    </ion-fab>
+</ion-content>
