@@ -6,6 +6,7 @@ import { AdmItemsPage } from './pages/adm-items/adm-items.page';
 import { AdmUsersPage } from './pages/adm-users/adm-users.page';
 import { AdmStoresPage } from './pages/adm-stores/adm-stores.page';
 import { AdmStructPage } from './pages/adm-struct/adm-struct.page';
+import { AdmMasiveChangesPage } from './pages/adm-masive-changes/adm-masive-changes.page';
 
 
 const routes: Routes = [
@@ -16,6 +17,10 @@ const routes: Routes = [
   {
     path: 'items',
     component: AdmItemsPage
+  },
+  {
+    path: 'masive-changes',
+    component: AdmMasiveChangesPage
   },
   {
     path: 'products',
@@ -33,6 +38,8 @@ const routes: Routes = [
     path: 'users',
     component: AdmUsersPage
   },
+  
+
 
 ];
 

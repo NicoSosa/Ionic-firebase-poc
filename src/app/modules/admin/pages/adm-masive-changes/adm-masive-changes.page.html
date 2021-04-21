@@ -1,0 +1,40 @@
+<app-toolbar [tittleToolbar]="tittleToolbar" [urlBack]="urlBack"></app-toolbar>
+
+<ion-content>
+  <ion-segment (ionChange)="segmentChanged($event)" value="0">
+    <ion-segment-button *ngFor="let opt of masiveOptions; let i = index" [value]="i">
+        <ion-label>{{opt.optionDescript}}</ion-label>
+    </ion-segment-button>
+  </ion-segment>
+
+  <div *ngIf="masiveOptions[0].active || masiveOptions[1].active">
+    <ion-list *ngFor="let page of itemList; let i = index">
+      <ion-list *ngFor="let category of page.categories; let j = index">
+        <ion-item-divider color="light" sticky="true">
+          <ion-label><strong>{{page.name | titlecase}} - {{category.category | titlecase}}</strong></ion-label>
+          <ion-checkbox class="checkSticky" slot="end" 
+          [(ngModel)]="category.masterCheck"
+          [indeterminate]="category.isIndeterminate"
+          (click)="checkMaster($event, i , j)"></ion-checkbox>
+        </ion-item-divider>
+
+          <ion-item *ngFor="let item of category.items">
+            <ion-label>{{item.showName}}</ion-label>
+            <ion-checkbox slot="end" 
+            [(ngModel)]="item.isChecked" 
+            (ionChange)="checkEvent(item)"></ion-checkbox>
+          </ion-item> 
+      </ion-list>
+    </ion-list>
+  </div>
+</ion-content>
+<ion-fab *ngIf="masiveOptions[0].active" vertical="bottom" horizontal="center" sticky="true">
+  <ion-fab-button color="primary" (click)="moveSelection()">
+      <ion-icon name="git-pull-request-outline" size="large"></ion-icon>
+  </ion-fab-button>
+</ion-fab>
+<ion-fab *ngIf="masiveOptions[1].active" vertical="bottom" horizontal="center" sticky="true">
+  <ion-fab-button color="danger" (click)="deleteSelection()">
+      <ion-icon name="trash-outline" size="large"></ion-icon>
+  </ion-fab-button>
+</ion-fab>

@@ -13,6 +13,7 @@ import { AdmStructPage } from './pages/adm-struct/adm-struct.page';
 import { CategoriesModalComponent } from './modals/categories-modal/categories-modal.component';
 import { PagesModalComponent } from './modals/pages-modal/pages-modal.component';
 import { ItemModalComponent } from './modals/item-modal/item-modal.component';
+import { AdmMasiveChangesPage } from './pages/adm-masive-changes/adm-masive-changes.page';
 
 
 
@@ -25,6 +26,7 @@ import { ItemModalComponent } from './modals/item-modal/item-modal.component';
   declarations: [
     AdminPage,
     AdmItemsPage,
+    AdmMasiveChangesPage,
     AdmProductsPage,
     AdmStoresPage,
     AdmStructPage,

@@ -14,3 +14,15 @@ export const CHANGE_OPTIONS: ChangeOptions[] = [{
     active: false
 },
 ]
+
+export const MASIVE_OPTIONS: ChangeOptions[] = [{
+    optionDescript: 'Reoder Items',
+    active: true
+},{
+    optionDescript: 'Delete Items',
+    active: false
+},{
+    optionDescript: 'Create Items',
+    active: false
+},
+]
