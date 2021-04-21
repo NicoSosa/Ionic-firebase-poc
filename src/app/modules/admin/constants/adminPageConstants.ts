@@ -1,9 +1,9 @@
 export const ADMIN_PAGE_TITLE_TOOLBAR = 'Administrator';
 export const ADMIN_ITEM_TITLE_TOOLBAR = 'Items Administrator';
 export const ADMIN_MASIVE_TITLE_TOOLBAR = 'Masive Changes Administrator';
-export const ADMIN_PRODUCTS_TITLE_TOOLBAR = 'Products Administrator';
+// export const ADMIN_PRODUCTS_TITLE_TOOLBAR = 'Products Administrator';
 export const ADMIN_STRUCT_TITLE_TOOLBAR = 'Inventory Structure Administrator';
-export const ADMIN_STORES_TITLE_TOOLBAR = 'Stores Administrator';
+// export const ADMIN_STORES_TITLE_TOOLBAR = 'Stores Administrator';
 export const ADMIN_USERS_TITLE_TOOLBAR = 'Users Administrator';
 
 export const ADMIN_URL = 'admin';
