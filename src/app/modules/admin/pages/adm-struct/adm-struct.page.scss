@@ -1,0 +1,52 @@
+.accordion-list{
+    margin-top: 5px;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+ion-segment {
+    margin: 5px 5px 20px 5px
+}
+
+ion-list {
+    --background: #f4f5f8;
+    padding: 0;
+    margin: 5px 5px 5px 5px;
+    
+}
+
+ion-list-header {
+    --background: #f4f5f8;
+    padding: 0;
+}
+
+.titlePage {
+    --background: #f4f5f8;
+    padding: 0;
+}
+ion-item {
+    --background: #ffffff;
+    padding: 0;
+}
+
+.section-active, .section {
+    background: #f4f5f8;
+    
+}
+
+ion-icon {
+    margin-top: 2px;
+}
+
+.saveButton {
+    --background: #53b65b;
+    margin: 10px 5% 0 65%
+}
+
+.addCategoryButton {
+    --background: #405ace;
+}
+.addPageButton {
+    --background: #405ace;
+    margin: 10px 65% 0 5%
+}

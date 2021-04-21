@@ -10,6 +10,11 @@ ion-buttons {
   justify-content: center;
 }
 
+ion-button {
+  margin-left: 80px;
+  margin-right: 80px;
+}
+
 ion-icon{
   margin-bottom: 3px;
   margin-left: 3px;
@@ -26,6 +31,10 @@ ion-slide{
   height: 50px;
   margin-top: 5px;
   margin-bottom: 10px;
+}
+
+.categoryTitle{
+ text-align: left; 
 }
 
 ion-item-divider{
@@ -70,4 +79,20 @@ ion-slides {
 
   p b {
     color: var(--ion-text-color, #000000);
+  }
+
+  .finalTextArea {
+    border: solid 1px black;
+    border-radius: 6px;
+    margin: 0 20px 0 20px;
+  }
+  
+  .itemInput{
+    border: solid 1px black;
+    border-radius: 6px;
+    text-align: center;
+  }
+
+  .unitCol{
+    text-align: center;
   }

@@ -1,0 +1,40 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="end">
+      <ion-button color="medium" (click)="cancel()">
+        <ion-icon name="close-outline"></ion-icon>
+      </ion-button>
+  </ion-buttons>
+    <ion-title>{{ tittleToolbar1 }} </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content  [formGroup]="categoryForm">
+
+  <ion-item color="light">
+    <ion-label position="floating" clearInput="true"><b>Page name:</b></ion-label>
+    <ion-input formControlName="category"></ion-input>
+    <div *ngIf="categoryName.invalid && (categoryName.dirty || categoryName.touched)">
+      <p class="requiredMsg"> Its required!!</p>
+      </div>
+  </ion-item>
+  <ion-item color="light">
+    <ion-label>Page root</ion-label>
+    <ion-select interface="popover" [formControl]="pageRoot">
+
+      <ion-select-option *ngFor="let page of pagesList; let i = index" [value]="i">{{page | titlecase}}</ion-select-option>
+    </ion-select>
+  </ion-item>
+  <br>
+  <!-- <pre>
+    {{ categoryForm.value | json }}
+  </pre> -->
+  
+
+  <div>
+  
+    <ion-button class="cancelButton" color="danger" (click)="cancel()" >Cancel</ion-button>
+    <ion-button class="saveButton" color="success" (click)="saveChanges()" >Save</ion-button>
+  </div>
+
+</ion-content>

@@ -1,5 +1,72 @@
 <app-toolbar [tittleToolbar]="tittleToolbar" [urlBack]="urlBack"></app-toolbar>
 
 <ion-content>
+    <ion-list [formGroup]="filterForm" color="light">
 
+        <ion-item color="light">
+            <ion-col size="2"><b>Filters:</b></ion-col>
+            <ion-col size="1"></ion-col>
+            <ion-col size="2">
+                Name:
+            </ion-col>
+            <ion-col size="3">
+                <ion-item class="itemInput">
+                    <ion-input formControlName="keyWord"></ion-input>
+                </ion-item>
+            </ion-col>
+        </ion-item>
+        <ion-item color="light">
+                
+            <ion-col size="1"></ion-col>
+            <ion-col size="1">Page:</ion-col>
+            <ion-col size="3">
+                <ion-item *ngIf="inventoryStructure" class="itemInput">
+                    <ion-select interface="popover" formControlName="filterPage" (ionChange)="filterPageChange()">
+                        <ion-select-option [value]=-1>All</ion-select-option>
+                        <ion-select-option *ngFor="let page of inventoryStructure.pages; let i = index" [value]="i">{{page.name | titlecase}}</ion-select-option>
+                    </ion-select>
+                </ion-item>
+            </ion-col>
+            <ion-col size="2"></ion-col>
+            <ion-col size="2">Category:</ion-col>
+            <ion-col size="3">
+                <ion-item *ngIf="inventoryStructure && filterPage.value >= 0" class="itemInput">
+                    <ion-select interface="popover" formControlName="filterCategory">
+                        <ion-select-option [value]="-1">All</ion-select-option>
+                        <ion-select-option *ngFor="let category of inventoryStructure.pages[filterPage.value].categories; let j = index" [value]="j">{{category.category | titlecase}}</ion-select-option>
+                    </ion-select>
+                </ion-item>
+            </ion-col>
+        </ion-item>
+    </ion-list>
+    <ion-item color="light">
+        <ion-button color="success" (click)="openItemModal(null,null)">Create Item</ion-button>
+    </ion-item>
+    
+    <br>
+
+    <ion-item-divider color="light" sticky="true">
+        <ion-col size="2">Name</ion-col>
+        <ion-col size="3">Show name</ion-col>
+        <ion-col size="2">Units</ion-col>
+        <ion-col size="2">Page</ion-col>
+        <ion-col size="2">Category</ion-col>
+        <ion-col size="1">Modify</ion-col>
+    </ion-item-divider>
+    <ion-list>
+        <ion-item *ngFor="let item of filteredItemList; let k = index">
+            <ion-col size="2">{{item.name}}</ion-col>
+            <ion-col size="3">{{item.showName}}</ion-col>
+            <ion-col size="2">{{item.unit}}</ion-col>
+            <ion-col size="2">{{inventoryStructure.pages[item.idxPage].name}}</ion-col>
+            <ion-col size="2">{{inventoryStructure.pages[item.idxPage].categories[item.idxCategory].category}}</ion-col>
+            <ion-col size="1">
+                <ion-chip color="tertiary" (click)="openItemModal(item,k)">
+                    <ion-label>
+                        <ion-icon color="tertiary" name="create-outline" size="large"></ion-icon>
+                    </ion-label>
+                </ion-chip>
+            </ion-col>
+        </ion-item>
+    </ion-list>
 </ion-content>

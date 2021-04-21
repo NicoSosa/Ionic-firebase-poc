@@ -1,0 +1,27 @@
+ion-list {
+    background: #f1f0f0;
+    margin: 5px 5px 5px 5px
+}
+
+ion-item-divider {
+    color: black;
+    margin-bottom: 2px;
+}
+
+.itemInput{
+    border: solid 1px black;
+    border-radius: 6px;
+    text-align: center;
+}
+
+.categoryTitle{
+    text-align: left; 
+}
+
+.cancelButton {
+    margin: 0 60% 0 5%;
+}
+
+.requiredMsg{
+    color: #f77d7d;
+} 

@@ -1,0 +1,80 @@
+<app-toolbar [tittleToolbar]="tittleToolbar" [urlBack]="urlBack"></app-toolbar>
+
+<ion-content>
+  <ion-segment (ionChange)="segmentChanged($event)" value="0">
+    <ion-segment-button *ngFor="let opt of changesOptions; let i = index" [value]="i">
+        <ion-label>{{opt.optionDescript}}</ion-label>
+    </ion-segment-button>
+  </ion-segment>
+
+  <div *ngIf="changesOptions[0].active && inventoryStructure">
+      <ion-list *ngFor="let page of inventoryStructure.pages; let i = index">
+        <ion-item class="titlePage">
+          {{ page.name | titlecase }}
+          <ion-chip color="danger" (click)="deletePage(i)" slot="end" *ngIf="page.categories.length < 1">
+            <ion-label>
+                <ion-icon color="danger" name="trash-outline" size="large"></ion-icon>
+            </ion-label>
+          </ion-chip>
+          <ion-chip color="dark" (click)="openPageModal(i)" slot="end">
+            <ion-label>
+                <ion-icon color="dark" name="create-outline" size="large"></ion-icon>
+            </ion-label>
+          </ion-chip>
+        </ion-item>
+          <ion-item *ngFor="let category of page.categories; let j = index">
+            <ion-label>
+              {{category.category}} <small> ({{ category.items.length }} items)</small>
+            </ion-label>
+            <ion-chip color="tertiary" (click)="openCategoryModal(i,j)" slot="end">
+              <ion-label>
+                  <ion-icon name="create-outline" size="large"></ion-icon>
+              </ion-label>
+          </ion-chip>
+          </ion-item>
+          <ion-item>
+            <ion-button class="addCategoryButton" (click)="openCategoryModal(i,-1)">
+              add category
+            </ion-button>
+          </ion-item>
+      </ion-list>
+  </div>
+  <div *ngIf="changesOptions[1].active">
+    <ion-reorder-group (ionItemReorder)="reorderPages($event)" [disabled]="!changesOptions[1].active" *ngIf="inventoryStructure">
+      <ion-list *ngFor="let page of inventoryStructure.pages; let i = index">
+        <ion-item class="titlePage">
+          {{ page.name | titlecase }}
+          <ion-reorder slot="end"></ion-reorder>
+        </ion-item>
+          <ion-item *ngFor="let category of page.categories; let j = index">
+            <ion-label>
+              {{category.category}} <small> ({{ category.items.length }} items)</small>
+            </ion-label>
+          </ion-item>
+      </ion-list>
+    </ion-reorder-group>
+  </div>
+  <div *ngIf="changesOptions[2].active">
+      <ion-list *ngFor="let page of inventoryStructure.pages; let i = index">
+        <ion-item class="titlePage">
+          {{ page.name | titlecase }}
+          <ion-reorder slot="end"></ion-reorder>
+        </ion-item>
+        <ion-reorder-group [disabled]="!changesOptions[2].active" (ionItemReorder)="reorderCategories($event, i)" >
+          <ion-item *ngFor="let category of page.categories; let j = index">
+            <ion-label>
+              {{category.category}} <small> ({{ category.items.length }} items)</small>
+            </ion-label>
+            <ion-reorder slot="end"></ion-reorder> 
+          </ion-item>
+        </ion-reorder-group>
+      </ion-list>
+  </div>
+  <ion-button class="addPageButton" (click)="openPageModal(-1)">
+    add page
+  </ion-button>
+  
+  <ion-button class="saveButton" expand="full" (click)="saveChanges()">
+    Save Changes
+  </ion-button>
+</ion-content>

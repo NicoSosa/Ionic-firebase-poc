@@ -5,6 +5,7 @@ import { AdmProductsPage } from './pages/adm-products/adm-products.page';
 import { AdmItemsPage } from './pages/adm-items/adm-items.page';
 import { AdmUsersPage } from './pages/adm-users/adm-users.page';
 import { AdmStoresPage } from './pages/adm-stores/adm-stores.page';
+import { AdmStructPage } from './pages/adm-struct/adm-struct.page';
 
 
 const routes: Routes = [
@@ -25,11 +26,13 @@ const routes: Routes = [
     component: AdmStoresPage
   },
   {
+    path: 'structure',
+    component: AdmStructPage
+  },
+  {
     path: 'users',
     component: AdmUsersPage
   },
-  
-
 
 ];
 

@@ -1,0 +1,112 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="end">
+      <ion-button color="medium" (click)="cancel()">
+        <ion-icon name="close-outline"></ion-icon>
+      </ion-button>
+  </ion-buttons>
+    <ion-title>{{ tittleToolbar1 }} </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content  [formGroup]="itemForm">
+  <ion-item color="light"></ion-item>
+  <ion-item color="light">
+    <ion-col size="1"></ion-col>
+    <ion-col size="2">Id:</ion-col>
+    <ion-col size="7">
+      <ion-item class="itemInput">
+        <ion-input formControlName="id"></ion-input>
+      </ion-item>
+    </ion-col>
+    <ion-col size="2">
+      <div *ngIf="id.invalid && (id.dirty || id.touched)">
+        <p class="requiredMsg"> Its required!!</p>
+      </div>
+    </ion-col>
+  </ion-item>
+  
+  <ion-item color="light">
+    <ion-col size="1"></ion-col>
+    <ion-col size="2">Name:</ion-col>
+    <ion-col size="7">
+      <ion-item class="itemInput">
+        <ion-input formControlName="name"></ion-input>
+      </ion-item>
+    </ion-col>
+    <ion-col size="2">
+      <div *ngIf="name.invalid && (name.dirty || name.touched)">
+        <p class="requiredMsg"> Its required!!</p>
+      </div>
+    </ion-col>
+  </ion-item>
+  <ion-item color="light">
+    <ion-col size="1"></ion-col>
+    <ion-col size="2">Show Name:</ion-col>
+    <ion-col size="7">
+      <ion-item class="itemInput">
+        <ion-input formControlName="showName"></ion-input>
+      </ion-item>
+    </ion-col>
+    <ion-col size="2">
+      <div *ngIf="showName.invalid && (showName.dirty || showName.touched)">
+        <p class="requiredMsg"> Its required!!</p>
+      </div>
+    </ion-col>
+  </ion-item>
+  <ion-item color="light">
+    <ion-col size="1"></ion-col>
+    <ion-col size="2">Unit:</ion-col>
+    <ion-col size="7">
+      <ion-item class="itemInput">
+        <ion-input formControlName="unit"></ion-input>
+      </ion-item>
+    </ion-col>
+    <ion-col size="2">
+      <div *ngIf="unit.invalid && (unit.dirty || unit.touched)">
+        <p class="requiredMsg"> Its required!!</p>
+      </div>
+    </ion-col>
+  </ion-item>
+  <ion-item color="light">
+    <ion-col size="1"></ion-col>
+    <ion-col size="2">Page:</ion-col>
+    <ion-col size="7">
+      <ion-item *ngIf="inventoryStructure" class="itemInput">
+        <ion-select interface="popover" formControlName="idxPage" (ionChange)="filterPageChange()">
+            <ion-select-option *ngFor="let page of inventoryStructure.pages; let i = index" [value]="i">{{page.name | titlecase}}</ion-select-option>
+        </ion-select>
+    </ion-item>
+      <div *ngIf="idxPage.invalid && (idxPage.dirty || idxPage.touched)">
+        <p class="requiredMsg"> Its required!!</p>
+      </div>
+    </ion-col>
+  </ion-item>
+  <ion-item color="light">
+    <ion-col size="1"></ion-col>
+    <ion-col size="2">Category:</ion-col>
+    <ion-col size="7">
+      <ion-item *ngIf="inventoryStructure && idxPage.value >= 0" class="itemInput">
+        <ion-select interface="popover" formControlName="idxCategory">
+            <ion-select-option *ngFor="let category of inventoryStructure.pages[idxPage.value].categories; let j = index" [value]="j">{{category.category | titlecase}}</ion-select-option>
+        </ion-select>
+    </ion-item>
+      <div *ngIf="idxCategory.invalid && (idxCategory.dirty || idxCategory.touched)">
+        <p class="requiredMsg"> Its required!!</p>
+      </div>
+    </ion-col>
+  </ion-item>
+  <ion-item color="light" *ngIf="!itsNew">
+    <ion-button class="deleteButton" color="danger" (click)="deleteItem()" >Delete Item</ion-button>
+  </ion-item>
+
+  <br>
+
+  <div>
+    <ion-button class="cancelButton" color="danger" (click)="cancel()" >Cancel</ion-button>
+    <ion-button class="saveButton" color="success" (click)="saveChanges()" >Save</ion-button>  
+  </div>
+</ion-content>
+<!-- <pre>
+  {{ itemForm.value | json}}
+</pre> -->

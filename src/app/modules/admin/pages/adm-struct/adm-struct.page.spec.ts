@@ -1,19 +1,19 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
-import { StockFormComponent } from './stock-form.component';
+import { AdmStructPage } from './adm-struct.page';
 
-describe('StockFormComponent', () => {
-  let component: StockFormComponent;
-  let fixture: ComponentFixture<StockFormComponent>;
+describe('AdmStructPage', () => {
+  let component: AdmStructPage;
+  let fixture: ComponentFixture<AdmStructPage>;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ StockFormComponent ],
+      declarations: [ AdmStructPage ],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(StockFormComponent);
+    fixture = TestBed.createComponent(AdmStructPage);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));

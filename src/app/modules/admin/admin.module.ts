@@ -9,16 +9,29 @@ import { AdmItemsPage } from './pages/adm-items/adm-items.page';
 import { AdmProductsPage } from './pages/adm-products/adm-products.page';
 import { AdmUsersPage } from './pages/adm-users/adm-users.page';
 import { AdmStoresPage } from './pages/adm-stores/adm-stores.page';
+import { AdmStructPage } from './pages/adm-struct/adm-struct.page';
+import { CategoriesModalComponent } from './modals/categories-modal/categories-modal.component';
+import { PagesModalComponent } from './modals/pages-modal/pages-modal.component';
+import { ItemModalComponent } from './modals/item-modal/item-modal.component';
 
 
 
 @NgModule({
+  entryComponents: [
+    CategoriesModalComponent,
+    PagesModalComponent,
+    ItemModalComponent
+  ],
   declarations: [
     AdminPage,
     AdmItemsPage,
     AdmProductsPage,
     AdmStoresPage,
-    AdmUsersPage
+    AdmStructPage,
+    AdmUsersPage,
+    CategoriesModalComponent,
+    PagesModalComponent,
+    ItemModalComponent
   ],
   imports: [
     CommonModule,

@@ -1,4 +1,3 @@
-import { CategoryProductViewModel } from './categorys/categoryProductView.model';
 import { FlavourProductViewModel } from './flavours/flavourProductView.model';
 
 export interface ProductViewModel {

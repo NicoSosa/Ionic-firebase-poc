@@ -6,14 +6,15 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { StockRoutingModule } from './stock-routing.module';
 import { InventoryAdmPage } from './pages/inventory-adm/inventory-adm.page';
 import { InventoryFormPage } from './pages/inventory-form/inventory-form.page';
-import { StockFormComponent } from './components/stock-form/stock-form.component';
 import { SharedModule } from '../shared/shared.module';
+import { InventoryChartComponent } from './components/inventory-chart/inventory-chart.component';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
 
 @NgModule({
   declarations: [
     InventoryAdmPage,
     InventoryFormPage,
-    StockFormComponent
+    InventoryChartComponent
   ],
   imports: [
     CommonModule,
@@ -21,7 +22,8 @@ import { SharedModule } from '../shared/shared.module';
     FormsModule,
     ReactiveFormsModule,
     StockRoutingModule,
-    SharedModule
+    SharedModule,
+    NgxChartsModule
   ],
   exports: [
     InventoryAdmPage,

@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "empanadus-inventory": {
+      "hosting": {
+        "app": [
+          "empanadus-inventory"
+        ]
+      }
+    }
+  }
+}
