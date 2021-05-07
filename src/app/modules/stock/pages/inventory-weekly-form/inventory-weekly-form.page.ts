@@ -54,11 +54,12 @@ export class InventoryWeeklyFormPage implements OnInit {
   //#region - Get Data
   private getInventoryStruct() {
     this.dbRequestsService.getWeeklyStructure().subscribe( struct => {
-      this.inventoryStructure = struct[0];
+      this.inventoryStructure = struct;
       this.slidesButtonStatus[0] = { active: false, text: '', lastPage: false }
-        this.slidesButtonStatus[1] = { active: true, text: struct[0].pages[1].name, lastPage: false}
-      struct[0].pages.forEach( (page, pageIdx) => this.pushPageInv(page, pageIdx) )
+        this.slidesButtonStatus[1] = { active: true, text: struct.pages[1].name, lastPage: false}
+      struct.pages.forEach( (page, pageIdx) => this.pushPageInv(page, pageIdx) )
       this.pushFinalPage();
+      this.tittleToolbar = `${this.invTitleName} - ${this.inventoryStructure.pages[0].name || ''}`;
       this.alertsService.dismissLoading();
     });
   }
@@ -75,7 +76,7 @@ export class InventoryWeeklyFormPage implements OnInit {
       const storeAbv = this.storeInv.value;
       this.selectedStore = this.storeList.filter( store => store.nameAbbreviation === storeAbv)[0];
       this.invTitleName = ` ${this.selectedStore.name}: ${this.invTitleName}`;
-      this.tittleToolbar = `${this.invTitleName} - ${this.inventoryStructure.pages[0].name || ''}`;
+      // this.tittleToolbar = `${this.invTitleName} - ${this.inventoryStructure.pages[0].name || ''}`;
     }
     );
   }

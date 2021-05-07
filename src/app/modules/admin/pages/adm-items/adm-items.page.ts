@@ -7,6 +7,7 @@ import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
 import { ModalController } from '@ionic/angular';
 import { ItemModalComponent } from '../../modals/item-modal/item-modal.component';
 import { ToastsService } from 'src/app/services/userMsgs/toasts.service';
+import { AlertsService } from '../../../../services/userMsgs/alerts.service';
 
 @Component({
   selector: 'app-adm-items',
@@ -25,6 +26,7 @@ export class AdmItemsPage implements OnInit {
   filterForm: FormGroup;
 
   constructor(private modalCtrl: ModalController,
+    private alertsService: AlertsService,
     private formBuilder: FormBuilder,
     private toastsService: ToastsService,
     private dbRequestsService: DbRequestsService) { }
@@ -137,6 +139,7 @@ export class AdmItemsPage implements OnInit {
   }
 
   private beforeCloseModal( item, idxItem, data ) {
+    this.alertsService.presentLoading();
     if (data && data.isDirty) {
       const idCat = data.itemForm.idxCategory;
       const idPag = data.itemForm.idxPage;
@@ -173,10 +176,11 @@ export class AdmItemsPage implements OnInit {
           }
         }
       }
-      this.dbRequestsService.updateStructure(this.inventoryStructure).then(resp => {
+      this.dbRequestsService.updateWeekStructure(this.inventoryStructure).then(resp => {
         this.toastsService.savedItemToast(this.savedMsg);
       }
-      ).catch(err => this.toastsService.errorToast(err.msg));
+      ).catch(err => this.toastsService.errorToast(err.msg))
+      .finally( () => this.alertsService.dismissLoading() );
       // this.setItemList();
       // this.filterItems();
     }

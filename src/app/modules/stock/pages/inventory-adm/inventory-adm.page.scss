@@ -1,3 +1,14 @@
 ion-fab{
     margin-bottom: 8%;
 }
+
+ion-toolbar {
+    --border-color: #494949;
+    --border-width: 0 0 2px 0;
+    text-align: center;
+    border: 10px, black, solid;
+}
+
+ion-segment{
+    --background: #f4f5f8;
+}

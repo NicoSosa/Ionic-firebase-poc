@@ -13,15 +13,17 @@ import { INITIAL_INVENTORY_STRUCT, INITIAL_DAILY_INVENTORY_STRUCT } from '../inf
   providedIn: 'root'
 })
 export class DbRequestsService {
-  private WeeklyInventoryCollection: AngularFirestoreCollection<any>;
-  private WeeklyInventories: Observable<any>;
-  private DailyInventoryCollection: AngularFirestoreCollection<any>;
-  private DailyInventories: Observable<any>;
-  private inventoryStructureCollection: AngularFirestoreCollection<DBInventoryStructure>;
-  private inventoryStructure: Observable<DBInventoryStructure[]>;
+  private weeklyInventoryCollection: AngularFirestoreCollection<any>;
+  private weeklyInventories: Observable<any>;
+  private dailyInventoryCollection: AngularFirestoreCollection<any>;
+  private dailyInventories: Observable<any>;
+  private weeklyInventoryStructureCollection: AngularFirestoreCollection<DBInventoryStructure>;
+  private weeklyInventoryStructure: Observable<DBInventoryStructure[]>;
+  private dailyInventoryStructureCollection: AngularFirestoreCollection<DBInventoryStructure>;
+  private dailyInventoryStructure: Observable<DBInventoryStructure[]>;
   private storesAbr = STORES_NAME;
   
-  private constInventoryStructure: InventoryStructure[] = INITIAL_INVENTORY_STRUCT;
+  private constInventoryStructure: InventoryStructure = INITIAL_INVENTORY_STRUCT;
   private constDailyInventoryStructure: InventoryStructure = INITIAL_DAILY_INVENTORY_STRUCT;
 
   private storeList: StoreViewModel[] = [
@@ -1058,14 +1060,45 @@ export class DbRequestsService {
   }
 
   private setCollections(): void {
-    this.WeeklyInventoryCollection = this.afs.collection<any>('weeklyInventories',inv => inv.orderBy('createdDate','desc').where('store','==','RVS').limit(1));
-    this.DailyInventoryCollection = this.afs.collection<any>('dailyInventories',inv => inv.orderBy('createdDate','desc').limit(1));
-    this.inventoryStructureCollection = this.afs.collection<any>('inventoryStructure', is => is.orderBy('dateUpdated','desc').limit(1))
+    this.weeklyInventoryCollection = this.afs.collection<any>('weeklyInventories',inv => inv.orderBy('createdDate','desc').where('store','==','RVS').limit(1));
+    this.dailyInventoryCollection = this.afs.collection<any>('dailyInventories',inv => inv.orderBy('createdDate','desc').limit(1));
+    this.weeklyInventoryStructureCollection = this.afs.collection<any>('weeklyinventoryStructure', is => is.orderBy('dateUpdated','desc').limit(1))
+    this.dailyInventoryStructureCollection = this.afs.collection<any>('dailyinventoryStructure', is => is.orderBy('dateUpdated','desc').limit(1))
   }
 
   getStores(): Observable<StoreViewModel[]> {
     const storeListObservable$ = of(this.storeList);
     return storeListObservable$;
+  }
+
+  getWeeklyStructure(): Observable<InventoryStructure> {
+    // return of(this.constInventoryStructure);
+    this.weeklyInventoryStructure = this.weeklyInventoryStructureCollection.valueChanges();
+    return this.weeklyInventoryStructure.pipe( map( data => data[0]));
+  }
+  
+  getDailyStructure(): Observable<InventoryStructure> {
+    // return of(this.constDailyInventoryStructure);
+    this.dailyInventoryStructure = this.dailyInventoryStructureCollection.valueChanges();
+    return this.dailyInventoryStructure.pipe( map( data => data[0]));
+  }
+
+  async updateWeekStructure(inventoryStructure: InventoryStructure) {
+    const dbInventoryStructure: DBInventoryStructure = {
+      ...inventoryStructure,
+      dateUpdated: Date.now(),
+      userUpdated: 'System'
+    }
+    return this.weeklyInventoryStructureCollection.add(dbInventoryStructure)
+  }
+
+  async updateDailyStructure(inventoryStructure: InventoryStructure) {
+    const dbInventoryStructure: DBInventoryStructure = {
+      ...inventoryStructure,
+      dateUpdated: Date.now(),
+      userUpdated: 'System'
+    }
+    return this.dailyInventoryStructureCollection.add(dbInventoryStructure)
   }
 
   getInventorys(): Observable<InventoryViewModel[]>{
@@ -1083,32 +1116,13 @@ export class DbRequestsService {
   async setNewWeeklyInventory(inventory: InventoryViewModel ) {
     inventory.user = 'System'
     inventory.createdDate = Date.now();
-    return this.WeeklyInventoryCollection.add(inventory);
+    return this.weeklyInventoryCollection.add(inventory);
   }
 
   async setNewDailyInventory(inventory: InventoryViewModel ) {
     inventory.user = 'System'
     inventory.createdDate = Date.now();
-    return this.DailyInventoryCollection.add(inventory);
+    return this.dailyInventoryCollection.add(inventory);
   }
 
-
-  getWeeklyStructure(): Observable<InventoryStructure[]> {
-    return of(this.constInventoryStructure);
-    this.inventoryStructure = this.inventoryStructureCollection.valueChanges();
-    return this.inventoryStructure
-  }
-
-  getDailyStructure(): Observable<InventoryStructure> {
-    return of(this.constDailyInventoryStructure);
-  }
-
-  async updateStructure(inventoryStructure: InventoryStructure) {
-    const dbInventoryStructure: DBInventoryStructure = {
-      ...inventoryStructure,
-      dateUpdated: Date.now(),
-      userUpdated: 'System'
-    }
-    return this.inventoryStructureCollection.add(dbInventoryStructure)
-  }
 }

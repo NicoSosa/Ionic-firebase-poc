@@ -7,6 +7,7 @@ import { ModalController } from '@ionic/angular';
 import { PagesModalComponent } from '../../modals/pages-modal/pages-modal.component';
 import { CategoriesModalComponent } from '../../modals/categories-modal/categories-modal.component';
 import { ToastsService } from '../../../../services/userMsgs/toasts.service';
+import { AlertsService } from '../../../../services/userMsgs/alerts.service';
 
 @Component({
   selector: 'app-adm-struct',
@@ -22,6 +23,7 @@ export class AdmStructPage implements OnInit {
 
   public inventoryStructure: InventoryStructure
   constructor(private modalCtrl: ModalController,
+    private alertsService: AlertsService,
     private toastsService: ToastsService,
     private dbRequestsService: DbRequestsService) { 
 
@@ -31,6 +33,9 @@ export class AdmStructPage implements OnInit {
     this.dbRequestsService.getWeeklyStructure().subscribe( struct => {
       this.inventoryStructure = struct[0];
     });
+    // this.dbRequestsService.getDailyStructure().subscribe( struct => {
+    //   this.inventoryStructure = struct;
+    // });
   }
 
   segmentChanged(event): void{
@@ -122,10 +127,13 @@ export class AdmStructPage implements OnInit {
   }
 
   saveChanges() {
-    this.dbRequestsService.updateStructure(this.inventoryStructure).then(resp => {
+    this.alertsService.presentLoading();
+    this.dbRequestsService.updateWeekStructure(this.inventoryStructure).then(resp => {
+    // this.dbRequestsService.updateDailyStructure(this.inventoryStructure).then(resp => {
       this.toastsService.savedItemToast(this.savedMsg);
     }
-    ).catch(err => this.toastsService.errorToast(err.msg));
+    ).catch(err => this.toastsService.errorToast(err.msg))
+    .finally( () => this.alertsService.dismissLoading() );
   }
 
 

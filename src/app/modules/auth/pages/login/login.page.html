@@ -1,9 +1,34 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>login</ion-title>
-  </ion-toolbar>
-</ion-header>
+<ion-content color="light" class="ion-padding">
+  <div text-center>
+      <div class="WelcText">
+          <p><a>Welcome to EmpanadUs</a><br> Please, enter your email and password to continue</p>
+      </div>
+  </div>
 
-<ion-content>
-
+  <form [formGroup]="formGrp" (ngSubmit)="submit()">
+    <ion-row>
+      <ion-col size="12" size-sm="10" offset-sm="1" size-md="8" offset-md="2" size-lg="6" offset-lg="3" size-xl="4"
+        offset-xl="4">
+        <ion-card>
+          <ion-card-content>
+            <ion-item lines="none">
+              <ion-input formControlName="EmailUser" type="email" placeholder="Email" name="email" ></ion-input>
+            </ion-item>
+  
+            <ion-item lines="none">
+              <ion-input formControlName="PassUser" [type]="showPassword ? 'text' : 'password'" placeholder="Password" name="password">
+              </ion-input>
+              <ion-button color="light"slot="end" size="small" (click)="toggleShow()">
+                <ion-icon name="eye-outline" *ngIf="!showPassword"></ion-icon>
+                <ion-icon name="eye-off-outline" *ngIf="showPassword"></ion-icon>
+              </ion-button>
+            </ion-item>
+  
+            <ion-button type="submit" [disabled]="formGrp.invalid" expand="block">Login</ion-button>
+          </ion-card-content>
+        </ion-card>
+  
+      </ion-col>
+    </ion-row>
+  </form>
 </ion-content>

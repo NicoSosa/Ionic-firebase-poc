@@ -14,6 +14,11 @@ export class ToastsService {
       color: 'success',
       message: `${savedMsg}`,
       duration: 2000,
+      buttons: [
+        {
+          text: 'Ok',
+          handler: () => {}
+        }]
     });
 
     toast.present();
@@ -23,6 +28,7 @@ export class ToastsService {
       position: 'middle',
       color: 'danger',
       message: `Ups! - ${err}`,
+      duration: 3000,
       buttons: [
         {
           text: 'Ok',

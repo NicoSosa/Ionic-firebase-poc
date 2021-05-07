@@ -555,128 +555,85 @@ const DRINKS: CategoryInventory = {
 
 const COFFEE: CategoryInventory = {
   category: 'Coffee',
-  unit: 'Container',
+  unit: '',
   formStyle: FormStyle.OnlyInput,
   items: [
     {
       id: '6f53de8b-7f9b-46de-aede-47f982275c28',
       name: 'Colectivo Toro Espresso Decaf Whole Bean (5lb)',
       showName: 'Colectivo Toro Espresso Decaf Whole Bean (5lb)',
-      unit: 'container'
+      unit: ''
     },
     {
       id: '2fe49376-2cc4-40d6-8346-ae64eeec6eca',
       name: 'Colectivo Toro Espresso Whole Bean (5lb)',
       showName: 'Colectivo Toro Espresso Whole Bean (5lb)',
-      unit: 'container'
+      unit: ''
     },
     {
       id: 'b7284dbb-df4c-42dd-b134-8185c77a7d8d',
       name: 'Lavazza Caffe Macinato Aroma Classic Filter #2459 (2.25oz Box of 30)',
       showName: 'Lavazza Caffe Macinato Aroma Classic Filter #2459 (2.25oz Box of 30)',
-      unit: 'container'
+      unit: ''
     },
     {
       id: 'fcba528a-8b28-41b2-adfe-da5c97eb993e',
       name: 'LA2401 Lavazza Granfiltro REG 2.25oz. 30ct each',
       showName: 'LA2401 Lavazza Granfiltro REG 2.25oz. 30ct each',
-      unit: 'container'
+      unit: ''
     },
     {
       id: '06edb1cc-26e1-4346-a60a-9754b3efdc99',
       name: 'LA2431 Lavazza Gran DARK ROAST 30/2.25 each',
       showName: 'LA2431 Lavazza Gran DARK ROAST 30/2.25 each',
-      unit: 'container'
+      unit: ''
     },
     {
       id: 'b8e758df-16f1-4b3c-95f9-e0bf14f1e4e3',
       name: 'LA1081 LaVazza DECAF Grnd 2.25oz 30ct. each',
       showName: 'LA1081 LaVazza DECAF Grnd 2.25oz 30ct. each',
-      unit: 'container'
-    },
-    {
-      id: 'c8652d7b-2905-48fe-bb9e-5da576048e41',
-      name: 'Rossa',
-      showName: 'Rossa',
-      unit: 'container'
-    },
-    {
-      id: 'fcf8ac20-0feb-4311-af94-fc6fe64b0fa9',
-      name: 'Crema e Aroma',
-      showName: 'Crema e Aroma',
-      unit: 'container'
-    },
-    {
-      id: 'a7bf5540-8b40-4518-85d4-5cd0fd01c48d',
-      name: 'Super Crema',
-      showName: 'Super Crema',
-      unit: 'container'
-    },
-    {
-      id: 'ffc2ee0e-1d8a-4731-a16e-5b8d570eecb9',
-      name: 'Dark Roast',
-      showName: 'Dark Roast',
-      unit: 'container'
-    },
-    {
-      id: '76add7ad-1ec7-4d12-9b0f-04c1998f6754',
-      name: 'Filtro Classico',
-      showName: 'Filtro Classico',
-      unit: 'container'
-    },
-    {
-      id: 'afd1415c-0232-4b04-a6f7-47cf2c8307ec',
-      name: 'Gran Filtro',
-      showName: 'Gran Filtro',
-      unit: 'container'
-    },
-    {
-      id: '5bc4f0ea-4736-4c69-a072-422d81d4b133',
-      name: 'Gran Filtro Decaf',
-      showName: 'Gran Filtro Decaf',
-      unit: 'container'
-    },
-    {
-      id: '32da7fa3-ae6f-4d77-bfc0-1c8f39a20606',
-      name: 'Esspreso Decaf',
-      showName: 'Esspreso Decaf',
-      unit: 'container'
-    },
-    {
-      id: '88b13f4b-ec8e-47bd-8f77-6ecc1b8aed31',
-      name: 'Oro',
-      showName: 'Oro',
-      unit: 'container'
-    },
-    {
-      id: 'd54e7f36-7fc9-44aa-8c18-15c930a7e3b7',
-      name: 'Espresso',
-      showName: 'Espresso',
-      unit: 'container'
-    },
-    {
-      id: '08e1d359-60d1-4bb7-93e2-65fdc4960de8',
-      name: 'Espresso Decaf',
-      showName: 'Espresso Decaf',
-      unit: 'container'
-    },
-    {
-      id: 'e6e339b9-7a2f-4c57-bd20-fcb687345620',
-      name: 'House Blend',
-      showName: 'House Blend',
-      unit: 'container'
+      unit: ''
     },
   ]
 };
 
-// const TEA: CategoryInventory = {
-//   category: 'Coffee',
-//   unit: 'container',
-//   formStyle: FormStyle.OnlyInput,
-//   items: [
-
-//   ]
-// };
+const TEA: CategoryInventory = {
+  category: 'Tea',
+  unit: '',
+  formStyle: FormStyle.OnlyInput,
+  items: [
+    {
+      id: '2b6a3649-9ec4-4394-af31-57f03edb9e10',
+      name: 'Green Tea',
+      showName: 'Green Tea',
+      unit: ''
+    },
+    {
+      id: '4516b811-e76f-4f2e-86dd-661ed9211f9c',
+      name: 'Chamomile',
+      showName: 'Chamomile',
+      unit: ''
+    },
+    {
+      id: '37e4c6a5-d042-4ccc-82d2-a1ef4cd3b6ae',
+      name: 'Peppermint',
+      showName: 'Peppermint',
+      unit: ''
+    },
+    {
+      id: 'c0543b05-b9d3-4e22-bdb9-5b18bccaf2c2',
+      name: 'Chai Pyramid',
+      showName: 'Chai Pyramid',
+      unit: ''
+    },
+    {
+      id: '5c76d75c-d1a2-4e47-ae03-c949d4ad3de2',
+      name: 'Ginger Orange Blossom',
+      showName: 'Ginger Orange Blossom',
+      unit: ''
+    },
+  ]
+};
 
 // const HW: CategoryInventory = {};
 
@@ -1459,8 +1416,7 @@ const UTILITIES_FORFOOD: CategoryInventory = {
 };
 
 
-
-export const INITIAL_INVENTORY_STRUCT: InventoryStructure[]  = [{
+export const INITIAL_INVENTORY_STRUCT: InventoryStructure  = {
     pages: [{
       name: 'Empanadas',
       categories: [EMPANADAS,FILLINGS]
@@ -1471,7 +1427,7 @@ export const INITIAL_INVENTORY_STRUCT: InventoryStructure[]  = [{
     },
     {
       name: 'Coffee',
-      categories: [COFFEE]
+      categories: [COFFEE,TEA]
     },
     {
       name: 'Raw materials',
@@ -1481,7 +1437,7 @@ export const INITIAL_INVENTORY_STRUCT: InventoryStructure[]  = [{
       name: 'Utilities',
       categories: [CLEANING, MATE ,UTILITIES_FORFOOD],
     }],
-  }];
+  };
 
   export const INITIAL_DAILY_INVENTORY_STRUCT: InventoryStructure = {
     pages: [{
@@ -1495,6 +1451,6 @@ export const INITIAL_INVENTORY_STRUCT: InventoryStructure[]  = [{
     {
       name: 'Others Items',
       itsOther: true,
-      categories: [COFFEE, PRODUCE, CLEANING, MATE, UTILITIES_FORFOOD]
+      categories: [COFFEE,TEA, PRODUCE, CLEANING, MATE, UTILITIES_FORFOOD]
     }]
   }
