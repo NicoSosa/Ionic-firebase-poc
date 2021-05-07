@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { ADMIN_STRUCT_TITLE_TOOLBAR, ADMIN_URL } from '../../constants/adminPageConstants';
+import { ADMIN_STRUCT_TITLE_TOOLBAR, ADMIN_URL, INV_STRUCT_SAVE } from '../../constants/adminPageConstants';
 import { DbRequestsService } from '../../../../services/db-requests.service';
 import { InventoryStructure, PageInventory, CategoryInventory } from '../../../../models/inventories/inventoryStructure.model';
 import { CHANGE_OPTIONS } from '../../constants/structureAdminPage';
 import { ModalController } from '@ionic/angular';
 import { PagesModalComponent } from '../../modals/pages-modal/pages-modal.component';
 import { CategoriesModalComponent } from '../../modals/categories-modal/categories-modal.component';
+import { ToastsService } from '../../../../services/userMsgs/toasts.service';
 
 @Component({
   selector: 'app-adm-struct',
@@ -15,18 +16,20 @@ import { CategoriesModalComponent } from '../../modals/categories-modal/categori
 export class AdmStructPage implements OnInit {
   public tittleToolbar = ADMIN_STRUCT_TITLE_TOOLBAR;
   public urlBack = ADMIN_URL;
+  private savedMsg = INV_STRUCT_SAVE;
 
   public changesOptions = CHANGE_OPTIONS;
 
   public inventoryStructure: InventoryStructure
   constructor(private modalCtrl: ModalController,
+    private toastsService: ToastsService,
     private dbRequestsService: DbRequestsService) { 
 
   }
 
   ngOnInit() {
-    this.dbRequestsService.getStructure().subscribe( struct => {
-      this.inventoryStructure = struct;
+    this.dbRequestsService.getWeeklyStructure().subscribe( struct => {
+      this.inventoryStructure = struct[0];
     });
   }
 
@@ -119,7 +122,10 @@ export class AdmStructPage implements OnInit {
   }
 
   saveChanges() {
-    console.log(this.inventoryStructure);
+    this.dbRequestsService.updateStructure(this.inventoryStructure).then(resp => {
+      this.toastsService.savedItemToast(this.savedMsg);
+    }
+    ).catch(err => this.toastsService.errorToast(err.msg));
   }
 
 

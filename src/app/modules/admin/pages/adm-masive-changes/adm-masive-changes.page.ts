@@ -26,8 +26,8 @@ export class AdmMasiveChangesPage implements OnInit {
   }
 
   private getData(): void {
-    this.dbRequestsService.getStructure().subscribe( struct => {
-      this.inventoryStructure = struct;
+    this.dbRequestsService.getWeeklyStructure().subscribe( struct => {
+      this.inventoryStructure = struct[0];
       this.setItemList();
     });
   }

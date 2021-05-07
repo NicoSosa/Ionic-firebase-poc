@@ -64,6 +64,7 @@ export class ItemModalComponent implements OnInit {
     this.itemForm.markAsDirty();
     this.modalCtrl.dismiss({
       isDirty: this.itemForm.dirty,
+      itemForm: this.itemForm.value,
       delete: true,
     });
   }

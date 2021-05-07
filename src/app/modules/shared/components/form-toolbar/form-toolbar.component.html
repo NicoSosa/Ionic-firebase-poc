@@ -1,0 +1,17 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start" *ngIf="urlBack">
+      <ion-button color="dark" (click)="goBack()">
+          <ion-icon name="chevron-back-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>{{ tittleToolbar }}</ion-title>
+    <ion-buttons slot="end" *ngIf="urlBack">
+      <ion-button color="danger" (click)="clearEvent()">
+        <ion-icon name="trash-outline"></ion-icon>
+          Clear Form
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+

@@ -5,6 +5,8 @@ import { Router } from '@angular/router';
 import { InventoryService } from '../../../../services/inventory/inventory.service';
 import { Observable } from 'rxjs/internal/Observable';
 import { InventoryListItem, InventoryViewModel } from '../../../../models/inventories/inventoryView.Model';
+import { AlertsService } from '../../../../services/userMsgs/alerts.service';
+import { ALERT_TYPE_OF_FORM_DATA } from '../../constants/inventoryConstants';
 
 @Component({
   selector: 'app-inventory-adm',
@@ -22,6 +24,7 @@ export class InventoryAdmPage implements OnInit {
   chartOpen: boolean[] = [true,true,true];  
 
   constructor(private router: Router,
+    private alertsService: AlertsService,
     private inventoryService: InventoryService,
     private dbRequestsService: DbRequestsService) { }
 
@@ -38,10 +41,14 @@ export class InventoryAdmPage implements OnInit {
   }
 
   private getInventories(): void {
+    
     this.dbRequestsService.getInventorys().subscribe( data => {
       this.inventories = data;
       this.changeSelectedInventory(this.inventories[0].store);
-    })
+    });
+    // this.dbRequestsService.getLastInventories().forEach(
+    //   (invObs, idx) => invObs.subscribe( data => this.inventories[idx] = data[0])
+    // );
     // this.inventoryService.getInventories().subscribe( data => {this.inventories = data; console.log(data);});
   }
 
@@ -74,12 +81,26 @@ export class InventoryAdmPage implements OnInit {
       products: productList,
       utilities: utilitiesList,
       produces: produceList,
-    }
-    console.log(this.selectedChartInventory);    
+    }  
   }
 
   goToStockForm(): void {
-    this.router.navigateByUrl(`stock/inventory-form/${this.selectedStore.nameAbbreviation}`)
+    if(this.selectedStore.nameAbbreviation === 'RVS') {
+      this.alertsService.selectOneOptionAlert(ALERT_TYPE_OF_FORM_DATA).then( alert => {
+        alert.present();
+        alert.onDidDismiss().then(value => {
+          if(value.data.values === 0 && value.role === 'ok' ){
+            this.router.navigateByUrl(`stock/inventory-form/${this.selectedStore.nameAbbreviation}`)
+          }
+          if(value.data.values === 1 && value.role === 'ok' ){
+            this.router.navigateByUrl(`stock/daily-form/${this.selectedStore.nameAbbreviation}`)
+          }
+        })
+      }
+      );
+    } else {
+      this.router.navigateByUrl(`stock/inventory-form/${this.selectedStore.nameAbbreviation}`)
+    }
   }
 
   toggleChart(idx: number){

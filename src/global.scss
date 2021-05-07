@@ -36,3 +36,54 @@ ion-toolbar {
 ion-menu {
     --background: #f4f5f8;
 }
+
+.one-option-alert {
+    --background: #f4f5f8;
+    button.cancel-button {
+        font-weight: bold;
+        color: #ff7a7a;
+    }
+    button.accept-button {
+        font-weight: bold;
+        color: #7a7cf5;
+    }
+    button.one-option-item {
+        background-color: #ffffff;
+        font-weight: bold;
+        color:white
+    }
+}
+
+.warning-delete-alert {
+    --background: #f4f5f8;
+    button.cancel-button {
+        font-weight: bold;
+        color: #ff7a7a;
+    }
+    button.accept-button {
+        font-weight: bold;
+        color: #7a7cf5;
+    }
+    button.one-option-item {
+        background-color: #ffffff;
+        font-weight: bold;
+        color:white
+    }
+} 
+
+.warning-save-alert {
+    --background: #f4f5f8;
+    button.cancel-button {
+        font-weight: bold;
+        color: #ff7a7a;
+    }
+    button.accept-button {
+        font-weight: bold;
+        color: #6cdf89;
+    }
+    button.one-option-item {
+        background-color: #ffffff;
+        font-weight: bold;
+        color:white
+    }
+} 

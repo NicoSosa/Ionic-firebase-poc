@@ -1,5 +1,5 @@
 export interface InventoryViewModel {
-    createdDate: string;
+    createdDate: number;
     id: string;
     store: string;
     user: string;

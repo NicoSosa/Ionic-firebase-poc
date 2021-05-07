@@ -10,11 +10,6 @@ ion-buttons {
   justify-content: center;
 }
 
-ion-button {
-  margin-left: 80px;
-  margin-right: 80px;
-}
-
 ion-icon{
   margin-bottom: 3px;
   margin-left: 3px;
@@ -95,4 +90,11 @@ ion-slides {
 
   .unitCol{
     text-align: center;
+  }
+
+  .deleteButton{
+    margin: 0 40% 0 3%;
+  }
+  .prevButton{
+    margin: 0 50% 0 5%;
   }

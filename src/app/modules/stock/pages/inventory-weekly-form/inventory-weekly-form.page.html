@@ -1,0 +1,61 @@
+<app-form-toolbar [tittleToolbar]="tittleToolbar" [urlBack]="urlBack" (clearForm)="deleteProgress()"></app-form-toolbar>
+
+<ion-content [formGroup]="inventoryForm">
+  <!-- <pre>
+    {{ inventoryForm.value | json }}
+  </pre> -->
+
+  <ion-slides scrollbar="true" [options]="{allowTouchMove: false}" #slides formArrayName="pages">
+    <ion-slide *ngFor="let page of pagesInv.controls; let idxPage = index" [formGroupName]="idxPage">
+      
+      <div *ngIf="idxPage != pagesInv.controls.length - 1 ">
+        <ion-toolbar class="slide-title">
+          <ion-title>{{page.value.name | titlecase}}</ion-title>
+        </ion-toolbar>
+
+        <ion-list class="itemList" formArrayName="categories">
+          
+          <div *ngFor="let pageCategory of inventoryStructure.pages[idxPage].categories; let j = index" >
+            <span *ngIf="pageCategory.formStyle === formStyleEnum.InputPlusSlider">
+              <app-inv-input-slider-form [inventoryForm]="inventoryForm" [idxPage]="idxPage" [pageCategory]="pageCategory" [cacheInventory]="cacheInventory" (setLS)="setLocalStorageInventory()"></app-inv-input-slider-form>
+            </span>
+            <span *ngIf="pageCategory.formStyle === formStyleEnum.OnlyInput">
+              <app-inv-only-input-form [inventoryForm]="inventoryForm" [idxPage]="idxPage" [pageCategory]="pageCategory" [cacheInventory]="cacheInventory" (setLS)="setLocalStorageInventory()"></app-inv-only-input-form>
+            </span>
+            <span *ngIf="pageCategory.formStyle === formStyleEnum.IsNeededInput">
+              <app-inv-is-needed-input-form [inventoryForm]="inventoryForm" [idxPage]="idxPage" [pageCategory]="pageCategory" [cacheInventory]="cacheInventory" (setLS)="setLocalStorageInventory()"></app-inv-is-needed-input-form>
+            </span>
+          </div>
+        </ion-list>
+      </div>
+
+      <div *ngIf="idxPage == pagesInv.controls.length - 1" >
+        <ion-toolbar class="slide-title">
+          <ion-title>{{page.value.name | titlecase}}</ion-title>
+        </ion-toolbar>
+        <ion-item class="finalTextArea">
+          <ion-label>Notes:</ion-label>
+          <ion-textarea formControlName="observation" rows="6" cols="20" placeholder="Enter any notes here..."></ion-textarea>
+        </ion-item>
+        <br>
+
+        <ion-button class="deleteButton" color="danger" (click)="deleteProgress()"><ion-icon name="trash-bin-outline"></ion-icon> <span style="padding-left:5px"></span> Delete Progress</ion-button>
+        <ion-button class="saveButton" color="success" (click)="saveInventory()"><ion-icon name="cloud-upload-outline"></ion-icon> <span style="padding-left:5px"></span> Save Inventory</ion-button>
+        
+
+      </div>
+    </ion-slide>
+  </ion-slides>
+      <ion-footer>
+        <ion-toolbar>
+            <ion-button slot="start" class="prevButton" color="light" (click)="prev()" *ngIf="slidesButtonStatus[0].active">
+              <ion-icon name="chevron-back-outline"></ion-icon>
+              {{ slidesButtonStatus[0].text }}
+            </ion-button>
+            <ion-button slot="end" class="nextButton" color="light" icon="chevron-down"(click)="next()" *ngIf="slidesButtonStatus[1].active">
+              {{ slidesButtonStatus[1].text}}
+              <ion-icon name="chevron-forward-outline"></ion-icon>
+            </ion-button>
+        </ion-toolbar>
+      </ion-footer>
+</ion-content>

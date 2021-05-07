@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { ADMIN_ITEM_TITLE_TOOLBAR, ADMIN_URL } from '../../constants/adminPageConstants';
+import { ADMIN_ITEM_TITLE_TOOLBAR, ADMIN_URL, INV_STRUCT_SAVE } from '../../constants/adminPageConstants';
 import { DbRequestsService } from '../../../../services/db-requests.service';
 import { InventoryStructure } from '../../../../models/inventories/inventoryStructure.model';
 import { ItemOfAdministration } from '../../../../models/administration/itemOfAdministration.model';
 import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
 import { ModalController } from '@ionic/angular';
 import { ItemModalComponent } from '../../modals/item-modal/item-modal.component';
+import { ToastsService } from 'src/app/services/userMsgs/toasts.service';
 
 @Component({
   selector: 'app-adm-items',
@@ -15,6 +16,7 @@ import { ItemModalComponent } from '../../modals/item-modal/item-modal.component
 export class AdmItemsPage implements OnInit {
   public tittleToolbar = ADMIN_ITEM_TITLE_TOOLBAR;
   public urlBack = ADMIN_URL;
+  private savedMsg = INV_STRUCT_SAVE;
 
   public inventoryStructure: InventoryStructure;
   public itemList: ItemOfAdministration[] = [];
@@ -24,6 +26,7 @@ export class AdmItemsPage implements OnInit {
 
   constructor(private modalCtrl: ModalController,
     private formBuilder: FormBuilder,
+    private toastsService: ToastsService,
     private dbRequestsService: DbRequestsService) { }
 
   ngOnInit() {
@@ -33,9 +36,10 @@ export class AdmItemsPage implements OnInit {
   }
 
   private getData(): void {
-    this.dbRequestsService.getStructure().subscribe( struct => {
-      this.inventoryStructure = struct;
+    this.dbRequestsService.getWeeklyStructure().subscribe( struct => {
+      this.inventoryStructure = struct[0];
       this.setItemList();
+      this.filterItems();
     });
   }
 
@@ -111,9 +115,11 @@ export class AdmItemsPage implements OnInit {
     this.filteredItemList = itemSearched;
   }
 
-  async openItemModal(item, idxItem: number){
+  async openItemModal(item){
     let itemData: ItemOfAdministration = null;
+    let idxItem: number = -1;
     if (item) {
+      idxItem = this.inventoryStructure.pages[item.idxPage].categories[item.idxCategory].items.findIndex( itm => itm.id.localeCompare( item.id) === 0 );
       itemData = item;
     }
     const modal = await this.modalCtrl.create({
@@ -131,14 +137,13 @@ export class AdmItemsPage implements OnInit {
   }
 
   private beforeCloseModal( item, idxItem, data ) {
-
-    console.log(data);
     if (data && data.isDirty) {
       const idCat = data.itemForm.idxCategory;
       const idPag = data.itemForm.idxPage;
       const dataItem = {
         id: data.itemForm.id,
         name: data.itemForm.name,
+        slid: data.itemForm.slid,
         showName: data.itemForm.showName,
         unit: data.itemForm.unit
       }
@@ -147,9 +152,9 @@ export class AdmItemsPage implements OnInit {
         this.inventoryStructure.pages[idPag].categories[idCat].items.push(dataItem);
       } else {
         if (data.delete) {
+          
           let items = this.inventoryStructure.pages[item.idxPage]
             .categories[item.idxCategory].items.filter((itm,idx) => idx!==idxItem);
-          
           this.inventoryStructure.pages[item.idxPage].categories[item.idxCategory].items = items;
         } else {
           if ( idCat !== item.idxCategory || idPag !== item.idxPage ) {
@@ -161,14 +166,19 @@ export class AdmItemsPage implements OnInit {
             this.inventoryStructure.pages[item.idxPage].categories[item.idxCategory].items[idxItem] = {
               id: dataItem.id,
               name: dataItem.name,
+              slid: dataItem.slid,
               showName: dataItem.showName,
               unit: dataItem.unit
             }
           }
         }
       }
-      this.setItemList();
-      this.filterItems();
+      this.dbRequestsService.updateStructure(this.inventoryStructure).then(resp => {
+        this.toastsService.savedItemToast(this.savedMsg);
+      }
+      ).catch(err => this.toastsService.errorToast(err.msg));
+      // this.setItemList();
+      // this.filterItems();
     }
 
   }

@@ -12,16 +12,16 @@ const routes: Routes = [
     loadChildren: () => import('./modules/stock/stock.module').then( m => m.StockModule)
   },
   {
-    path: 'charts',
-    loadChildren: () => import('./modules/charts/charts.module').then( m => m.ChartsModule)
-  },
-  {
     path: 'admin',
     loadChildren: () => import('./modules/admin/admin.module').then( m => m.AdminModule)
   },
   {
     path: 'user',
     loadChildren: () => import('./modules/user/user.module').then( m => m.UserModule)
+  },
+  {
+    path: 'login',
+    loadChildren: () => import('./modules/auth/pages/login/login.module').then( m => m.LoginPageModule)
   },
 ];
 

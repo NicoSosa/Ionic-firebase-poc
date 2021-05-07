@@ -3,6 +3,8 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { InventoryAdmPage } from './pages/inventory-adm/inventory-adm.page';
 import { InventoryFormPage } from './pages/inventory-form/inventory-form.page';
+import { InventoryDailyFormPage } from './pages/inventory-daily-form/inventory-daily-form.page';
+import { InventoryWeeklyFormPage } from './pages/inventory-weekly-form/inventory-weekly-form.page';
 
 const routes: Routes = [
   {
@@ -10,9 +12,19 @@ const routes: Routes = [
     component: InventoryAdmPage
   },
   {
-    path: 'inventory-form/:id',
+    path: 'inventorys-form/:id',
     component: InventoryFormPage
-  }
+  },
+  {
+    path: 'daily-form/:id',
+    component: InventoryDailyFormPage
+  },
+  {
+    path: 'inventory-form/:id',
+    component: InventoryWeeklyFormPage
+  },
+ 
+
 ];
 
 @NgModule({
