@@ -1060,7 +1060,7 @@ export class DbRequestsService {
   }
 
   private setCollections(): void {
-    this.weeklyInventoryCollection = this.afs.collection<any>('weeklyInventories',inv => inv.orderBy('createdDate','desc').where('store','==','RVS').limit(1));
+    this.weeklyInventoryCollection = this.afs.collection<any>('weeklyInventories',inv => inv.orderBy('createdDate','desc').orderBy('store','desc').limit(1));
     this.dailyInventoryCollection = this.afs.collection<any>('dailyInventories',inv => inv.orderBy('createdDate','desc').limit(1));
     this.weeklyInventoryStructureCollection = this.afs.collection<any>('weeklyinventoryStructure', is => is.orderBy('dateUpdated','desc').limit(1))
     this.dailyInventoryStructureCollection = this.afs.collection<any>('dailyinventoryStructure', is => is.orderBy('dateUpdated','desc').limit(1))

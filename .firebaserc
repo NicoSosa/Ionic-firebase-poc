@@ -1,9 +1,9 @@
 {
   "targets": {
-    "empanadus-inventory": {
+    "empanadus-nonprod": {
       "hosting": {
         "app": [
-          "empanadus-inventory"
+          "empanadus-nonprod"
         ]
       }
     }
