@@ -87,7 +87,7 @@ export class InventoryWeeklyFormPage implements OnInit {
     this.inventoryForm = this.formBuilder.group({
       store: '',
       pages: this.formBuilder.array([]),
-      date: '',
+      createdDate: '',
     });
   }
 
@@ -184,21 +184,21 @@ export class InventoryWeeklyFormPage implements OnInit {
         
       }
     });
-    this.inventoryForm.get('date').reset;
+    this.inventoryForm.get('createdDate').reset;
     this.deleteLocalStorageInventory();
   }
   //#endregion
 
   //#region LocalStorage
   public setLocalStorageInventory(): any {
-    this.inventoryForm.get('date').setValue(Date.now());
+    this.inventoryForm.get('createdDate').setValue(Date.now());
     localStorage.setItem( this.localStorageStore, JSON.stringify(this.inventoryForm.value))
   }
 
   private getLocalStorageInventory(): any {
     const inventoryLS = JSON.parse(localStorage.getItem( this.localStorageStore));
     let dateControl= Date.now();
-    if ( inventoryLS && inventoryLS.date +  1000*60*60 >= dateControl) {
+    if ( inventoryLS && inventoryLS.createdDate +  1000*60*60 >= dateControl) {
       return inventoryLS;
     } else {
       return null;

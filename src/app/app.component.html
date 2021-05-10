@@ -1,6 +1,6 @@
 <ion-app>
-  <ion-split-pane contentId="main-content">
-    <ion-menu contentId="main-content" type="overlay">
+  <ion-split-pane contentId="main-content" when="isLoged">
+    <ion-menu contentId="main-content" type="overlay" #mymenu>
       <ion-content>
         <ion-list id="inbox-list">
           <ion-list-header>Menu</ion-list-header>
@@ -14,7 +14,7 @@
             </ion-item>
           </ion-menu-toggle>
         </ion-list>
-        <ion-button color="medium" expand="block" (click)="logOut()">
+        <ion-button color="medium" expand="block" (click)="mymenu.close(); logOut()">
           Log out
           <ion-icon slot="end" name="log-out-outline"></ion-icon>
         </ion-button>

@@ -52,7 +52,8 @@ export class LoginPage implements OnInit {
     await this.authService.login(email, pass).then(
       oResp => {
         if (oResp) {
-          this.formGrp.reset();
+          this.emailUser.setValue('');
+          this.passUser.setValue('');
           this.router.navigateByUrl('stock');
         }
       }).catch( error => {

@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 import { InventoryAdmPage } from './pages/inventory-adm/inventory-adm.page';
-import { InventoryFormPage } from './pages/inventory-form/inventory-form.page';
 import { InventoryDailyFormPage } from './pages/inventory-daily-form/inventory-daily-form.page';
 import { InventoryWeeklyFormPage } from './pages/inventory-weekly-form/inventory-weekly-form.page';
 
@@ -10,10 +9,6 @@ const routes: Routes = [
   {
     path: '',
     component: InventoryAdmPage
-  },
-  {
-    path: 'inventorys-form/:id',
-    component: InventoryFormPage
   },
   {
     path: 'daily-form/:id',

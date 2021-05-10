@@ -5,7 +5,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { StockRoutingModule } from './stock-routing.module';
 import { InventoryAdmPage } from './pages/inventory-adm/inventory-adm.page';
-import { InventoryFormPage } from './pages/inventory-form/inventory-form.page';
 import { SharedModule } from '../shared/shared.module';
 import { InventoryChartComponent } from './components/inventory-chart/inventory-chart.component';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
@@ -19,7 +18,6 @@ import { InvIsNeededHideFormComponent } from './components/inv-is-needed-hide-fo
 @NgModule({
   declarations: [
     InventoryAdmPage,
-    InventoryFormPage,
     InventoryDailyFormPage,
     InventoryWeeklyFormPage,
     InvInputSliderFormComponent,
@@ -39,7 +37,6 @@ import { InvIsNeededHideFormComponent } from './components/inv-is-needed-hide-fo
   ],
   exports: [
     InventoryAdmPage,
-    InventoryFormPage,
     InventoryDailyFormPage
   ]
 })

@@ -1,22 +1,32 @@
+import { FormStyle } from '@angular/common';
+
 export interface InventoryViewModel {
     createdDate: number;
-    id: string;
+    closedDate: Date;
+    pages: PageInventoryViewModel[];
     store: string;
-    user: string;
-    products: InventoryListItem[];
-    produces: Item[];
-    utilities: InventoryListItem[];
+    createdUser: string;
 }
 
-export interface InventoryListItem {
-    category: string;
-    items: Item[];
-}
-
-interface Item {
+interface PageInventoryViewModel {
     name: string;
-    quantity?: number;
-    value?: number;
+    categories: CategoryInventoryViewModel[];
+    itsOther?: boolean;
+    observation?: string;
+}
+interface CategoryInventoryViewModel {
+    category: string;
     unit?: string;
+    formStyle: FormStyle;
+    items: ItemViewModel[];
+}
+
+interface ItemViewModel {
+    id: string;
+    name: string;
+    showName: string;
+    quantity?: number;
+    unit?: string;
+    slid?: number;
 }
 

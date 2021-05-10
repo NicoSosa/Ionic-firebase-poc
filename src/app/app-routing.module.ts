@@ -19,17 +19,17 @@ const routes: Routes = [
   {
     path: 'stock',
     loadChildren: () => import('./modules/stock/stock.module').then( m => m.StockModule),
-    canActivate:[AngularFireAuthGuard], data: { authGuardPipe: redirectUnauthorizedToLogin }
+    // canActivate:[AngularFireAuthGuard], data: { authGuardPipe: redirectUnauthorizedToLogin }
   },
   {
     path: 'admin',
     loadChildren: () => import('./modules/admin/admin.module').then( m => m.AdminModule),
-    canActivate:[AngularFireAuthGuard], data: { authGuardPipe: redirectUnauthorizedToLogin }
+    // canActivate:[AngularFireAuthGuard], data: { authGuardPipe: redirectUnauthorizedToLogin }
   },
   {
     path: 'user',
     loadChildren: () => import('./modules/user/user.module').then( m => m.UserModule),
-    canActivate:[AngularFireAuthGuard], data: { authGuardPipe: redirectUnauthorizedToLogin }
+    // canActivate:[AngularFireAuthGuard], data: { authGuardPipe: redirectUnauthorizedToLogin }
   },
   {
     path: 'login',
