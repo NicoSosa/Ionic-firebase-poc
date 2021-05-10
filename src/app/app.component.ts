@@ -38,6 +38,7 @@ export class AppComponent {
       if(authData){
         this.dbRequestsService.getUserFirestore(authData.uid).subscribe( afUser => {
           if(afUser){
+            this.userName = authData.email;
             this.authUser = {...afUser, ...authData};
             if (this.authUser.isInventoryUser) {
               this.appPages = USER_MENU;

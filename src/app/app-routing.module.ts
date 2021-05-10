@@ -5,6 +5,7 @@ import { AngularFireAuthGuard, hasCustomClaim, redirectUnauthorizedTo, redirectL
 import { pipe } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { customClaims } from '@angular/fire/auth-guard';
+import { AdminGuard } from './services/auth/guard/admin.guard';
 
 const redirectUnauthorizedToLogin = () => redirectUnauthorizedTo(['login']);
 const adminOnly = () => pipe(customClaims, map(claims => claims.role === 'inventoryAdmin'));
@@ -19,17 +20,17 @@ const routes: Routes = [
   {
     path: 'stock',
     loadChildren: () => import('./modules/stock/stock.module').then( m => m.StockModule),
-    // canActivate:[AngularFireAuthGuard], data: { authGuardPipe: redirectUnauthorizedToLogin }
+    canActivate:[AngularFireAuthGuard], data: { authGuardPipe: redirectUnauthorizedToLogin }
   },
   {
     path: 'admin',
     loadChildren: () => import('./modules/admin/admin.module').then( m => m.AdminModule),
-    // canActivate:[AngularFireAuthGuard], data: { authGuardPipe: redirectUnauthorizedToLogin }
+    canActivate:[AngularFireAuthGuard, AdminGuard], data: { authGuardPipe: redirectUnauthorizedToLogin }
   },
   {
     path: 'user',
     loadChildren: () => import('./modules/user/user.module').then( m => m.UserModule),
-    // canActivate:[AngularFireAuthGuard], data: { authGuardPipe: redirectUnauthorizedToLogin }
+    canActivate:[AngularFireAuthGuard, AdminGuard], data: { authGuardPipe: redirectUnauthorizedToLogin }
   },
   {
     path: 'login',
