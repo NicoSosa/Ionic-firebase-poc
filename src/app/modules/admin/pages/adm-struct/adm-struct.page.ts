@@ -31,7 +31,7 @@ export class AdmStructPage implements OnInit {
 
   ngOnInit() {
     this.dbRequestsService.getWeeklyStructure().subscribe( struct => {
-      this.inventoryStructure = struct[0];
+      this.inventoryStructure = struct;
     });
     // this.dbRequestsService.getDailyStructure().subscribe( struct => {
     //   this.inventoryStructure = struct;
@@ -132,7 +132,10 @@ export class AdmStructPage implements OnInit {
     // this.dbRequestsService.updateDailyStructure(this.inventoryStructure).then(resp => {
       this.toastsService.savedItemToast(this.savedMsg);
     }
-    ).catch(err => this.toastsService.errorToast(err.msg))
+    ).catch(err => {
+      this.toastsService.errorToast(err.msg)
+      console.log(err);
+    })
     .finally( () => this.alertsService.dismissLoading() );
   }
 

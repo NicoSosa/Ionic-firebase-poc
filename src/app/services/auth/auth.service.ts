@@ -4,15 +4,20 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { AuthUser } from '../../models/auth/authUser.model';
-import { ToastsService } from 'src/app/services/userMsgs/toasts.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
+  private authUser: AuthUser;
 
-  constructor(private afAuth: AngularFireAuth,
-    private toastsService: ToastsService) {}
+  constructor(private afAuth: AngularFireAuth) {
+    this.initialProcess();
+  }
+
+  private initialProcess(): void {
+    this.authUser = null;
+  }
   
   isLogedIn(): Observable<boolean> {
     return this.afAuth.authState.pipe( map( user => {
@@ -24,31 +29,33 @@ export class AuthService {
     }));
   }
 
-  userData(): Observable<AuthUser> {
-    return this.afAuth.idTokenResult.pipe( map( idTRMap => {
-      if (!idTRMap) {
-        return null
+  authData(): Observable<AuthUser> {
+    return this.afAuth.idTokenResult.pipe( map(user => {
+      if( user ){
+        this.authUser = {
+          uid: user.claims.user_id,
+          email:  user.claims.email, 
+        }
+        return this.authUser;
       }
-
-      const claims = { ...idTRMap.claims };
-      const authUserData: AuthUser = {
-        uid: claims.user_id,
-        displayName: claims.name,
-        email: claims.email,
-        emailVerified: claims.email_verified,
-
-      }
-      return authUserData;
+      return null;
     }));
+  }
+
+  getAuthEmail(): string {
+    if (this.authUser){
+      return this.authUser.email;
+    }
+    return null;
   }
 
   async login(email: string, password: string): Promise<AuthUser> {
       const { user } = await this.afAuth.signInWithEmailAndPassword(email, password);
-
       return user;
   }
 
   async logout(): Promise<void> {
+    this.authUser = null;
     await this.afAuth.signOut();
   }
 }

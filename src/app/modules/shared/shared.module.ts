@@ -5,11 +5,10 @@ import { IonicModule } from '@ionic/angular';
 import { FormToolbarComponent } from './components/form-toolbar/form-toolbar.component';
 
 
-
 @NgModule({
   declarations: [
     ToolbarComponent,
-    FormToolbarComponent
+    FormToolbarComponent,
   ],
   imports: [
     IonicModule,
@@ -17,7 +16,7 @@ import { FormToolbarComponent } from './components/form-toolbar/form-toolbar.com
   ],
   exports: [
     ToolbarComponent,
-    FormToolbarComponent
+    FormToolbarComponent,
   ]
 })
 export class SharedModule { }

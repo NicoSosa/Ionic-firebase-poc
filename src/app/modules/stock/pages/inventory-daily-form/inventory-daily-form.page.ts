@@ -72,7 +72,8 @@ export class InventoryDailyFormPage implements OnInit {
       const storeAbv = this.storeInv.value;
       this.selectedStore = this.storeList.filter( store => store.nameAbbreviation === storeAbv)[0];
       this.invTitleName = ` ${this.selectedStore.name}: ${this.invTitleName}`;
-      this.tittleToolbar = `${this.invTitleName} - ${this.inventoryStructure.pages[0].name || ''}`;
+      
+      this.tittleToolbar = `${this.invTitleName} - ${this.inventoryStructure? this.inventoryStructure.pages[0].name : ''}`;
     }
     );
   }
@@ -83,7 +84,7 @@ export class InventoryDailyFormPage implements OnInit {
     this.inventoryForm = this.formBuilder.group({
       store: '',
       pages: this.formBuilder.array([]),
-      date: '',
+      createdDate: '',
     });
   }
 
@@ -190,21 +191,21 @@ export class InventoryDailyFormPage implements OnInit {
         
       }
     });
-    this.inventoryForm.get('date').reset;
+    this.inventoryForm.get('createdDate').reset;
     this.deleteLocalStorageInventory();
   }
   //#endregion
 
   //#region LocalStorage
   public setLocalStorageInventory(): any {
-    this.inventoryForm.get('date').setValue(Date.now());
+    this.inventoryForm.get('createdDate').setValue(Date.now());
     localStorage.setItem(INVENTORY_LS, JSON.stringify(this.inventoryForm.value))
   }
 
   private getLocalStorageInventory(): any {
     const inventoryLS = JSON.parse(localStorage.getItem(INVENTORY_LS));
     let dateControl= Date.now();
-    if ( inventoryLS && inventoryLS.date +  1000*60*60 >= dateControl) {
+    if ( inventoryLS && inventoryLS.createdDate +  1000*60*60 >= dateControl) {
       return inventoryLS;
     } else {
       return null;

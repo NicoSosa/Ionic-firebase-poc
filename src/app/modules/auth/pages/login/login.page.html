@@ -5,7 +5,7 @@
       </div>
   </div>
 
-  <form [formGroup]="formGrp" (ngSubmit)="submit()">
+  <form [formGroup]="formGrp">
     <ion-row>
       <ion-col size="12" size-sm="10" offset-sm="1" size-md="8" offset-md="2" size-lg="6" offset-lg="3" size-xl="4"
         offset-xl="4">
@@ -24,7 +24,7 @@
               </ion-button>
             </ion-item>
   
-            <ion-button type="submit" [disabled]="formGrp.invalid" expand="block">Login</ion-button>
+            <ion-button (click)="submit()" [disabled]="formGrp.invalid" expand="block">Login</ion-button>
           </ion-card-content>
         </ion-card>
   

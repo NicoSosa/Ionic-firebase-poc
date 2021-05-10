@@ -7,127 +7,127 @@ const EMPANADAS: CategoryInventory = {
   formStyle: FormStyle.InputPlusSlider,
   items: [
     {
-      id: '60994966-f6f1-4d80-b93a-12a887e59ad1',
+      id: '3a041baf-add9-4597-8e05-9329fdde7d00',
       name: 'Meet',
       showName: 'Meet',
       slid: 16
     },
     {
-      id: 'c4da461a-c9ea-4285-8c7e-38f7187d090e',
+      id: '7b3eeb49-63e9-439a-aac2-d6422bf56013',
       name: 'Chicken',
       showName: 'Chicken',
       slid: 16
     },
     {
-      id: 'af673743-4e1a-49ef-84e4-b8b0d0810e37',
+      id: '97135cc1-7824-4fc1-98cb-66adf576f0b0',
       name: 'BBQ Pork',
       showName: 'BBQ Pork',
       slid: 10
     },
     {
-      id: '58ed079e-5592-4ccb-8a6d-9445886b74d6',
+      id: 'de206ca2-3ebd-44d8-a358-5e5127423eb5',
       name: 'Sausage',
       showName: 'Sausage',
       slid: 8
     },
     {
-      id: '65ad6b1f-4506-4b4c-aa2d-aa0272d6311f',
+      id: '651804fb-8312-44eb-89e9-3bc3594f3004',
       name: 'Ham & Cheese',
       showName: 'Ham & Cheese',
       slid: 9
     },
     {
-      id: '03780a3e-0b0f-4013-8466-99700483d780',
+      id: '99aef93b-30df-42d2-868b-c9e5cc7aa11c',
       name: 'Tuna',
       showName: 'Tuna',
       slid: 4
     },
     {
-      id: '5449267c-f513-4ebf-942f-898a77e2e1c7',
+      id: '0778a1ba-7211-4259-80ec-2f033592ac3a',
       name: 'Bacon',
       showName: 'Bacon',
       slid: 6
     },
     {
-      id: '8bfa9e10-d53b-436a-9786-1fdd59228e79',
+      id: 'f861eb31-5b85-4484-81f5-e6948edfe3b3',
       name: 'Caprese',
       showName: 'Caprese',
       slid: 6
     },
     {
-      id: 'f10241c4-449f-445f-a412-fd3e52315e26',
+      id: '40f8cc01-9f9d-4ccb-98e6-083e806a017c',
       name: 'Spinach',
       showName: 'Spinach',
       slid: 11
     },
     {
-      id: '5d5bb03f-7353-4dfb-bb5b-4dcebd9578fb',
+      id: '051d33ba-813d-4a93-83e0-897b0efc34aa',
       name: 'Mushroom',
       showName: 'Mushroom',
       slid: 8
     },
     {
-      id: '015d7af2-bf79-43fb-a6fa-6efb74532b8b',
+      id: '87817d2e-fd09-47ae-81c3-1702f970c490',
       name: 'Corn',
       showName: 'Corn',
       slid: 4
     },
     {
-      id: '791a1d74-d244-4095-80ae-1d56d3108a51',
+      id: '0207876e-efb1-4cf7-aba6-e95679263716',
       name: 'Onion',
       showName: 'Onion',
       slid: 3
     },
     {
-      id: '61c5511d-32e8-4fdb-9b1e-113b1ad2da30',
+      id: 'a6442425-378c-4c83-9493-b50884d9d6da',
       name: 'Broccoli',
       showName: 'Broccoli',
       slid: 3
     },
     {
-      id: '3660c9d0-561c-4416-ad93-c5f280902232',
+      id: '09f45a92-38c6-4808-8a96-9ac9f628fc95',
       name: 'Apple',
       showName: 'Apple',
       slid: 7
     },
     {
-      id: 'a32df6ce-7433-4827-b14c-fdc5242bdfda',
+      id: '1b17380a-7168-41d3-b1ed-233a85e7cdce',
       name: 'Banana',
       showName: 'Banana',
       slid: 3
     },
     {
-      id: '5e182117-72d3-4b38-965d-26aa3fe4f87c',
+      id: 'e491c152-35e9-47ce-ab39-6a5ca269fb0e',
       name: 'Pepperoni',
       showName: 'Pepperoni',
       slid: 7
     },
     {
-      id: 'ed587252-660b-479c-8825-20b63d980b15',
+      id: 'e54d4aad-4a90-454f-bcb2-b8edf257f254',
       name: 'Buffalo Chick',
       showName: 'Buffalo Chick',
       slid: 8
     },
     {
-      id: '5aa56503-6322-4c43-821a-648b443dd2fc',
+      id: 'a1f8f301-f96c-4325-9109-2a72a948d398',
       name: '4 Cheese',
       showName: '4 Cheese',
       slid: 4
     },
     {
-      id: '2e2e8f0b-9932-4526-a3dc-567d718d9c8e',
+      id: 'f1af423a-11df-4878-8248-7fa1dd812ab4',
       name: 'Spin',
       showName: 'Spin',
       slid: 3
     },
     {
-      id: '5742fdcf-d72a-42b8-ab09-bca41fb7bc08',
+      id: '90f67479-1cc0-4a6f-b481-8a61cd515c59',
       name: 'Potato',
       showName: 'Potato',
       slid: 2
     },
     {
-      id: '375ddfa0-cdc0-45e2-a202-69edc3859ea7',
+      id: '623e1b97-e0d4-49e1-9329-7dd04180a90e',
       name: 'Soy',
       showName: 'Soy',
       slid: 2
