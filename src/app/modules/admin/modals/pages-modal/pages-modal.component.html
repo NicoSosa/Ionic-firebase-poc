@@ -34,7 +34,7 @@
             <p class="requiredMsg"> Its required!!</p>
             </div>
           </ion-col>
-          <ion-col size="1" class="ion-aling-self-end" (click)="deleteCategory(i)" *ngIf="category.get('items').controls.length == 0">
+          <ion-col size="1" class="ion-aling-self-end" (click)="deleteCategory(i)" *ngIf="category.get('items')['controls'].length == 0">
               <ion-icon size="big" color="danger" name="trash-outline"></ion-icon>
           </ion-col>
         </ion-item>
