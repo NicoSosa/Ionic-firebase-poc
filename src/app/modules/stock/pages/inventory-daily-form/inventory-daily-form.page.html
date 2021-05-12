@@ -19,8 +19,11 @@
         <ion-list class="itemList" formArrayName="categories">
           
           <div *ngFor="let pageCategory of inventoryStructure.pages[idxPage].categories; let j = index" >
-            <span *ngIf="!inventoryStructure.pages[idxPage].itsOther">
+            <span *ngIf="!inventoryStructure.pages[idxPage].itsOther && pageCategory.category !== 'Fillings'  ">
               <app-inv-is-needed-only-form [inventoryForm]="inventoryForm" [idxPage]="idxPage" [pageCategory]="pageCategory" [cacheInventory]="cacheInventory" (setLS)="setLocalStorageInventory()" (endLoading)="closeLoading()"></app-inv-is-needed-only-form>
+            </span>
+            <span *ngIf="!inventoryStructure.pages[idxPage].itsOther && pageCategory.category === 'Fillings' ">
+              <app-inv-input-slider-form [inventoryForm]="inventoryForm" [idxPage]="idxPage" [pageCategory]="pageCategory" [cacheInventory]="cacheInventory" (setLS)="setLocalStorageInventory()" (endLoading)="closeLoading()"></app-inv-input-slider-form> 
             </span>
             <span *ngIf="inventoryStructure.pages[idxPage].itsOther">
               <app-inv-is-needed-hide-form [inventoryForm]="inventoryForm" [idxPage]="idxPage" [pageCategory]="pageCategory" [cacheInventory]="cacheInventory" (setLS)="setLocalStorageInventory()"></app-inv-is-needed-hide-form>

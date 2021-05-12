@@ -196,7 +196,7 @@ export class InventoryWeeklyFormPage implements OnInit {
   private getLocalStorageInventory(): any {
     const inventoryLS = JSON.parse(localStorage.getItem( this.localStorageStore));
     let dateControl= Date.now();
-    if ( inventoryLS && inventoryLS.createdDate +  1000*60*60 >= dateControl) {
+    if ( inventoryLS && inventoryLS.createdDate +  1000*60*60*30 >= dateControl) {
       return inventoryLS;
     } else {
       return null;
@@ -248,6 +248,5 @@ export class InventoryWeeklyFormPage implements OnInit {
   }
   //#endregion
   closeLoading(): void { 
-    console.log('cloose');
     this.alertsService.dismissLoading().then()}
 }

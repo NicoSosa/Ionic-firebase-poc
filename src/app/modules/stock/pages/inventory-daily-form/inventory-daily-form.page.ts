@@ -167,7 +167,7 @@ export class InventoryDailyFormPage implements OnInit {
           page.categories.map( (cat) => {
             let resumedData = {
               category: cat.category,
-              items: cat.items.filter( item => item.isNeeded)
+              items: cat.items.filter( item => item.isNeeded || item.quantity )
             }
             if (resumedData.items.length > 0) {
               dailyData.resumedCategories.push({...resumedData});
@@ -206,29 +206,43 @@ export class InventoryDailyFormPage implements OnInit {
       alert.onDidDismiss().then(value => {
         if( value.role === 'ok') {
           this.deleteProgressProcess();
+          this.slides.slideTo(0).then(() => {
+            this.slides.getActiveIndex().then( activeIdx => {
+              this.updateSlideButton(activeIdx);
+            })
+          });
         }
       })
     })
-  }
+  } 
   
   private deleteProgressProcess(): void {
     this.pagesInv.controls.forEach( (page, idxPage) => {
       const pages = page.get('categories') as FormArray;
-      let isOthr = null;
+      let isOthr = false;
+      let name = '';
       if (this.inventoryStructure.pages[idxPage]){
         isOthr =  this.inventoryStructure.pages[idxPage].itsOther;
       }
       try {
         pages.controls.forEach( category => {
           const items = category.get('items') as FormArray;
+          const name = category.get('category') as FormControl;
           if(!isOthr){
+            if (name){ if (name.value === 'Fillings') {  
+              items.controls.forEach( item => {
+                item.get('rangeQuantity').setValue(0);
+                item.get('quantity').setValue(0);
+              })
+            }}
             items.controls.forEach( item => {
               item.get('isNeeded').setValue(false);
             })
           } else {
+            console.log(isOthr);
             items.controls.forEach( item => {
-              item.get('quantity').setValue(0);
               item.get('isNeeded').setValue(false);
+
             })
           }
         })
@@ -250,7 +264,7 @@ export class InventoryDailyFormPage implements OnInit {
   private getLocalStorageInventory(): void {
     const inventoryLS = JSON.parse(localStorage.getItem(INVENTORY_LS));
     let dateControl= Date.now();
-    if ( inventoryLS && inventoryLS.createdDate +  1000*60*60 >= dateControl) {
+    if ( inventoryLS && inventoryLS.createdDate +  1000*60*60*30 >= dateControl) {
       this.cacheInventory = inventoryLS;
     } else {
       this.cacheInventory = null;
