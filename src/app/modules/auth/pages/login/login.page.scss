@@ -1,3 +1,7 @@
+ion-content {
+    --background: #f4f5f8;
+}
+
 ion-title,
 h3,
 p {
@@ -29,4 +33,28 @@ a {
 
 ion-card {
     margin-top: 50px;
+}
+
+
+@media (prefers-color-scheme: dark) {   
+    .WelcText {
+        color: #cecece;
+    }
+
+    a {
+        color: #ffffff;
+    }
+
+    ion-content {
+        --background: #222428;
+    }
+
+    ion-card {
+        --background: #201f1f;
+    }
+    ion-item {
+        --background: #201f1f;
+        color: #ffffff; 
+    }
+
 }

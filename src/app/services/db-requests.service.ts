@@ -9,6 +9,7 @@ import { INITIAL_INVENTORY_STRUCT, INITIAL_DAILY_INVENTORY_STRUCT } from '../inf
 import { AuthService } from './auth/auth.service';
 import { AuthUser } from '../models/auth/authUser.model';
 import { StoresAbv, StoresAbvDescript } from '../infrastructure/enum/storesAbv.enum';
+import { InventoryDailyData } from '../models/inventories/inventoryDailyData.model';
 
 
 @Injectable({
@@ -77,13 +78,17 @@ export class DbRequestsService {
 
   getWeeklyStructure(): Observable<InventoryStructure> {
     // return of(this.constInventoryStructure);
-    this.weeklyInventoryStructure = this.weeklyInventoryStructureCollection.valueChanges();
+    if( !this.weeklyInventoryStructure){
+      this.weeklyInventoryStructure = this.weeklyInventoryStructureCollection.valueChanges();
+    }
     return this.weeklyInventoryStructure.pipe( map( data => data[0]));
   }
   
   getDailyStructure(): Observable<InventoryStructure> {
     // return of(this.constDailyInventoryStructure);
-    this.dailyInventoryStructure = this.dailyInventoryStructureCollection.valueChanges();
+    if( !this.dailyInventoryStructure) {
+      this.dailyInventoryStructure = this.dailyInventoryStructureCollection.valueChanges();
+    }
     return this.dailyInventoryStructure.pipe( map( data => data[0]));
   }
 
@@ -110,7 +115,7 @@ export class DbRequestsService {
     return ArrayObservableOfInventories.pipe( map( data => data[0]));
   }
 
-  getLastDailyInventoryByAbvName(): Observable<InventoryViewModel> {
+  getLastDailyInventoryByAbvName(): Observable<InventoryDailyData> {
     return this.dailyInventoryCollection.valueChanges().pipe( map (data => data[0]));
   }
 
@@ -121,9 +126,9 @@ export class DbRequestsService {
     return this.weeklyInventoryCollection.add(inventory);
   }
 
-  async setNewDailyInventory(inventory: InventoryViewModel ) {
+  async setNewDailyInventory(inventory: InventoryDailyData ) {
     inventory.createdUser = this.authService.getAuthEmail();
-    inventory.createdDate = Date.now()
+    inventory.createdDate = Date.now();
     inventory.closedDate = new Date();
     return this.dailyInventoryCollection.add(inventory);
   }

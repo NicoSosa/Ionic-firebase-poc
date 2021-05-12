@@ -24,6 +24,7 @@ ion-list-header {
     --background: #f4f5f8;
     padding: 0;
 }
+
 ion-item {
     --background: #ffffff;
     padding: 0;
@@ -49,4 +50,14 @@ ion-icon {
 .addPageButton {
     --background: #405ace;
     margin: 10px 65% 0 5%
+}
+
+@media (prefers-color-scheme: dark) {   
+    .titlePage {
+        --background: #222428 !important;
+    }
+
+    ion-item {
+        --background: #201f1f !important;
+    }
 }

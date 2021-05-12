@@ -60,7 +60,6 @@ export class InventoryWeeklyFormPage implements OnInit {
       struct.pages.forEach( (page, pageIdx) => this.pushPageInv(page, pageIdx) )
       this.pushFinalPage();
       this.tittleToolbar = `${this.invTitleName} - ${this.inventoryStructure.pages[0].name || ''}`;
-      this.alertsService.dismissLoading();
     });
   }
 
@@ -76,7 +75,6 @@ export class InventoryWeeklyFormPage implements OnInit {
       const storeAbv = this.storeInv.value;
       this.selectedStore = this.storeList.filter( store => store.nameAbbreviation === storeAbv)[0];
       this.invTitleName = ` ${this.selectedStore.name}: ${this.invTitleName}`;
-      // this.tittleToolbar = `${this.invTitleName} - ${this.inventoryStructure.pages[0].name || ''}`;
     }
     );
   }
@@ -136,7 +134,7 @@ export class InventoryWeeklyFormPage implements OnInit {
       this.router.navigateByUrl(this.urlBack);
       this.toastsService.savedItemToast(this.savedMsg);
     }).catch( err => this.toastsService.errorToast(err.msg))
-      .finally( () => this.alertsService.dismissLoading());
+      .finally( () => this.closeLoading());
   }
   
 
@@ -249,4 +247,7 @@ export class InventoryWeeklyFormPage implements OnInit {
     }
   }
   //#endregion
+  closeLoading(): void { 
+    console.log('cloose');
+    this.alertsService.dismissLoading().then()}
 }

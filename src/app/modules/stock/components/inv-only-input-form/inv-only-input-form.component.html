@@ -8,7 +8,7 @@
         <span [formGroupName]="categoryIdx" *ngIf="categoryIdx >= 0">
           <ion-item-divider sticky="true">
             <ion-col class="categoryTitle" size="8">
-              <ion-label><b>{{ categoryName.value }}</b></ion-label>
+              <ion-label>{{ categoryName.value }}</ion-label>
             </ion-col>
             <ion-col size="2">Quantity</ion-col>
             <ion-col size="2">Units</ion-col>
@@ -17,7 +17,7 @@
           <div formArrayName="items">
             <ion-item color="light" *ngFor="let item of categoryItems.controls; let itemIdx = index" [formGroupName]="itemIdx">
               <ion-col size="8">
-                <b>{{item.value.showName}}:</b>
+                {{item.value.showName}}:
               </ion-col>
               <ion-col size="2">
                 <ion-item class="itemInput">
@@ -25,7 +25,7 @@
                 </ion-item>                      
               </ion-col>
               <ion-col size="2" class="unitCol">
-              <b>{{item.value.unit}}</b>
+              {{item.value.unit}}
               </ion-col>
             </ion-item>
           </div>

@@ -16,7 +16,7 @@ export class AlertsService {
       message: 'Please, wait...',
       animated: true,
       spinner: 'circles',
-      duration: 5000,
+      duration: 3000,
     }).then(a => {
       a.present().then(() => {
         if (!this.isLoading) {
@@ -56,7 +56,7 @@ export class AlertsService {
   async warningDelete() {
     return await this.alertController.create({
       cssClass: 'warning-delete-alert',
-      subHeader: 'Do you want delete all your progress?',
+      subHeader: 'Do you want to delete all your progress?',
       keyboardClose: true,
       backdropDismiss: false,
       header: 'Atention!',
@@ -77,7 +77,7 @@ export class AlertsService {
   async warningSaveData() {
     return await this.alertController.create({
       cssClass: 'warning-save-alert',
-      subHeader: 'Do you want save this form?',
+      subHeader: 'Do you want to save this form?',
       keyboardClose: true,
       backdropDismiss: false,
       header: 'Atention!',
@@ -88,6 +88,22 @@ export class AlertsService {
         handler: () => { }
       }, {
         text: 'Yes, I want',
+        role: 'ok',
+        cssClass: 'accept-button',
+        handler: () => { }
+      }]
+    });
+ 
+  }
+  async warningPermission(store: string) {
+    return await this.alertController.create({
+      cssClass: 'warning-delete-alert',
+      subHeader: `You can't create an inventory for ${store} with your account.`,
+      keyboardClose: true,
+      backdropDismiss: false,
+      header: 'Insufficient permissions',
+      buttons: [{
+        text: 'Ok',
         role: 'ok',
         cssClass: 'accept-button',
         handler: () => { }

@@ -9,5 +9,10 @@ ion-toolbar {
 }
 
 ion-segment{
-    --background: #f4f5f8;
+    --background: #f9f9fa;
+}
+@media (prefers-color-scheme: dark) {
+    ion-segment{
+        --background: #201f1f;
+    }    
 }

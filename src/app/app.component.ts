@@ -27,6 +27,8 @@ export class AppComponent {
 
   private initialProcess(): void {
     this.alertsService.presentLoading();
+    this.dbRequestsService.getDailyStructure().subscribe();
+    this.dbRequestsService.getWeeklyStructure().subscribe();
     this.authUser = null;
     this.authService.isLogedIn().subscribe( loged =>{
       if( !loged ){

@@ -68,8 +68,6 @@ export class InvIsNeededHideFormComponent implements OnInit {
       id: item.id,
       name: item.name,
       showName: item.showName,
-      unit: item.unit,
-      quantity: {value: quant | 0, disabled: !isNeed},
       isNeeded: isNeed,
     }));
   }

@@ -1,19 +1,19 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
-import { InventoryChartComponent } from './inventory-chart.component';
+import { InvIsNeededOnlyFormComponent } from './inv-is-needed-only-form.component';
 
-describe('InventoryChartComponent', () => {
-  let component: InventoryChartComponent;
-  let fixture: ComponentFixture<InventoryChartComponent>;
+describe('InvIsNeededOnlyFormComponent', () => {
+  let component: InvIsNeededOnlyFormComponent;
+  let fixture: ComponentFixture<InvIsNeededOnlyFormComponent>;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ InventoryChartComponent ],
+      declarations: [ InvIsNeededOnlyFormComponent ],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(InventoryChartComponent);
+    fixture = TestBed.createComponent(InvIsNeededOnlyFormComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));

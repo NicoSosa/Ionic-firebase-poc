@@ -5,6 +5,9 @@ import { Router } from '@angular/router';
 import { InventoryViewModel } from '../../../../models/inventories/inventoryView.Model';
 import { AlertsService } from '../../../../services/userMsgs/alerts.service';
 import { ALERT_TYPE_OF_FORM_DATA } from '../../constants/inventoryConstants';
+import { AuthService } from '../../../../services/auth/auth.service';
+import { first } from 'rxjs/operators';
+import { InventoryDailyData } from '../../../../models/inventories/inventoryDailyData.model';
 
 @Component({
   selector: 'app-inventory-adm',
@@ -17,11 +20,12 @@ export class InventoryAdmPage implements OnInit {
 
   private selectedStore: StoreViewModel;
   public weeklyInventory: InventoryViewModel;
-  public dailyInventory: InventoryViewModel;
+  public dailyInventory: InventoryDailyData;
 
   chartOpen: boolean[] = [true,true,true];  
 
   constructor(private router: Router,
+    private authService: AuthService,
     private alertsService: AlertsService,
     private dbRequestsService: DbRequestsService) { }
 
@@ -58,22 +62,47 @@ export class InventoryAdmPage implements OnInit {
     });
   }
 
-  goToStockForm(): void {
-    if(this.selectedStore.nameAbbreviation === 'RVS') {
-      this.alertsService.selectOneOptionAlert(ALERT_TYPE_OF_FORM_DATA).then( alert => {
-        alert.present();
-        alert.onDidDismiss().then(value => {
-          if(value.data.values === 0 && value.role === 'ok' ){
-            this.router.navigateByUrl(`stock/inventory-form/${this.selectedStore.nameAbbreviation}`)
-          }
-          if(value.data.values === 1 && value.role === 'ok' ){
-            this.router.navigateByUrl(`stock/daily-form/${this.selectedStore.nameAbbreviation}`)
-          }
-        })
+  async goToStockForm(): Promise<void> {
+    let permition = await this.getInventoryPermit();
+    if (permition){
+      if(this.selectedStore.nameAbbreviation === 'RVS') {
+        this.alertsService.selectOneOptionAlert(ALERT_TYPE_OF_FORM_DATA).then( alert => {
+          alert.present();
+          alert.onDidDismiss().then(value => {
+            if(value.data.values === 0 && value.role === 'ok' ){
+              this.router.navigateByUrl(`stock/inventory-form/${this.selectedStore.nameAbbreviation}`)
+            }
+            if(value.data.values === 1 && value.role === 'ok' ){
+              this.router.navigateByUrl(`stock/daily-form/${this.selectedStore.nameAbbreviation}`)
+            }
+          })
+        }
+        );
+      } else {
+        this.router.navigateByUrl(`stock/inventory-form/${this.selectedStore.nameAbbreviation}`)
       }
-      );
     } else {
-      this.router.navigateByUrl(`stock/inventory-form/${this.selectedStore.nameAbbreviation}`)
+      let store = this.selectedStore.name;
+      this.alertsService.warningPermission(store).then( alert => {
+        alert.present();
+      });
     }
   }
+
+  private async getInventoryPermit() {
+    let userAuth = await this.authService.authData().pipe(first()).toPromise();
+    if (userAuth) {
+      let userDb = await this.dbRequestsService.getUserFirestore(userAuth.uid).pipe(first()).toPromise();
+      if (userDb) {
+        if (userDb.isInventoryAdmin || userDb.displayName === 'empanadus') {
+          return true;
+        }
+        if ( userDb.displayName === this.selectedStore.nameAbbreviation) {
+          return true;
+        }
+      }
+    }
+    return false;
+  }
+
 }

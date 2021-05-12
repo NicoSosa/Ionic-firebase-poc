@@ -6,10 +6,6 @@ ion-footer{
     right: 0;
   }
   
-  ion-buttons {
-    justify-content: center;
-  }
-  
   ion-icon{
     margin-bottom: 3px;
     margin-left: 3px;
@@ -19,26 +15,6 @@ ion-footer{
   ion-slide{
     overflow-y: scroll;    
     display: block;    
-  }
-  
-  .slide-title {
-    --background: #f4f5f8;
-    height: 50px;
-    margin-top: 5px;
-    margin-bottom: 10px;
-  }
-  
-  .categoryTitle{
-   text-align: left; 
-  }
-  
-  ion-item-divider{
-    --background: #f1f0f0;
-    --color: #000000;
-  }
-  
-  .itemList{
-    background: #f4f5f8;
   }
   
   ion-slides {
@@ -59,37 +35,6 @@ ion-footer{
       max-width: 80%;
       margin: 60px 0 40px;
       pointer-events: none;
-    }
-  
-    b {
-      font-weight: 500;
-    }
-  
-    p {
-      padding: 0 40px;
-      font-size: 14px;
-      line-height: 1.5;
-      color: var(--ion-color-step-600, #60646b);
-    }
-  
-    p b {
-      color: var(--ion-text-color, #000000);
-    }
-  
-    .finalTextArea {
-      border: solid 1px black;
-      border-radius: 6px;
-      margin: 0 20px 0 20px;
-    }
-    
-    .itemInput{
-      border: solid 1px black;
-      border-radius: 6px;
-      text-align: center;
-    }
-  
-    .unitCol{
-      text-align: center;
     }
 
     .deleteButton, .saveButton{

@@ -6,7 +6,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { StockRoutingModule } from './stock-routing.module';
 import { InventoryAdmPage } from './pages/inventory-adm/inventory-adm.page';
 import { SharedModule } from '../shared/shared.module';
-import { InventoryChartComponent } from './components/inventory-chart/inventory-chart.component';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { InventoryDailyFormPage } from './pages/inventory-daily-form/inventory-daily-form.page';
 import { InvInputSliderFormComponent } from './components/inv-input-slider-form/inv-input-slider-form.component';
@@ -14,6 +13,7 @@ import { InventoryWeeklyFormPage } from './pages/inventory-weekly-form/inventory
 import { InvOnlyInputFormComponent } from './components/inv-only-input-form/inv-only-input-form.component';
 import { InvIsNeededInputFormComponent } from './components/inv-is-needed-input-form/inv-is-needed-input-form.component';
 import { InvIsNeededHideFormComponent } from './components/inv-is-needed-hide-form/inv-is-needed-hide-form.component';
+import { InvIsNeededOnlyFormComponent } from './components/inv-is-needed-only-form/inv-is-needed-only-form.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +24,7 @@ import { InvIsNeededHideFormComponent } from './components/inv-is-needed-hide-fo
     InvOnlyInputFormComponent,
     InvIsNeededInputFormComponent,
     InvIsNeededHideFormComponent,
-    InventoryChartComponent
+    InvIsNeededOnlyFormComponent
   ],
   imports: [
     CommonModule,

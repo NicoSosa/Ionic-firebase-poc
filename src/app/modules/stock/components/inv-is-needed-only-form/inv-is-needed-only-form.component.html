@@ -7,29 +7,25 @@
       <span formArrayName="categories">
         <span [formGroupName]="categoryIdx" *ngIf="categoryIdx >= 0">
           <ion-item-divider sticky="true">
-            <ion-col class="categoryTitle" size="6">
+            <ion-col class="categoryTitle" size="5">
               <ion-label>{{ categoryName.value }}</ion-label>
             </ion-col>
+            <ion-col size="4">{{categoryUnit.value}}</ion-col>
             <ion-col size="2">Is needed?</ion-col>
-            <ion-col size="2">Quantity</ion-col>
-            <ion-col size="2">Unit</ion-col>
+            <ion-col size="1"></ion-col>
           </ion-item-divider>
           <hr>
           <div formArrayName="items">
   
             <ion-item color="light" *ngFor="let item of categoryItems.controls; let itemIdx = index" [formGroupName]="itemIdx">
-              <ion-col size="6">
+              <ion-col size="7">
                 {{item.value.showName}}:
               </ion-col>
+              <ion-col size="2"></ion-col>
               <ion-col size="2" class="unitCol" >
                 <ion-toggle color="primary" formControlName="isNeeded" (ionChange)="changeCheckNeeded(itemIdx)"></ion-toggle>
               </ion-col>
-              <ion-col size="2">
-                <ion-item class="itemInput">
-                  <ion-input type="number" inputmode="numeric" formControlName="quantity" (ionChange)="setLocalStorageInventory()"></ion-input>
-                </ion-item>                      
-              </ion-col>
-              <ion-col size="2" class="unitCol">{{item.value.unit}}</ion-col>
+              <ion-col size="1"></ion-col>
             </ion-item>
               </div>
         </span>

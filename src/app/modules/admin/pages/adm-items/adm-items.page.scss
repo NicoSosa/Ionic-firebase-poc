@@ -3,9 +3,20 @@ ion-list{
 }
 
 .itemInput{
-    border: solid 1px black;
-    border-radius: 6px;
     text-align: center;
     margin-top: 1px;
     margin-bottom: 1px;
+}
+
+@media (prefers-color-scheme: dark) {   
+    ion-list{
+        background: #111111;
+    }
+    .titlePage {
+        --background: #222428 !important;
+    }
+
+    ion-item {
+        --background: #201f1f !important;
+    }
 }

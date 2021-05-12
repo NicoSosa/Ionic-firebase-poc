@@ -11,6 +11,8 @@ import { StoreViewModel } from '../../../../models/stores/storeView.model';
 import { ToastsService } from '../../../../services/userMsgs/toasts.service';
 import { AlertsService } from '../../../../services/userMsgs/alerts.service';
 import { FormStyle } from '../../../../infrastructure/enum/formStyle.enum';
+import { InventoryFormResult } from '../../../../models/inventories/inventoryFormResult.model';
+import { InventoryDailyData } from 'src/app/models/inventories/inventoryDailyData.model';
 
 const INVENTORY_LS ='dailyInventoryLocalStorage'
 @Component({
@@ -43,7 +45,7 @@ export class InventoryDailyFormPage implements OnInit {
 
   ngOnInit() {
     this.alertsService.presentLoading().then();
-    this.cacheInventory = this.getLocalStorageInventory();
+    this.getLocalStorageInventory();
     this.generateInventoryForm();
     this.getInventoryStruct();
     this.getStore();
@@ -58,7 +60,6 @@ export class InventoryDailyFormPage implements OnInit {
         this.slidesButtonStatus[1] = { active: true, text: struct.pages[1].name, lastPage: false}
       struct.pages.forEach( (page, pageIdx) => this.pushPageInv(page, pageIdx) )
       this.pushFinalPage();
-      this.alertsService.dismissLoading();
     });
   }
 
@@ -81,10 +82,11 @@ export class InventoryDailyFormPage implements OnInit {
 
   //#region - Forms Logic
   private generateInventoryForm(): void {
+    let createdDate = this.getCreatedDate();
     this.inventoryForm = this.formBuilder.group({
       store: '',
       pages: this.formBuilder.array([]),
-      createdDate: '',
+      createdDate,
     });
   }
 
@@ -106,10 +108,12 @@ export class InventoryDailyFormPage implements OnInit {
   }
 
   private pushPageInv(pageInventory: PageInventory, pageIdx: number): void {
+    let itsOther = pageInventory.itsOther ? pageInventory.itsOther : false;
     this.pagesInv.push(
       this.formBuilder.group({
         name: pageInventory.name,
         categories: this.formBuilder.array([]),
+        itsOther,
       })
     );
   }
@@ -127,13 +131,73 @@ export class InventoryDailyFormPage implements OnInit {
 
   private saveInventoryProcess(): void {
     this.alertsService.presentLoading().then();
-    this.storeInv.setValue(this.selectedStore.nameAbbreviation);
-    this.dbRequestsService.setNewDailyInventory(this.inventoryForm.value).then( resp => {
+    
+    const dailyData = this.formatingFormResults();
+    this.dbRequestsService.setNewDailyInventory(dailyData).then( resp => {
       this.deleteProgressProcess();
       this.router.navigateByUrl(this.urlBack);
       this.toastsService.savedItemToast(this.savedMsg);
     }).catch( err =>  this.toastsService.errorToast(err))
-      .finally( () => this.alertsService.dismissLoading() );
+      .finally( () => this.closeLoading() );
+  }
+
+  private formatingFormResults() {
+    const formResults: InventoryFormResult = this.inventoryForm.value;
+    let dailyData: InventoryDailyData = {
+      createdUser: '',
+      closedDate: null,
+      store: formResults.store,
+      createdDate: formResults.createdDate,
+      observation: '',
+      categories: [],
+      resumedCategories: [],
+    };
+
+    formResults.pages.forEach( (page, idxPage) => {
+      if (formResults.pages.length -1 === idxPage) {
+        dailyData.observation = page.observation;
+      } else {
+        if (!page.itsOther) {
+          const catPoc = page.categories.map( (cat) => {
+            return {
+              category: cat.category,
+              items: cat.items
+            }
+          }); 
+          page.categories.map( (cat) => {
+            let resumedData = {
+              category: cat.category,
+              items: cat.items.filter( item => item.isNeeded)
+            }
+            if (resumedData.items.length > 0) {
+              dailyData.resumedCategories.push({...resumedData});
+            };
+          }); 
+          dailyData.categories.push(...catPoc)
+        } else {
+          let catPoc = {
+            category: 'Other Items',
+            items: [],
+          }
+          let itemList = [];
+          page.categories.forEach( (cat) => {
+            if( cat.items.length > 0){
+              cat.items.forEach( item => {
+                if (item.isNeeded){
+                  itemList.push({...item, category: cat.category});
+                }
+              });
+            }
+          });
+          catPoc.items = itemList;
+          if( catPoc.items.length > 0) {
+            dailyData.categories.push(catPoc);
+            dailyData.resumedCategories.push(catPoc);
+          }
+        }
+      }
+    });
+    return dailyData;
   }
 
   public deleteProgress(): void {
@@ -156,30 +220,11 @@ export class InventoryDailyFormPage implements OnInit {
       }
       try {
         pages.controls.forEach( category => {
-          let style = category.get('formStyle').value;
           const items = category.get('items') as FormArray;
           if(!isOthr){
-            switch (style) {
-              case FormStyle.InputPlusSlider:
-                items.controls.forEach( item => {
-                  item.get('quantity').setValue(0);
-                  item.get('rangeQuantity').setValue(0);
-                })
-                break;
-              case FormStyle.OnlyInput:
-                items.controls.forEach( item => {
-                  item.get('quantity').setValue(0);
-                })
-                break;
-              case FormStyle.IsNeededInput:
-                items.controls.forEach( item => {
-                  item.get('quantity').setValue(0);
-                  item.get('isNeeded').setValue(false);
-                })
-                break;
-              default:
-                break;
-            }
+            items.controls.forEach( item => {
+              item.get('isNeeded').setValue(false);
+            })
           } else {
             items.controls.forEach( item => {
               item.get('quantity').setValue(0);
@@ -202,13 +247,21 @@ export class InventoryDailyFormPage implements OnInit {
     localStorage.setItem(INVENTORY_LS, JSON.stringify(this.inventoryForm.value))
   }
 
-  private getLocalStorageInventory(): any {
+  private getLocalStorageInventory(): void {
     const inventoryLS = JSON.parse(localStorage.getItem(INVENTORY_LS));
     let dateControl= Date.now();
     if ( inventoryLS && inventoryLS.createdDate +  1000*60*60 >= dateControl) {
-      return inventoryLS;
+      this.cacheInventory = inventoryLS;
     } else {
-      return null;
+      this.cacheInventory = null;
+    }
+  }
+
+  private getCreatedDate(): string {
+    if (this.cacheInventory){
+      return this.cacheInventory.createdDate;
+    } else {
+      return '';
     }
   }
 
@@ -256,4 +309,6 @@ export class InventoryDailyFormPage implements OnInit {
     }
   }
   //#endregion
+
+  closeLoading() { this.alertsService.dismissLoading();}
 }

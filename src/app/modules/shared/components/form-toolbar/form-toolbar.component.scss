@@ -1,0 +1,11 @@
+.clearButton {
+    --background: light;
+    --color: red;
+}
+
+@media (prefers-color-scheme: dark) {
+    .clearButton {
+        --background: #969696;
+        --color: #ff7a7a;
+    }
+}

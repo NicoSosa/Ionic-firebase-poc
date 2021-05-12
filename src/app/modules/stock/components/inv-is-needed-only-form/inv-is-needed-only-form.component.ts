@@ -1,19 +1,18 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormGroup, FormControl, FormArray, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormControl, FormArray, FormBuilder } from '@angular/forms';
 import { CategoryInventory, ItemInventory } from '../../../../models/inventories/inventoryStructure.model';
 import { AlertsService } from '../../../../services/userMsgs/alerts.service';
 
 @Component({
-  selector: 'app-inv-input-slider-form',
-  templateUrl: './inv-input-slider-form.component.html',
-  styleUrls: ['./inv-input-slider-form.component.scss'],
+  selector: 'app-inv-is-needed-only-form',
+  templateUrl: './inv-is-needed-only-form.component.html',
+  styleUrls: ['./inv-is-needed-only-form.component.scss'],
 })
-export class InvInputSliderFormComponent implements OnInit {
+export class InvIsNeededOnlyFormComponent implements OnInit {
   @Input() inventoryForm: FormGroup;
   @Input() idxPage: number;
   @Input() pageCategory: CategoryInventory;
   @Input() cacheInventory: any;
-  @Input() itsDaily: boolean;
   @Output() setLS = new EventEmitter<boolean>();
   @Output() endLoading = new EventEmitter<boolean>();
 
@@ -64,42 +63,30 @@ export class InvInputSliderFormComponent implements OnInit {
   }
 
   private pushCategoryItem(item: ItemInventory, pageIdx: number, categoryIdx: number, itemIdx: number): void {
-    let quant = 0;
-    let slidVal = item.slid;
-    if (slidVal > 6 && this.itsDaily) {slidVal = 6 };
-    if(this.cacheInventory){ quant = this.getQuantityFromCache(pageIdx, categoryIdx, itemIdx);}
+    let isNeed = false;
+    if(this.cacheInventory){ 
+      isNeed = this.getIsNeededFromCache(pageIdx, categoryIdx, itemIdx);
+    };
+
     this.categoryItems.push( this.formBuilder.group({
       id: item.id,
       name: item.name,
       showName: item.showName,
-      slid: slidVal,
-      quantity: [quant, Validators.pattern("^[0-9]*$"),],
-      rangeQuantity: quant,
+      isNeeded: isNeed,
     }));
   }
 
-
-  public inputChange(itemIdx): void {
-    const itemControl = this.categoryItems.controls[itemIdx] as FormControl;
-    const inputValue = itemControl.get('quantity').value;
-    itemControl.get('rangeQuantity').setValue(inputValue);
-
+  public changeCheckNeeded(itemIdx): void {
+    const itemControl = this.categoryItems.controls[itemIdx];
+    const isNeeded: boolean = !itemControl.get('isNeeded').value;
     this.setLocalStorageInventory();
   }
 
-  public rangeChange(itemIdx): void {
-    const itemControl = this.categoryItems.controls[itemIdx] as FormControl;
-    const rangeValue = itemControl.get('rangeQuantity').value;
-    itemControl.get('quantity').setValue(rangeValue);
-    
-    this.setLocalStorageInventory();
-  }
-
-  private setLocalStorageInventory() {
+  public setLocalStorageInventory() {
     this.setLS.emit(true);
   }
 
-  private getQuantityFromCache(pageIdx: number, categoryIdx: number, itemIdx: number) {
-    return this.cacheInventory.pages[pageIdx].categories[categoryIdx].items[itemIdx].quantity;
+  private getIsNeededFromCache(pageIdx: number, categoryIdx: number, itemIdx: number) {
+    return this.cacheInventory.pages[pageIdx].categories[categoryIdx].items[itemIdx].isNeeded;
   }
 }

@@ -37,6 +37,40 @@ ion-menu {
     --background: #f4f5f8;
 }
 
+ion-item-divider{
+    --background: #f1f0f0;
+    --color: #000000;
+}
+
+.slide-title {
+    --background: #f4f5f8;
+    height: 50px;
+    margin-top: 5px;
+    margin-bottom: 10px;
+}
+
+.othersMsg{
+    --background: #f4f5f8;
+    font-weight: 600;
+    text-align-last: center;
+    text-align: center;
+}
+
+.itemList{
+    background: #f4f5f8;
+}
+
+.itemInput{
+    border: solid 1px black;
+    border-radius: 6px;
+    text-align: center;
+}
+.finalTextArea {
+    border: solid 1px black;
+    border-radius: 6px;
+    margin: 0 20px 0 20px;
+}
+
 .one-option-alert {
     --background: #f4f5f8;
     button.cancel-button {
@@ -87,3 +121,102 @@ ion-menu {
         color:white
     }
 } 
+
+
+@media (prefers-color-scheme: dark) {    
+    ion-content {
+        --background: #111111;
+    }
+    
+    ion-toolbar {
+        --background: #222428;
+    }
+    
+    ion-menu {
+        --background: #000000;
+    }
+
+    ion-footer > ion-toolbar {
+        --background: #111113;
+    }
+    
+    ion-item-divider{
+        --background: #111111;
+        --color: #ffffff;
+    }
+
+    .slide-title {
+        --background: #222428;
+    }
+
+    .othersMsg{
+        --background: #222428;
+    }
+
+    .itemList{
+        background: #222428;
+    }
+
+    .itemInput{
+        border: solid 1px #ffffff;
+    }
+
+    .finalTextArea {
+        border: solid 1px #ffffff;
+    }
+
+    .one-option-alert {
+        --background: #222428;
+        button.cancel-button {
+            font-weight: bold;
+            color: #fa8585;
+        }
+        button.accept-button {
+            font-weight: bold;
+            color: #8f90f0;
+        }
+        button.one-option-item {
+            background-color: #201f1f;
+            font-weight: bold;
+            color:white
+        }
+    }
+
+    .warning-delete-alert {
+        --background: #222428;
+        button.cancel-button {
+            font-weight: bold;
+            color: #fa8585;
+        }
+        button.accept-button {
+            font-weight: bold;
+            color: #8f90f0;
+        }
+        button.one-option-item {
+            background-color: #201f1f;
+            font-weight: bold;
+            color:white
+        }
+    } 
+
+    .warning-save-alert {
+        --background: #222428;
+        button.cancel-button {
+            font-weight: bold;
+            color: #fa8585;
+        }
+        button.accept-button {
+            font-weight: bold;
+            color: #7de697;
+        }
+        button.one-option-item {
+            background-color: #201f1f;
+            font-weight: bold;
+            color:white
+        }
+    } 
+    
+    
+}
+
+
