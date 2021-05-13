@@ -7,7 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { ViewPageRoutingModule } from './view-routing.module';
 
 import { ViewPage } from './view.page';
-import { ViewInvListItemsComponent } from '../../stock/components/view-inv-list-items/view-inv-list-items.component';
+import { ViewListComponent } from './components/view-list/view-list.component';
 
 @NgModule({
   imports: [
@@ -16,6 +16,6 @@ import { ViewInvListItemsComponent } from '../../stock/components/view-inv-list-
     IonicModule,
     ViewPageRoutingModule
   ],
-  declarations: [ViewPage, ViewInvListItemsComponent]
+  declarations: [ViewPage, ViewListComponent]
 })
 export class ViewPageModule {}
