@@ -115,8 +115,7 @@ export class DbRequestsService {
     return ArrayObservableOfInventories.pipe( map( data => data[0]));
   }
 
-  getLastDailyInventoryByAbvName(): Observable<InventoryDailyData[]> {
-    const abvString = 'RVS'
+  getLastDailyInventoryByAbvName(abvString: string): Observable<InventoryDailyData[]> {
     if (!this.dailyInventories) {
       this.dailyInventories = this.afs.collection<any>('dailyInventory',inv => inv.orderBy('closedDate','desc').where('store','==', abvString).limit(3)).valueChanges();
     }

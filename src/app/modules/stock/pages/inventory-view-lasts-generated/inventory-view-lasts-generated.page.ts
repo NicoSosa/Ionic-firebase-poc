@@ -1,47 +1,56 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { StoreViewModel } from 'src/app/models/stores/storeView.model';
 import { DbRequestsService } from 'src/app/services/db-requests.service';
 import { AlertsService } from 'src/app/services/userMsgs/alerts.service';
-import { DAILY_INVENTORY_TITLE_NAME, STOCK_URL } from '../../constants/inventoryConstants';
+import { STOCK_URL, VIEW_TITLE_NAME } from '../../constants/inventoryConstants';
+import { first } from 'rxjs/operators';
+import { InventoryDailyData } from 'src/app/models/inventories/inventoryDailyData.model';
 @Component({
   selector: 'app-inventory-view-lasts-generated',
   templateUrl: './inventory-view-lasts-generated.page.html',
   styleUrls: ['./inventory-view-lasts-generated.page.scss'],
 })
 export class InventoryViewLastsGeneratedPage implements OnInit {
-  private invTitleName = DAILY_INVENTORY_TITLE_NAME;
   public urlBack = STOCK_URL;
 
   public tittleToolbar: string;
-  // public storeList: StoreViewModel[];
+  public inventoryList: InventoryDailyData[];
+  private typeInventory: string;
   private selectedStore: StoreViewModel;
 
-  constructor(private router: Router,
-    private actRoute: ActivatedRoute,
+  constructor(private actRoute: ActivatedRoute,
     private alertsService: AlertsService,
     private dbRequestsService: DbRequestsService) { }
 
   ngOnInit() {
     this.alertsService.presentLoading().then();
-    this.getInventories();
-    // this.getStore();
+    this.initialProcess()
   }
 
-  private getInventories(): void {}
-//   private async getStores() {
-//     await this.actRoute.params.subscribe( params => {
-//       this.storeInv.setValue(params.id);
-//     });
+  private async initialProcess() {
+    await this.getStore();
+    this.getInventories();
+  }
 
-//     this.dbRequestsService.getStores().subscribe( stores => {
-//       this.storeList = stores;
-//       const storeAbv = this.storeInv.value;
-//       this.selectedStore = this.storeList.filter( store => store.nameAbbreviation === storeAbv)[0];
-//       this.storeNameInv.setValue(this.selectedStore.name);
-//       this.invTitleName = ` ${this.selectedStore.name}: ${this.invTitleName}`;
-      
-//       this.tittleToolbar = `${this.invTitleName} - ${this.inventoryStructure? this.inventoryStructure.pages[0].name : ''}`;
-//     });
-//   }
+  private getInventories(): void {
+    const abvStore = this.selectedStore.nameAbbreviation;
+    this.dbRequestsService.getLastDailyInventoryByAbvName(abvStore).subscribe( inventoryList => {
+      this.inventoryList = inventoryList;
+      this.alertsService.dismissLoading();
+    });
+  }
+
+  private async getStore() {
+    let nameAbv;
+    await this.actRoute.params.pipe(first()).toPromise().then(params=> {
+      nameAbv = params.id;
+      this.typeInventory = params.invType;
+    });
+
+    await this.dbRequestsService.getStores().pipe(first()).toPromise().then( stores =>{
+      this.selectedStore = stores.filter( store => store.nameAbbreviation === nameAbv)[0];
+    });
+    this.tittleToolbar = `${VIEW_TITLE_NAME}: ${this.selectedStore.name} - ${this.typeInventory}`;
+  }
 }

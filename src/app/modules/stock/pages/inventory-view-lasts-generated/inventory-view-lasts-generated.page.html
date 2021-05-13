@@ -1,9 +1,7 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>inventory-view-lasts-generated</ion-title>
-  </ion-toolbar>
-</ion-header>
+<app-toolbar [tittleToolbar]="tittleToolbar" [urlBack]="urlBack" [smallTitle]="true"></app-toolbar>
 
 <ion-content>
-
+  <span *ngFor="let inventory of inventoryList" >
+    <app-view-inv-list-items [inventory]="inventory" ></app-view-inv-list-items>
+  </span>
 </ion-content>

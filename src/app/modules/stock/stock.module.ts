@@ -15,6 +15,7 @@ import { InvIsNeededInputFormComponent } from './components/inv-is-needed-input-
 import { InvIsNeededHideFormComponent } from './components/inv-is-needed-hide-form/inv-is-needed-hide-form.component';
 import { InvIsNeededOnlyFormComponent } from './components/inv-is-needed-only-form/inv-is-needed-only-form.component';
 import { InventoryViewLastsGeneratedPage } from './pages/inventory-view-lasts-generated/inventory-view-lasts-generated.page';
+import { ViewInvListItemsComponent } from './components/view-inv-list-items/view-inv-list-items.component';
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import { InventoryViewLastsGeneratedPage } from './pages/inventory-view-lasts-ge
     InvIsNeededInputFormComponent,
     InvIsNeededHideFormComponent,
     InvIsNeededOnlyFormComponent,
+    ViewInvListItemsComponent,
   ],
   imports: [
     CommonModule,

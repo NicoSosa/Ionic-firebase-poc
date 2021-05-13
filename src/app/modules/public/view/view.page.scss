@@ -1,0 +1,11 @@
+.inventory-data {
+    margin: 10px;
+    padding-bottom: 5px;
+    background-color: #f4f5f8;
+}
+
+@media (prefers-color-scheme: dark) {    
+    .inventory-data {
+        background-color: #222428;
+    }
+}

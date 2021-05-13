@@ -9,6 +9,7 @@ import { Router } from '@angular/router'
 export class ToolbarComponent implements OnInit {
   @Input() tittleToolbar: string;
   @Input() urlBack: string;
+  @Input() smallTitle: boolean;
 
   constructor(private router: Router) { }
 
