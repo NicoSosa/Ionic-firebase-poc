@@ -61,7 +61,6 @@ export class InvIsNeededHideFormComponent implements OnInit {
   }
 
   private pushCategoryItem(item: ItemInventory): void {
-    let quant = 0;
     let isNeed = false;
 
     this.categoryItems.push( this.formBuilder.group({
@@ -89,20 +88,12 @@ export class InvIsNeededHideFormComponent implements OnInit {
     this.setLS.emit(true);
   }
 
-  private getQuantityFromCache(pageIdx: number, categoryIdx: number, itemIdx: number) {
-    return this.cacheInventory.pages[pageIdx].categories[categoryIdx].items[itemIdx].quantity;
-  }
-
-  private getIsNeededFromCache(pageIdx: number, categoryIdx: number, itemIdx: number) {
-    return this.cacheInventory.pages[pageIdx].categories[categoryIdx].items[itemIdx].isNeeded;
-  } 
-
   toggleHide(){
     this.isHide = !this.isHide
     if(this.isHide){
       this.categoryItems.clear();
     } else {
-      this.pageCategory.items.forEach( (item, itemIdx) => this.pushCategoryItem(item));
+      this.pageCategory.items.forEach( (item) => this.pushCategoryItem(item));
     }
     this.setLocalStorageInventory();
   }

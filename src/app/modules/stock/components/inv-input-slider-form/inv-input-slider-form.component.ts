@@ -1,7 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormGroup, FormControl, FormArray, FormBuilder, Validators } from '@angular/forms';
 import { CategoryInventory, ItemInventory } from '../../../../models/inventories/inventoryStructure.model';
-import { AlertsService } from '../../../../services/userMsgs/alerts.service';
 
 @Component({
   selector: 'app-inv-input-slider-form',
@@ -26,9 +25,13 @@ export class InvInputSliderFormComponent implements OnInit {
   }
 
   private generateCategoryForm(): void {
+    let nameCategory = this.pageCategory.category;
+    if (this.itsDaily) {
+      nameCategory = `${this.pageCategory.category} ready`;
+    }
     this.categoryForm.push(
       this.formBuilder.group({
-        category: this.pageCategory.category,
+        category: nameCategory,
         unit: this.pageCategory.unit,
         formStyle: this.pageCategory.formStyle,
         items: this.formBuilder.array([]),

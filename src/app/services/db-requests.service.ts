@@ -128,7 +128,6 @@ export class DbRequestsService {
 
   async setNewDailyInventory(inventory: InventoryDailyData ) {
     inventory.createdUser = this.authService.getAuthEmail();
-    inventory.createdDate = Date.now();
     inventory.closedDate = new Date();
     return this.dailyInventoryCollection.add(inventory);
   }

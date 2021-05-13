@@ -1,11 +1,11 @@
 export interface InventoryDailyData {
     createdUser: string;
     closedDate: Date;
-    createdDate: number;
-    store: string;  
+    store: string; 
+    storeName: string; 
     observation: string;
-    categories: CategoryDailyData[];
-    resumedCategories: CategoryDailyData[];
+    isNeededcategories: CategoryDailyData[];
+    isProducedCategories: CategoryDailyData[];
 }
 
 interface CategoryDailyData {
@@ -19,5 +19,4 @@ interface ItemInventoryDailyData {
     showName: string;
     isNeeded?: boolean;
     quantity?: number;
-    category?: string;
 }

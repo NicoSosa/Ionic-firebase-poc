@@ -3,6 +3,7 @@ import { FormStyle } from '../../infrastructure/enum/formStyle.enum';
 export interface InventoryFormResult {
     createdDate: number;
     store: string;  
+    storeName: string;
     pages: PageInventoryFormResult[];
 }
 

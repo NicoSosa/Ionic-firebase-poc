@@ -58,7 +58,7 @@ export class InventoryDailyFormPage implements OnInit {
       this.tittleToolbar = `${this.invTitleName} - ${struct.pages[0].name}`;
       this.slidesButtonStatus[0] = { active: false, text: '', lastPage: false }
         this.slidesButtonStatus[1] = { active: true, text: struct.pages[1].name, lastPage: false}
-      struct.pages.forEach( (page, pageIdx) => this.pushPageInv(page, pageIdx) )
+      struct.pages.forEach( (page) => this.pushPageInv(page) )
       this.pushFinalPage();
     });
   }
@@ -72,6 +72,7 @@ export class InventoryDailyFormPage implements OnInit {
       this.storeList = stores;
       const storeAbv = this.storeInv.value;
       this.selectedStore = this.storeList.filter( store => store.nameAbbreviation === storeAbv)[0];
+      this.storeNameInv.setValue(this.selectedStore.name);
       this.invTitleName = ` ${this.selectedStore.name}: ${this.invTitleName}`;
       
       this.tittleToolbar = `${this.invTitleName} - ${this.inventoryStructure? this.inventoryStructure.pages[0].name : ''}`;
@@ -85,6 +86,7 @@ export class InventoryDailyFormPage implements OnInit {
     let createdDate = this.getCreatedDate();
     this.inventoryForm = this.formBuilder.group({
       store: '',
+      storeName: '',
       pages: this.formBuilder.array([]),
       createdDate,
     });
@@ -97,6 +99,9 @@ export class InventoryDailyFormPage implements OnInit {
   get storeInv(): FormControl {
     return this.inventoryForm.get('store') as FormControl;
   }
+  get storeNameInv(): FormControl {
+    return this.inventoryForm.get('storeName') as FormControl;
+  }
 
   private pushFinalPage(): void {
     this.pagesInv.push(
@@ -107,7 +112,7 @@ export class InventoryDailyFormPage implements OnInit {
     );
   }
 
-  private pushPageInv(pageInventory: PageInventory, pageIdx: number): void {
+  private pushPageInv(pageInventory: PageInventory): void {
     let itsOther = pageInventory.itsOther ? pageInventory.itsOther : false;
     this.pagesInv.push(
       this.formBuilder.group({
@@ -147,53 +152,51 @@ export class InventoryDailyFormPage implements OnInit {
       createdUser: '',
       closedDate: null,
       store: formResults.store,
-      createdDate: formResults.createdDate,
+      storeName: formResults.storeName,
       observation: '',
-      categories: [],
-      resumedCategories: [],
+      isNeededcategories: [],
+      isProducedCategories: [],
     };
+
+    let othersCategory = {
+      category: 'Other Items',
+      items: [],
+    }
 
     formResults.pages.forEach( (page, idxPage) => {
       if (formResults.pages.length -1 === idxPage) {
         dailyData.observation = page.observation;
       } else {
-        if (!page.itsOther) {
-          const catPoc = page.categories.map( (cat) => {
-            return {
-              category: cat.category,
-              items: cat.items
-            }
-          }); 
-          page.categories.map( (cat) => {
-            let resumedData = {
-              category: cat.category,
-              items: cat.items.filter( item => item.isNeeded || item.quantity )
-            }
-            if (resumedData.items.length > 0) {
-              dailyData.resumedCategories.push({...resumedData});
-            };
-          }); 
-          dailyData.categories.push(...catPoc)
-        } else {
-          let catPoc = {
-            category: 'Other Items',
-            items: [],
-          }
-          let itemList = [];
-          page.categories.forEach( (cat) => {
-            if( cat.items.length > 0){
-              cat.items.forEach( item => {
-                if (item.isNeeded){
-                  itemList.push({...item, category: cat.category});
-                }
+        page.categories.forEach( category => {
+          switch (category.formStyle) {
+            case FormStyle.IsNeededOnly:
+              dailyData.isNeededcategories.push({
+                category: category.category,
+                items: category.items
               });
-            }
-          });
-          catPoc.items = itemList;
-          if( catPoc.items.length > 0) {
-            dailyData.categories.push(catPoc);
-            dailyData.resumedCategories.push(catPoc);
+              break;
+              case FormStyle.InputPlusSlider:
+                dailyData.isProducedCategories.push({
+                  category: category.category,
+                  items: category.items.map(item => { return {
+                    id: item.id,
+                    name: item.name,
+                    quantity: item.quantity,
+                    showName: item.showName,
+                  }})
+                });
+              break;
+              case FormStyle.IsNeededAndHide:
+                category.items.forEach( item => {
+                  if (item.isNeeded){
+                    othersCategory.items.push({...item, category: category.category});
+                  }
+                });
+                break;
           }
+        });
+        if (formResults.pages.length -2 === idxPage && othersCategory.items.length > 0) {
+          dailyData.isNeededcategories.push(othersCategory);
         }
       }
     });
@@ -206,44 +209,40 @@ export class InventoryDailyFormPage implements OnInit {
       alert.onDidDismiss().then(value => {
         if( value.role === 'ok') {
           this.deleteProgressProcess();
-          this.slides.slideTo(0).then(() => {
-            this.slides.getActiveIndex().then( activeIdx => {
-              this.updateSlideButton(activeIdx);
-            })
-          });
         }
       })
     })
   } 
   
   private deleteProgressProcess(): void {
-    this.pagesInv.controls.forEach( (page, idxPage) => {
+    this.slides.slideTo(0).then(() => {
+      this.slides.getActiveIndex().then( activeIdx => {
+        this.updateSlideButton(activeIdx);
+      })
+    });
+    this.pagesInv.controls.forEach( (page) => {
       const pages = page.get('categories') as FormArray;
-      let isOthr = false;
-      let name = '';
-      if (this.inventoryStructure.pages[idxPage]){
-        isOthr =  this.inventoryStructure.pages[idxPage].itsOther;
-      }
       try {
         pages.controls.forEach( category => {
           const items = category.get('items') as FormArray;
-          const name = category.get('category') as FormControl;
-          if(!isOthr){
-            if (name){ if (name.value === 'Fillings') {  
+          const formStyle = category.get('formStyle').value;
+          switch (formStyle) {
+            case FormStyle.InputPlusSlider:
               items.controls.forEach( item => {
                 item.get('rangeQuantity').setValue(0);
                 item.get('quantity').setValue(0);
               })
-            }}
-            items.controls.forEach( item => {
-              item.get('isNeeded').setValue(false);
-            })
-          } else {
-            console.log(isOthr);
-            items.controls.forEach( item => {
-              item.get('isNeeded').setValue(false);
-
-            })
+              break;
+              case FormStyle.IsNeededOnly:
+                items.controls.forEach( item => {
+                  item.get('isNeeded').setValue(false);
+                })
+              break;
+              case FormStyle.IsNeededAndHide:
+                items.controls.forEach( item => {
+                  item.get('isNeeded').setValue(false);
+                })
+              break;
           }
         })
       } catch (error) {
