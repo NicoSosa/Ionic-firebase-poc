@@ -20,7 +20,7 @@ export class DbRequestsService {
   private weeklyInventoryCollection: AngularFirestoreCollection<any>;
   private weeklyInventories: Observable<any>;
   private dailyInventoryCollection: AngularFirestoreCollection<any>;
-  private dailyInventories: Observable<any>;
+  private dailyInventories: Observable<InventoryDailyData[]>;
   private weeklyInventoryStructureCollection: AngularFirestoreCollection<DBInventoryStructure>;
   private weeklyInventoryStructure: Observable<DBInventoryStructure[]>;
   private dailyInventoryStructureCollection: AngularFirestoreCollection<DBInventoryStructure>;
@@ -54,8 +54,10 @@ export class DbRequestsService {
   }
 
   private setCollections(): void {
-    this.weeklyInventoryCollection = this.afs.collection<any>('weeklyInventory',inv => inv.orderBy('createdDate','desc').orderBy('store','desc').limit(3));
-    this.dailyInventoryCollection = this.afs.collection<any>('dailyInventory',inv => inv.orderBy('createdDate','desc').orderBy('store','desc').limit(1));
+    this.weeklyInventoryCollection = this.afs.collection<any>('weeklyInventory',inv => inv.orderBy('createdDate','desc').limit(1));
+    this.dailyInventoryCollection = this.afs.collection<any>('dailyInventory',inv => inv.orderBy('createdDate','desc').limit(1));
+
+
     this.weeklyInventoryStructureCollection = this.afs.collection<any>('weeklyInventoryStructure', is => is.orderBy('dateUpdated','desc').limit(1))
     this.dailyInventoryStructureCollection = this.afs.collection<any>('dailyInventoryStructure', is => is.orderBy('dateUpdated','desc').limit(1))
   }
@@ -115,8 +117,12 @@ export class DbRequestsService {
     return ArrayObservableOfInventories.pipe( map( data => data[0]));
   }
 
-  getLastDailyInventoryByAbvName(): Observable<InventoryDailyData> {
-    return this.dailyInventoryCollection.valueChanges().pipe( map (data => data[0]));
+  getLastDailyInventoryByAbvName(): Observable<InventoryDailyData[]> {
+    const abvString = 'RVS'
+    if (!this.dailyInventories) {
+      this.dailyInventories = this.afs.collection<any>('weeklyInventory',inv => inv.orderBy('createdDate','desc').where('store','==', abvString).limit(3)).valueChanges();
+    }
+    return this.dailyInventories;
   }
 
   async setNewWeeklyInventory(inventory: InventoryViewModel ) {

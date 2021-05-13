@@ -52,7 +52,8 @@ export class InventoryAdmPage implements OnInit {
   private changeSelectedInventory(abv: string): void{
     if( abv === 'RVS') {
       this.dbRequestsService.getLastDailyInventoryByAbvName().subscribe( inv => {
-        this.dailyInventory = inv? inv : null;
+        console.log(inv);
+        this.dailyInventory = inv? inv[0] : null;
       });
     }else {
       this.dailyInventory = null;
