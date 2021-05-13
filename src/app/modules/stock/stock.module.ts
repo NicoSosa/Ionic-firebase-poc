@@ -14,17 +14,19 @@ import { InvOnlyInputFormComponent } from './components/inv-only-input-form/inv-
 import { InvIsNeededInputFormComponent } from './components/inv-is-needed-input-form/inv-is-needed-input-form.component';
 import { InvIsNeededHideFormComponent } from './components/inv-is-needed-hide-form/inv-is-needed-hide-form.component';
 import { InvIsNeededOnlyFormComponent } from './components/inv-is-needed-only-form/inv-is-needed-only-form.component';
+import { InventoryViewLastsGeneratedPage } from './pages/inventory-view-lasts-generated/inventory-view-lasts-generated.page';
 
 @NgModule({
   declarations: [
     InventoryAdmPage,
     InventoryDailyFormPage,
     InventoryWeeklyFormPage,
+    InventoryViewLastsGeneratedPage,
     InvInputSliderFormComponent,
     InvOnlyInputFormComponent,
     InvIsNeededInputFormComponent,
     InvIsNeededHideFormComponent,
-    InvIsNeededOnlyFormComponent
+    InvIsNeededOnlyFormComponent,
   ],
   imports: [
     CommonModule,
@@ -37,7 +39,8 @@ import { InvIsNeededOnlyFormComponent } from './components/inv-is-needed-only-fo
   ],
   exports: [
     InventoryAdmPage,
-    InventoryDailyFormPage
+    InventoryDailyFormPage,
+    InventoryViewLastsGeneratedPage
   ]
 })
 export class StockModule { }

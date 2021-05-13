@@ -2,6 +2,7 @@ import { FormType, FormTypeDescript } from '../../../infrastructure/enum/formTyp
 
 export const WEEK_INVENTORY_TITLE_NAME: string = 'Week Inventory'
 export const DAILY_INVENTORY_TITLE_NAME: string = 'Daily Inventory'
+export const VIEW_TITLE_NAME: string = 'View: '
 export const STOCK_URL = 'stock';
 export const INVENTORY_SAVE_MSG = 'The inventory has been saved';
 

@@ -216,10 +216,10 @@ export class InventoryDailyFormPage implements OnInit {
   
   private deleteProgressProcess(): void {
     this.slides.slideTo(0).then(() => {
-      this.slides.getActiveIndex().then( activeIdx => {
-        this.updateSlideButton(activeIdx);
-      })
-    });
+            this.slides.getActiveIndex().then( activeIdx => {
+              this.updateSlideButton(activeIdx);
+            })
+          });
     this.pagesInv.controls.forEach( (page) => {
       const pages = page.get('categories') as FormArray;
       try {

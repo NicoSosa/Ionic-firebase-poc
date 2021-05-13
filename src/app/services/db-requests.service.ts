@@ -55,9 +55,7 @@ export class DbRequestsService {
 
   private setCollections(): void {
     this.weeklyInventoryCollection = this.afs.collection<any>('weeklyInventory',inv => inv.orderBy('createdDate','desc').limit(1));
-    this.dailyInventoryCollection = this.afs.collection<any>('dailyInventory',inv => inv.orderBy('createdDate','desc').limit(1));
-
-
+    this.dailyInventoryCollection = this.afs.collection<any>('dailyInventory',inv => inv.orderBy('closedDate','desc').limit(1));
     this.weeklyInventoryStructureCollection = this.afs.collection<any>('weeklyInventoryStructure', is => is.orderBy('dateUpdated','desc').limit(1))
     this.dailyInventoryStructureCollection = this.afs.collection<any>('dailyInventoryStructure', is => is.orderBy('dateUpdated','desc').limit(1))
   }
@@ -120,7 +118,7 @@ export class DbRequestsService {
   getLastDailyInventoryByAbvName(): Observable<InventoryDailyData[]> {
     const abvString = 'RVS'
     if (!this.dailyInventories) {
-      this.dailyInventories = this.afs.collection<any>('weeklyInventory',inv => inv.orderBy('createdDate','desc').where('store','==', abvString).limit(3)).valueChanges();
+      this.dailyInventories = this.afs.collection<any>('dailyInventory',inv => inv.orderBy('closedDate','desc').where('store','==', abvString).limit(3)).valueChanges();
     }
     return this.dailyInventories;
   }

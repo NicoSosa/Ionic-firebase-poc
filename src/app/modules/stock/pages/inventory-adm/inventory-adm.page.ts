@@ -21,6 +21,7 @@ export class InventoryAdmPage implements OnInit {
   private selectedStore: StoreViewModel;
   public weeklyInventory: InventoryViewModel;
   public dailyInventory: InventoryDailyData;
+  public dailyDate: number;
 
   chartOpen: boolean[] = [true,true,true];  
 
@@ -52,8 +53,11 @@ export class InventoryAdmPage implements OnInit {
   private changeSelectedInventory(abv: string): void{
     if( abv === 'RVS') {
       this.dbRequestsService.getLastDailyInventoryByAbvName().subscribe( inv => {
-        console.log(inv);
-        this.dailyInventory = inv? inv[0] : null;
+        if (inv) {
+          this.dailyInventory = inv[0] 
+          let date = inv[0].closedDate;
+          this.dailyDate = Object(date).seconds*1000;
+        }
       });
     }else {
       this.dailyInventory = null;
@@ -106,4 +110,8 @@ export class InventoryAdmPage implements OnInit {
     return false;
   }
 
+  public goToUrl(type: string, id: string):void {
+    this.router.navigateByUrl(`stock/view/${type}/${id}`)
+
+  }
 }

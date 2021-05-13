@@ -4,6 +4,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { InventoryAdmPage } from './pages/inventory-adm/inventory-adm.page';
 import { InventoryDailyFormPage } from './pages/inventory-daily-form/inventory-daily-form.page';
 import { InventoryWeeklyFormPage } from './pages/inventory-weekly-form/inventory-weekly-form.page';
+import { InventoryViewLastsGeneratedPage } from './pages/inventory-view-lasts-generated/inventory-view-lasts-generated.page';
 
 const routes: Routes = [
   {
@@ -17,8 +18,11 @@ const routes: Routes = [
   {
     path: 'inventory-form/:id',
     component: InventoryWeeklyFormPage
-  },
- 
+  }, 
+  {
+    path: 'view/:invType/:id',
+    component: InventoryViewLastsGeneratedPage
+  }, 
 
 ];
 
