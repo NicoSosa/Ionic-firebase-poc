@@ -6,38 +6,59 @@
     <span [formGroupName]="idxPage">
       <span formArrayName="categories">
         <span [formGroupName]="categoryIdx" *ngIf="categoryIdx >= 0">
-            
           <ion-item-divider sticky="true">
-            <ion-col class="categoryTitle" size="3">
-              <ion-label>{{ categoryName.value }}</ion-label>
-            </ion-col>
-            <ion-col size="3">{{ categoryUnit.value }}</ion-col>
-            <ion-col size="6">Quantity</ion-col>
+              <ion-col class="categoryName" size="12" size-sm="12" size-md="12" size-lg="6" size-xl="6">
+                  <ion-row>
+                    <ion-col size="3">
+                      <ion-label>{{ categoryName.value }}</ion-label>
+                    </ion-col>
+                    <ion-col size="3">{{ categoryUnit.value }}</ion-col>
+                    <ion-col size="6">Quantity</ion-col>
+                  </ion-row> 
+              </ion-col>
+              <ion-col class="categoryTitle categoryName" size="12" size-sm="12" size-md="12" size-lg="6" size-xl="6">
+                  <ion-row>
+                    <ion-col size="3">
+                      <ion-label>{{ categoryName.value }}</ion-label>
+                    </ion-col>
+                    <ion-col size="3">{{ categoryUnit.value }}</ion-col>
+                    <ion-col size="6">Quantity</ion-col>
+                  </ion-row> 
+              </ion-col>
           </ion-item-divider>
           <hr>
-          <div formArrayName="items">
-            <ion-item color="light" *ngFor="let item of categoryItems.controls; let itemIdx = index" [formGroupName]="itemIdx">
-              <ion-col size="3">
-                {{item.value.showName}}:
-              </ion-col>
-              <ion-col size="2">
-                <ion-item class="itemInput">
-                  <ion-input clearOnEdit="true" type="number" inputmode="decimal" formControlName="quantity" (ionChange)="inputChange(itemIdx)"></ion-input>
-                  <!-- <ion-input clearOnEdit="true" type="number" enterkeyhint="next" inputmode="decimal" formControlName="quantity" (ionChange)="inputChange(itemIdx)"></ion-input> -->
-                </ion-item>                      
-              </ion-col>
-              <ion-col class="ion-align-self-end"  size="7">
-                <ion-range color="primary" min="0" [max]="item.value.slid" step="1" snaps="true" formControlName="rangeQuantity" (ionChange)="rangeChange(itemIdx)" *ngIf="item.value.slid >= 9">
-                  <ion-label slot="start">0</ion-label>
-                  <ion-label slot="end">{{item.value.slid}}</ion-label>
-                </ion-range>
-                <ion-range color="primary" min="0" [max]="item.value.slid" step="0.5" snaps="true" formControlName="rangeQuantity" (ionChange)="rangeChange(itemIdx)" *ngIf="item.value.slid < 9">
-                  <ion-label slot="start">0</ion-label>
-                  <ion-label slot="end">{{item.value.slid}}</ion-label>
-                </ion-range>
-              </ion-col>
-            </ion-item>
-          </div>
+          <ion-row formArrayName="items"> 
+            <ion-col size="12" size-sm="12" size-md="12" size-lg="6" size-xl="6" color="light" *ngFor="let item of categoryItems.controls; let itemIdx = index" [formGroupName]="itemIdx">
+              <ion-row class="ion-align-items-center ion-no-padding">
+                <ion-col size="3" >
+                  {{item.value.showName}}:
+                </ion-col>
+                <ion-col size="2">
+                  <ion-item class="itemInput">
+                    <ion-input clearOnEdit="true" type="number" inputmode="decimal" formControlName="quantity" (ionChange)="inputChange(itemIdx)" (ionBlur)="controlInput(itemIdx)"></ion-input>
+                    <!-- <ion-input clearOnEdit="true" type="number" enterkeyhint="next" inputmode="decimal" formControlName="quantity" (ionChange)="inputChange(itemIdx)"></ion-input> -->
+                  </ion-item>                      
+                </ion-col>
+
+                <ion-col size="1">
+                  <ion-chip color="dark" outline="false" (click)="minusQuant(itemIdx)">
+                    <ion-label>-</ion-label>
+                  </ion-chip>
+                </ion-col>
+                <ion-col class="ion-align-self-end"  size="5">
+                  <ion-range  min="0" [max]="item.value.slid" [step]="rangeStep" snaps="true" formControlName="rangeQuantity" debounce="100" (ionChange)="rangeChange(itemIdx)">
+                    <ion-label slot="start">0</ion-label>
+                    <ion-label slot="end">{{item.value.slid}}</ion-label>
+                  </ion-range>
+                </ion-col>
+                <ion-col size="1">
+                  <ion-chip color="dark" outline="false" (click)="plusQuant(itemIdx)">
+                    <ion-label>+</ion-label>
+                  </ion-chip>
+                </ion-col>
+              </ion-row>
+            </ion-col>
+          </ion-row>
         </span>
       </span>
     </span>

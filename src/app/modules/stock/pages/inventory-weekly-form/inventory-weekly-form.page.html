@@ -12,10 +12,6 @@
         <ion-toolbar class="slide-title">
           <ion-title>{{page.value.name | titlecase}}</ion-title>
         </ion-toolbar>
-        <ion-card *ngIf="inventoryStructure.pages[idxPage].categories.length == 0" >
-          no hay info
-        </ion-card>
-
         <ion-list class="itemList" formArrayName="categories">
           
           <div *ngFor="let pageCategory of inventoryStructure.pages[idxPage].categories; let j = index" >

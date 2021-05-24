@@ -11,8 +11,18 @@
         </ion-segment-button>
     </ion-segment>
 
-    <br>
-    
+    <ion-row>
+        <ion-col size="6">
+            <ion-button class="newInventoryButton" expand="full" shape="round" (click)="goToStockForm(formType.Weekly)">
+                New Weekly Inventory
+            </ion-button>
+        </ion-col>
+        <ion-col size="6">
+            <ion-button class="newInventoryButton" expand="full" shape="round" *ngIf="dailyInventory" (click)="goToStockForm(formType.Daily)">
+                New Daily Inventory
+            </ion-button>
+        </ion-col> 
+    </ion-row>    
     <!-- <ion-card button *ngIf="weeklyInventory" (click)="goToUrl('weekly',weeklyInventory.store)"> -->
     <ion-card button *ngIf="weeklyInventory">
         <ion-item color="light">
@@ -45,9 +55,9 @@
         </ion-card-content>
     </ion-card>
 
-    <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <!-- <ion-fab vertical="bottom" horizontal="end" slot="fixed">
         <ion-fab-button color="success" (click)="goToStockForm()">
             <ion-icon name="add-outline" size="large"></ion-icon>
         </ion-fab-button>
-    </ion-fab>
+    </ion-fab> -->
 </ion-content>

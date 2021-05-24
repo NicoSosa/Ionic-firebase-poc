@@ -15,6 +15,7 @@ export class InvInputSliderFormComponent implements OnInit {
   @Input() itsDaily: boolean;
   @Output() setLS = new EventEmitter<boolean>();
   @Output() endLoading = new EventEmitter<boolean>();
+  rangeStep = 0.5;
 
   public categoryIdx = -1;
 
@@ -76,7 +77,7 @@ export class InvInputSliderFormComponent implements OnInit {
       name: item.name,
       showName: item.showName,
       slid: slidVal,
-      quantity: [quant, Validators.pattern("^[0-9]*$"),],
+      quantity: quant,
       rangeQuantity: quant,
     }));
   }
@@ -84,8 +85,25 @@ export class InvInputSliderFormComponent implements OnInit {
 
   public inputChange(itemIdx): void {
     const itemControl = this.categoryItems.controls[itemIdx] as FormControl;
-    const inputValue = itemControl.get('quantity').value;
+    const inputValue = itemControl.get('quantity').value || 0;
+    
     itemControl.get('rangeQuantity').setValue(inputValue);
+    itemControl.get('quantity').setValue(inputValue);
+
+    this.setLocalStorageInventory();
+  }
+
+  controlInput(itemIdx) {
+    const itemControl = this.categoryItems.controls[itemIdx] as FormControl;
+    let inputValue = itemControl.get('quantity').value || 0;
+
+    const decimalPart = inputValue % 1;
+    if (decimalPart !== 0.5 && decimalPart !== 0) {
+      inputValue = Math.round(inputValue);
+    }
+    
+    itemControl.get('rangeQuantity').setValue(inputValue);
+    itemControl.get('quantity').setValue(inputValue);
 
     this.setLocalStorageInventory();
   }
@@ -100,6 +118,27 @@ export class InvInputSliderFormComponent implements OnInit {
 
   private setLocalStorageInventory() {
     this.setLS.emit(true);
+  }
+
+  minusQuant(itemIdx) {
+    const itemControl = this.categoryItems.controls[itemIdx] as FormControl;
+    const inputValue = itemControl.get('quantity').value;
+    if(inputValue > 0) {
+      itemControl.get('rangeQuantity').setValue(inputValue - this.rangeStep);
+      itemControl.get('quantity').setValue(inputValue - this.rangeStep);
+      this.setLocalStorageInventory();
+    }
+  }
+
+  plusQuant(itemIdx) {
+    const itemControl = this.categoryItems.controls[itemIdx] as FormControl;
+    const inputValue = itemControl.get('quantity').value;
+    const slid = itemControl.get('slid').value;
+    if(inputValue < slid) {
+      itemControl.get('rangeQuantity').setValue(inputValue + this.rangeStep);
+      itemControl.get('quantity').setValue(inputValue + this.rangeStep);
+      this.setLocalStorageInventory();
+    }
   }
 
   private getQuantityFromCache(pageIdx: number, categoryIdx: number, itemIdx: number) {

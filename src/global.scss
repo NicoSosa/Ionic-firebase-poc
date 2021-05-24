@@ -61,12 +61,12 @@ ion-item-divider{
 }
 
 .itemInput{
-    border: solid 1px black;
+    border: solid 1px #ccc9c9;
     border-radius: 6px;
     text-align: center;
 }
 .finalTextArea {
-    border: solid 1px black;
+    border: solid 1px #ccc9c9;
     border-radius: 6px;
     margin: 0 20px 0 20px;
 }
@@ -155,14 +155,6 @@ ion-item-divider{
 
     .itemList{
         background: #222428;
-    }
-
-    .itemInput{
-        border: solid 1px #ffffff;
-    }
-
-    .finalTextArea {
-        border: solid 1px #ffffff;
     }
 
     .one-option-alert {

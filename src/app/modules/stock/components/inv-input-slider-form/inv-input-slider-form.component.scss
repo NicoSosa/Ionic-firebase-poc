@@ -1,20 +1,28 @@
+.categoryName{
+  text-align: left; 
+}
 
-    .categoryTitle{
-     text-align: left; 
-    }
-  
-  ion-icon{
-    margin-bottom: 3px;
-    margin-left: 3px;
-    margin-right: 3px;
-  }
-  
-  ion-slide{
-    overflow-y: scroll;    
-    display: block;    
-  }
-  
-  .unitCol{
-    text-align: center;
-  }
-  
+.categoryTitle{
+  border-left: 1px #525252 solid;
+}
+
+ion-icon{
+  margin-bottom: 3px;
+  margin-left: 3px;
+  margin-right: 3px;
+}
+
+ion-slide{
+  overflow-y: scroll;    
+  display: block;    
+}
+
+.unitCol{
+  text-align: center;
+}
+
+ion-range {
+  border: 1px #ccc9c9 solid;
+  border-radius: 10px;
+  margin-bottom: 4px;
+}

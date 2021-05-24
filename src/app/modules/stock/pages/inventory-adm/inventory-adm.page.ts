@@ -8,6 +8,7 @@ import { ALERT_TYPE_OF_FORM_DATA } from '../../constants/inventoryConstants';
 import { AuthService } from '../../../../services/auth/auth.service';
 import { first } from 'rxjs/operators';
 import { InventoryDailyData } from '../../../../models/inventories/inventoryDailyData.model';
+import { FormType } from '../../../../infrastructure/enum/formType.enum';
 
 @Component({
   selector: 'app-inventory-adm',
@@ -17,6 +18,7 @@ import { InventoryDailyData } from '../../../../models/inventories/inventoryDail
 export class InventoryAdmPage implements OnInit {
   public tittleToolbar: string = 'Inventory Adm';
   public storeList: StoreViewModel[];
+  public formType = FormType;
 
   private selectedStore: StoreViewModel;
   public weeklyInventory: InventoryViewModel;
@@ -67,24 +69,15 @@ export class InventoryAdmPage implements OnInit {
     });
   }
 
-  async goToStockForm(): Promise<void> {
+  async goToStockForm(type: FormType): Promise<void> {
     let permition = await this.getInventoryPermit();
     if (permition){
-      if(this.selectedStore.nameAbbreviation === 'RVS') {
-        this.alertsService.selectOneOptionAlert(ALERT_TYPE_OF_FORM_DATA).then( alert => {
-          alert.present();
-          alert.onDidDismiss().then(value => {
-            if(value.data.values === 0 && value.role === 'ok' ){
-              this.router.navigateByUrl(`stock/inventory-form/${this.selectedStore.nameAbbreviation}`)
-            }
-            if(value.data.values === 1 && value.role === 'ok' ){
-              this.router.navigateByUrl(`stock/daily-form/${this.selectedStore.nameAbbreviation}`)
-            }
-          })
-        }
-        );
+      if(this.selectedStore.nameAbbreviation === 'RVS' && type === this.formType.Daily) {
+        this.router.navigateByUrl(`stock/daily-form/${this.selectedStore.nameAbbreviation}`)
       } else {
-        this.router.navigateByUrl(`stock/inventory-form/${this.selectedStore.nameAbbreviation}`)
+        if( type === this.formType.Weekly){ 
+          this.router.navigateByUrl(`stock/inventory-form/${this.selectedStore.nameAbbreviation}`); 
+        }
       }
     } else {
       let store = this.selectedStore.name;
