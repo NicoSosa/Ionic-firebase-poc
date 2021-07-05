@@ -12,6 +12,7 @@ import { CategoriesModalComponent } from './modals/categories-modal/categories-m
 import { PagesModalComponent } from './modals/pages-modal/pages-modal.component';
 import { ItemModalComponent } from './modals/item-modal/item-modal.component';
 import { AdmMasiveChangesPage } from './pages/adm-masive-changes/adm-masive-changes.page';
+import { AdminCardsComponent } from './components/admin-cards/admin-cards.component';
 
 
 
@@ -29,7 +30,8 @@ import { AdmMasiveChangesPage } from './pages/adm-masive-changes/adm-masive-chan
     AdmUsersPage,
     CategoriesModalComponent,
     PagesModalComponent,
-    ItemModalComponent
+    ItemModalComponent,
+    AdminCardsComponent
   ],
   imports: [
     CommonModule,

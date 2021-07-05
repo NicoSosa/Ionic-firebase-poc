@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { first } from 'rxjs/operators';
 import { ADMIN_STRUCT_TITLE_TOOLBAR, ADMIN_URL, INV_STRUCT_SAVE } from '../../constants/adminPageConstants';
 import { DbRequestsService } from '../../../../services/db-requests.service';
 import { InventoryStructure, PageInventory, CategoryInventory } from '../../../../models/inventories/inventoryStructure.model';
@@ -8,6 +9,8 @@ import { PagesModalComponent } from '../../modals/pages-modal/pages-modal.compon
 import { CategoriesModalComponent } from '../../modals/categories-modal/categories-modal.component';
 import { ToastsService } from '../../../../services/userMsgs/toasts.service';
 import { AlertsService } from '../../../../services/userMsgs/alerts.service';
+import { FormType, FormTypeDescript } from '../../../../infrastructure/enum/formType.enum';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-adm-struct',
@@ -15,14 +18,18 @@ import { AlertsService } from '../../../../services/userMsgs/alerts.service';
   styleUrls: ['./adm-struct.page.scss'],
 })
 export class AdmStructPage implements OnInit {
-  public tittleToolbar = ADMIN_STRUCT_TITLE_TOOLBAR;
+  public tittleToolbar: string = '';
   public urlBack = ADMIN_URL;
   private savedMsg = INV_STRUCT_SAVE;
 
   public changesOptions = CHANGE_OPTIONS;
 
-  public inventoryStructure: InventoryStructure
-  constructor(private modalCtrl: ModalController,
+  public inventoryStructure: InventoryStructure;
+  private formType: FormType;
+  private formTypeDescript = FormTypeDescript;
+
+  constructor(private activatedRoute: ActivatedRoute,
+    private modalCtrl: ModalController,
     private alertsService: AlertsService,
     private toastsService: ToastsService,
     private dbRequestsService: DbRequestsService) { 
@@ -30,12 +37,37 @@ export class AdmStructPage implements OnInit {
   }
 
   ngOnInit() {
-    this.dbRequestsService.getWeeklyStructure().subscribe( struct => {
-      this.inventoryStructure = struct;
+    this.initialProccess();
+  }
+
+  private async initialProccess(): Promise<void> {
+    this.alertsService.presentLoading();
+    this.formType = await this.activatedRoute.params.pipe(first()).toPromise().then(params => {
+      if (params.id === 'weekly') {
+        return FormType.Weekly
+      }
+      if (params.id === 'daily') {
+        return FormType.Daily
+      }
+      return null;
     });
-    // this.dbRequestsService.getDailyStructure().subscribe( struct => {
-    //   this.inventoryStructure = struct;
-    // });
+
+    this.tittleToolbar = `${this.formTypeDescript.get(this.formType)} ${ADMIN_STRUCT_TITLE_TOOLBAR}`;
+
+    if (this.formType === FormType.Weekly) {
+      this.dbRequestsService.getWeeklyStructure().subscribe( struct => {
+        this.inventoryStructure = struct;
+        this.alertsService.dismissLoading()
+      });
+    }
+
+    if (this.formType === FormType.Daily) {
+      this.dbRequestsService.getDailyStructure().subscribe( struct => {
+        this.inventoryStructure = struct;
+        this.alertsService.dismissLoading()
+      });
+    }
+
   }
 
   segmentChanged(event): void{
@@ -127,16 +159,26 @@ export class AdmStructPage implements OnInit {
   }
 
   saveChanges() {
+
     this.alertsService.presentLoading();
-    this.dbRequestsService.updateWeekStructure(this.inventoryStructure).then(resp => {
-    // this.dbRequestsService.updateDailyStructure(this.inventoryStructure).then(resp => {
-      this.toastsService.savedItemToast(this.savedMsg);
+    if (this.formType === FormType.Weekly) {
+      this.dbRequestsService.updateWeekStructure(this.inventoryStructure).then(resp => {
+        this.toastsService.savedItemToast(this.savedMsg);
+      }
+      ).catch(err => {
+        this.toastsService.errorToast(err.msg)
+        console.log(err);
+      }).finally( () => this.alertsService.dismissLoading() );
     }
-    ).catch(err => {
-      this.toastsService.errorToast(err.msg)
-      console.log(err);
-    })
-    .finally( () => this.alertsService.dismissLoading() );
+    if (this.formType === FormType.Daily) {
+      this.dbRequestsService.updateDailyStructure(this.inventoryStructure).then(resp => {
+        this.toastsService.savedItemToast(this.savedMsg);
+      }).catch(err => {
+        this.toastsService.errorToast(err.msg)
+        console.log(err);
+      }).finally( () => this.alertsService.dismissLoading() );
+    }
+
   }
 
 

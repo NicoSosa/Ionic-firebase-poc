@@ -1,17 +1,5 @@
 <app-toolbar [tittleToolbar]="tittleToolbar"></app-toolbar>
 
 <ion-content>
-  <ion-card button *ngFor="let card of adminPageCards" (click)="goToUrl(card.url)" class="animated fadeInDown fast">
-    <ion-item color="light">
-        <ion-icon slot="start" [ios]="card.icon + '-outline'" [md]="card.icon + '-outline'"></ion-icon>
-        <ion-label>
-            {{card.title}}
-        </ion-label>
-        <ion-icon name="chevron-forward-outline" slot="end"></ion-icon>
-    </ion-item>
-    <ion-card-content>
-        {{ card.description}} <br> {{ card.description2 }}
-    </ion-card-content>
-  </ion-card>
-
+  <app-admin-cards *ngFor="let card of adminPageCards" [card]="card"></app-admin-cards>
 </ion-content>

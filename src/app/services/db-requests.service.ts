@@ -77,19 +77,19 @@ export class DbRequestsService {
   }
 
   getWeeklyStructure(): Observable<InventoryStructure> {
-    // return of(this.constInventoryStructure);
-    if( !this.weeklyInventoryStructure){
-      this.weeklyInventoryStructure = this.weeklyInventoryStructureCollection.valueChanges();
-    }
-    return this.weeklyInventoryStructure.pipe( map( data => data[0]));
+    return of(this.constInventoryStructure);
+    // if( !this.weeklyInventoryStructure){
+    //   this.weeklyInventoryStructure = this.weeklyInventoryStructureCollection.valueChanges();
+    // }
+    // return this.weeklyInventoryStructure.pipe( map( data => data[0]));
   }
   
   getDailyStructure(): Observable<InventoryStructure> {
-    // return of(this.constDailyInventoryStructure);
-    if( !this.dailyInventoryStructure) {
-      this.dailyInventoryStructure = this.dailyInventoryStructureCollection.valueChanges();
-    }
-    return this.dailyInventoryStructure.pipe( map( data => data[0]));
+    return of(this.constDailyInventoryStructure);
+    // if( !this.dailyInventoryStructure) {
+    //   this.dailyInventoryStructure = this.dailyInventoryStructureCollection.valueChanges();
+    // }
+    // return this.dailyInventoryStructure.pipe( map( data => data[0]));
   }
 
   async updateWeekStructure(inventoryStructure: InventoryStructure) {

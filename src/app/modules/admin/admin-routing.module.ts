@@ -21,7 +21,7 @@ const routes: Routes = [
     component: AdmMasiveChangesPage
   },
   {
-    path: 'structure',
+    path: 'structure/:id',
     component: AdmStructPage
   },
   {

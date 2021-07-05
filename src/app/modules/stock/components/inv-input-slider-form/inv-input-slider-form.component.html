@@ -27,11 +27,16 @@
               </ion-col>
           </ion-item-divider>
           <hr>
-          <ion-row formArrayName="items"> 
+          <ion-row class="itemRow" formArrayName="items"> 
             <ion-col size="12" size-sm="12" size-md="12" size-lg="6" size-xl="6" color="light" *ngFor="let item of categoryItems.controls; let itemIdx = index" [formGroupName]="itemIdx">
-              <ion-row class="ion-align-items-center ion-no-padding">
+              <ion-row class="ion-align-items-center">
                 <ion-col size="3" >
                   {{item.value.showName}}:
+                </ion-col>
+                <ion-col class="ion-no-padding" size="1">
+                  <ion-button color="secondary" size="small" (click)="minusQuant(itemIdx)">
+                    <ion-label><ion-icon name="remove-outline"></ion-icon></ion-label>
+                  </ion-button>
                 </ion-col>
                 <ion-col size="2">
                   <ion-item class="itemInput">
@@ -39,22 +44,17 @@
                     <!-- <ion-input clearOnEdit="true" type="number" enterkeyhint="next" inputmode="decimal" formControlName="quantity" (ionChange)="inputChange(itemIdx)"></ion-input> -->
                   </ion-item>                      
                 </ion-col>
-
-                <ion-col size="1">
-                  <ion-chip color="dark" outline="false" (click)="minusQuant(itemIdx)">
-                    <ion-label>-</ion-label>
-                  </ion-chip>
+                
+                <ion-col class="ion-no-padding ion-text-left" size="1">
+                  <ion-button color="secondary" size="small" (click)="plusQuant(itemIdx)">
+                    <ion-label><ion-icon name="add-outline"></ion-icon></ion-label>
+                  </ion-button>
                 </ion-col>
-                <ion-col class="ion-align-self-end"  size="5">
-                  <ion-range  min="0" [max]="item.value.slid" [step]="rangeStep" snaps="true" formControlName="rangeQuantity" debounce="100" (ionChange)="rangeChange(itemIdx)">
+                <ion-col  size="5">
+                  <ion-range min="0" [max]="item.value.slid" [step]="rangeStep" snaps="true" formControlName="rangeQuantity" debounce="100" (ionChange)="rangeChange(itemIdx)">
                     <ion-label slot="start">0</ion-label>
                     <ion-label slot="end">{{item.value.slid}}</ion-label>
                   </ion-range>
-                </ion-col>
-                <ion-col size="1">
-                  <ion-chip color="dark" outline="false" (click)="plusQuant(itemIdx)">
-                    <ion-label>+</ion-label>
-                  </ion-chip>
                 </ion-col>
               </ion-row>
             </ion-col>

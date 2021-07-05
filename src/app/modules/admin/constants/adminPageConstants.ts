@@ -12,11 +12,18 @@ export interface AdminPageCard {
     title: string;
     description: string;
     description2?: string;
-    url: string;
+    url?: string;
     icon: string;
+    urlButtons?: UrlButton[]
 };
+
+interface UrlButton {
+    url: string;
+    description: string;
+};
+
 export const ADMIN_PAGE_CARDS: AdminPageCard[] = [
-    { title: 'Inventory Struct', description: 'Manage the inventory structure', description2:'Create, order, delete or update Pages and Categories', url: 'structure', icon: 'clipboard' },
+    { title: 'Inventory Struct', description: 'Manage the inventory structure', description2:'Create, order, delete or update Pages and Categories', urlButtons: [{url: 'structure/weekly', description: 'Weekly'}, {url: 'structure/daily', description: 'Daily'}], icon: 'clipboard' },
     // { title: 'Inventory Items', description: 'Manage the inventory items',  description2: 'Create, delete, update Items. Change Pages and Category of an Item', url: 'items', icon: 'reader' },
     { title: 'Inventory Items', description: 'Manage the inventory items',  description2: 'Create, delete, update Items. Change Pages and Category of an Item', url: 'items', icon: 'pricetag' },
     { title: 'Masive Changes', description: 'Create, Delete or move items massively', url: 'masive-changes', icon: 'pricetags' }, 

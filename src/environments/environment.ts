@@ -5,13 +5,24 @@
 export const environment = {
   production: false,
   firebaseConfig: {
-    apiKey: "AIzaSyAyIZxvSCPkQ2cCyVU3qNkskLnefgXrVqw",
-    authDomain: "empanadus-nonprod.firebaseapp.com",
-    projectId: "empanadus-nonprod",
-    storageBucket: "empanadus-nonprod.appspot.com",
-    messagingSenderId: "135441082224",
-    appId: "1:135441082224:web:43df494bad48baca23d1b5",
-    measurementId: "G-1M9DZVE596"
+    //FINAL
+    // apiKey: "AIzaSyAyIZxvSCPkQ2cCyVU3qNkskLnefgXrVqw",
+    // authDomain: "empanadus-nonprod.firebaseapp.com",
+    // projectId: "empanadus-nonprod",
+    // storageBucket: "empanadus-nonprod.appspot.com",
+    // messagingSenderId: "135441082224",
+    // appId: "1:135441082224:web:43df494bad48baca23d1b5",
+    // measurementId: "G-1M9DZVE596"
+
+    // PRUEBAS
+    apiKey: "AIzaSyAsOOSu3dFJv20c5UpVwK13ZIt1VYgp20M",
+    authDomain: "empanadus-inventory.firebaseapp.com",
+    databaseURL: "https://empanadus-inventory-default-rtdb.firebaseio.com",
+    projectId: "empanadus-inventory",
+    storageBucket: "empanadus-inventory.appspot.com",
+    messagingSenderId: "834286903951",
+    appId: "1:834286903951:web:6a905648e0ea42a4ef86fa",
+    measurementId: "G-470R27W3QP"
   }
 };
 

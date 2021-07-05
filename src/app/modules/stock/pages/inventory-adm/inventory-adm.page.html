@@ -12,14 +12,14 @@
     </ion-segment>
 
     <ion-row>
-        <ion-col size="6">
-            <ion-button class="newInventoryButton" expand="full" shape="round" (click)="goToStockForm(formType.Weekly)">
-                New Weekly Inventory
+        <ion-col class="ion-text-center" size="6">
+            <ion-button class="newInventoryButton" shape="round" (click)="goToStockForm(formType.Weekly)">
+                <small>New Weekly Inventory</small>
             </ion-button>
         </ion-col>
-        <ion-col size="6">
-            <ion-button class="newInventoryButton" expand="full" shape="round" *ngIf="dailyInventory" (click)="goToStockForm(formType.Daily)">
-                New Daily Inventory
+        <ion-col class="ion-text-center" size="6">
+            <ion-button class="newInventoryButton" shape="round" *ngIf="dailyInventory" (click)="goToStockForm(formType.Daily)">
+                <small>New Daily Inventory</small>
             </ion-button>
         </ion-col> 
     </ion-row>    

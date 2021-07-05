@@ -22,7 +22,13 @@ ion-slide{
 }
 
 ion-range {
+  --height: 10px;
   border: 1px #ccc9c9 solid;
   border-radius: 10px;
-  margin-bottom: 4px;
 }
+
+ion-button {
+  width: 10px;
+  height: 25px;
+}
+
