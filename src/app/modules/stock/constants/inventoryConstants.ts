@@ -6,8 +6,6 @@ export const VIEW_TITLE_NAME: string = 'View Inventory'
 export const STOCK_URL = 'stock';
 export const INVENTORY_SAVE_MSG = 'The inventory has been saved';
 
-export const STORES_NAME: string [] = ['RVS', 'LGE','HWD'];
-
 export const ALERT_TYPE_OF_FORM_DATA = {
     header: 'Which inventory do you want to generate?',
     inputs: [

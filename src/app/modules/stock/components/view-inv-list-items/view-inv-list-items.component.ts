@@ -8,6 +8,7 @@ import { InventoryDailyData } from '../../../../models/inventories/inventoryDail
 })
 export class ViewInvListItemsComponent implements OnInit {
   @Input() inventory: InventoryDailyData;
+  @Input() typeInventory: string;
   public dailyDate: number;
   public isHide = false;
 
@@ -15,6 +16,7 @@ export class ViewInvListItemsComponent implements OnInit {
 
   ngOnInit() {
     this.initialProcess();
+    console.log(this.inventory);
   }
   initialProcess(): void{
     const date = this.inventory.closedDate;

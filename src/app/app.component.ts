@@ -6,6 +6,8 @@ import { ADMIN_MAIL, ADMIN_MENU, USER_MENU } from './infrastructure/constants/si
 import { AuthUser } from './models/auth/authUser.model';
 import { DbRequestsService } from './services/db-requests.service';
 import { AlertsService } from './services/userMsgs/alerts.service';
+import { InventoryStructureService } from './services/firestore-requests/inventory-structure.service';
+import { InventoryUsersService } from './services/firestore-requests/inventory-users.service';
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
@@ -18,7 +20,8 @@ export class AppComponent {
 
   public appPages = null; 
   constructor(private router: Router,
-    private dbRequestsService: DbRequestsService,
+    private inventoryStructureService: InventoryStructureService,
+    private inventoryUsersService: InventoryUsersService,
     private authService: AuthService,
     private alertsService: AlertsService,
     private toastsService: ToastsService) {
@@ -27,8 +30,8 @@ export class AppComponent {
 
   private initialProcess(): void {
     this.alertsService.presentLoading();
-    this.dbRequestsService.getDailyStructure().subscribe();
-    this.dbRequestsService.getWeeklyStructure().subscribe();
+    this.inventoryStructureService.getDailyStructure().subscribe();
+    this.inventoryStructureService.getWeeklyStructure().subscribe();
     this.authUser = null;
     this.authService.isLogedIn().subscribe( loged =>{
       if( !loged ){
@@ -38,7 +41,7 @@ export class AppComponent {
     });
     this.authService.authData().subscribe( authData => {
       if(authData){
-        this.dbRequestsService.getUserFirestore(authData.uid).subscribe( afUser => {
+        this.inventoryUsersService.getUserFirestore(authData.uid).subscribe( afUser => {
           if(afUser){
             this.userName = authData.email;
             this.authUser = {...afUser, ...authData};

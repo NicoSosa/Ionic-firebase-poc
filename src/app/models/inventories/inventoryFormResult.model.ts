@@ -25,6 +25,7 @@ interface ItemInventoryFormResult {
     id: string;
     name: string;
     showName: string;
+    waste: number;
     isNeeded?: boolean;
     quantity?: number;
 }

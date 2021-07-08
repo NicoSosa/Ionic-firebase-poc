@@ -15,13 +15,13 @@
         <ion-list class="itemList" formArrayName="categories">
           
           <div *ngFor="let pageCategory of inventoryStructure.pages[idxPage].categories; let j = index" >
-            <span *ngIf="pageCategory.formStyle === formStyleEnum.InputPlusSlider">
+            <span *ngIf="pageCategory.formStyle === formStyleEnum.InputPlusSlider && pageCategory.items.length > 0">
               <app-inv-input-slider-form [inventoryForm]="inventoryForm" [idxPage]="idxPage" [pageCategory]="pageCategory" [cacheInventory]="cacheInventory" (setLS)="setLocalStorageInventory()" (endLoading)="closeLoading()"></app-inv-input-slider-form>
             </span>
-            <span *ngIf="pageCategory.formStyle === formStyleEnum.OnlyInput">
+            <span *ngIf="pageCategory.formStyle === formStyleEnum.OnlyInput && pageCategory.items.length > 0">
               <app-inv-only-input-form [inventoryForm]="inventoryForm" [idxPage]="idxPage" [pageCategory]="pageCategory" [cacheInventory]="cacheInventory" (setLS)="setLocalStorageInventory()"></app-inv-only-input-form>
             </span>
-            <span *ngIf="pageCategory.formStyle === formStyleEnum.IsNeededInput">
+            <span *ngIf="pageCategory.formStyle === formStyleEnum.IsNeededInput && pageCategory.items.length > 0">
               <app-inv-is-needed-input-form [inventoryForm]="inventoryForm" [idxPage]="idxPage" [pageCategory]="pageCategory" [cacheInventory]="cacheInventory" (setLS)="setLocalStorageInventory()"></app-inv-is-needed-input-form>
             </span>
           </div>

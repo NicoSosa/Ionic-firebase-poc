@@ -4,8 +4,9 @@ export interface InventoryDailyData {
     store: string; 
     storeName: string; 
     observation: string;
-    isNeededcategories: CategoryDailyData[];
-    isProducedCategories: CategoryDailyData[];
+    isNeededCategories?: CategoryDailyData[];
+    isProducedCategories?: CategoryDailyData[];
+    weeklyReport?: PagesDailyData[];
 }
 
 interface CategoryDailyData {
@@ -13,10 +14,15 @@ interface CategoryDailyData {
     items: ItemInventoryDailyData[];
 }
 
+interface PagesDailyData {
+    name: string;
+    categories: CategoryDailyData[];
+}
 interface ItemInventoryDailyData {
     id: string;
     name: string;
     showName: string;
+    waste?: number;
     isNeeded?: boolean;
     quantity?: number;
 }

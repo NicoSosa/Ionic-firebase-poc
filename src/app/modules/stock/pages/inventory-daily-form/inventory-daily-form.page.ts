@@ -4,15 +4,17 @@ import { FormArray, FormBuilder, FormGroup, FormControl } from '@angular/forms';
 import { ViewChild } from '@angular/core';
 import { IonSlides } from '@ionic/angular';
 import { ActivatedRoute, Router } from '@angular/router';
-import { DbRequestsService } from '../../../../services/db-requests.service';
 import { DAILY_INVENTORY_TITLE_NAME, INVENTORY_SAVE_MSG, STOCK_URL } from '../../constants/inventoryConstants';
 import { InventoryStructure, PageInventory } from '../../../../models/inventories/inventoryStructure.model';
-import { StoreViewModel } from '../../../../models/stores/storeView.model';
 import { ToastsService } from '../../../../services/userMsgs/toasts.service';
 import { AlertsService } from '../../../../services/userMsgs/alerts.service';
 import { FormStyle } from '../../../../infrastructure/enum/formStyle.enum';
 import { InventoryFormResult } from '../../../../models/inventories/inventoryFormResult.model';
 import { InventoryDailyData } from 'src/app/models/inventories/inventoryDailyData.model';
+import { InventoryStructureService } from 'src/app/services/firestore-requests/inventory-structure.service';
+import { InventoryReportService } from 'src/app/services/firestore-requests/inventory-report.service';
+import { StoreAbv, StoreName, StoresName } from 'src/app/infrastructure/enum/stores.enum';
+import { StoresNameDescript } from '../../../../infrastructure/enum/stores.enum';
 
 const INVENTORY_LS ='dailyInventoryLocalStorage'
 @Component({
@@ -26,9 +28,14 @@ export class InventoryDailyFormPage implements OnInit {
   private savedMsg = INVENTORY_SAVE_MSG;
   public tittleToolbar: string;
   public cacheInventory: any;
+  public localStorageStore: string;
   public inventoryStructure: InventoryStructure;
-  public storeList: StoreViewModel[];
-  private selectedStore: StoreViewModel;
+
+  public storeList = StoresName;
+  private selectedStore: StoresName;
+  private storeAbv: StoreAbv;
+  private storeName: StoreName;
+  
   public formStyleEnum = FormStyle;
 
   @ViewChild('slides') slides: IonSlides;
@@ -41,43 +48,42 @@ export class InventoryDailyFormPage implements OnInit {
     private formBuilder: FormBuilder,
     private toastsService: ToastsService,
     private alertsService: AlertsService,
-    private dbRequestsService: DbRequestsService) { }
+    private inventoryStructureService: InventoryStructureService,
+    private inventoryReportService: InventoryReportService) { }
 
   ngOnInit() {
     this.alertsService.presentLoading().then();
+    this.getStore();
     this.getLocalStorageInventory();
     this.generateInventoryForm();
     this.getInventoryStruct();
-    this.getStore();
   }
 
   //#region - Get Data
   private getInventoryStruct() {
-    this.dbRequestsService.getDailyStructure().subscribe( struct => {
-      this.inventoryStructure = struct;
-      this.tittleToolbar = `${this.invTitleName} - ${struct.pages[0].name}`;
-      this.slidesButtonStatus[0] = { active: false, text: '', lastPage: false }
-        this.slidesButtonStatus[1] = { active: true, text: struct.pages[1].name, lastPage: false}
-      struct.pages.forEach( (page) => this.pushPageInv(page) )
-      this.pushFinalPage();
+    this.inventoryStructureService.getLastDailyInventoryStructure(this.selectedStore).subscribe( struct => {
+      if( struct ){
+        this.inventoryStructure = struct;
+        this.tittleToolbar = `${this.invTitleName} - ${struct.pages[0].name}`;
+        this.slidesButtonStatus[0] = { active: false, text: '', lastPage: false }
+          this.slidesButtonStatus[1] = { active: true, text: struct.pages[1].name, lastPage: false}
+        struct.pages.forEach( (page) => this.pushPageInv(page) )
+        this.pushFinalPage();
+      } else {
+      }
     });
   }
 
   private getStore(): void {
     this.actRoute.params.subscribe( params => {
-      this.storeInv.setValue(params.id);
-    });
-
-    this.dbRequestsService.getStores().subscribe( stores => {
-      this.storeList = stores;
-      const storeAbv = this.storeInv.value;
-      this.selectedStore = this.storeList.filter( store => store.nameAbbreviation === storeAbv)[0];
-      this.storeNameInv.setValue(this.selectedStore.name);
-      this.invTitleName = ` ${this.selectedStore.name}: ${this.invTitleName}`;
+      this.storeAbv = params.id;
+      this.localStorageStore = params.id+INVENTORY_LS;
+      this.selectedStore = StoresName[this.storeAbv];
+      this.storeName = StoresNameDescript.get(this.selectedStore);
       
+      this.invTitleName = ` ${this.storeName}: ${this.invTitleName}`;
       this.tittleToolbar = `${this.invTitleName} - ${this.inventoryStructure? this.inventoryStructure.pages[0].name : ''}`;
-    }
-    );
+    });
   }
   //#endregion
 
@@ -85,8 +91,8 @@ export class InventoryDailyFormPage implements OnInit {
   private generateInventoryForm(): void {
     let createdDate = this.getCreatedDate();
     this.inventoryForm = this.formBuilder.group({
-      store: '',
-      storeName: '',
+      store: this.selectedStore,
+      storeName: this.storeName,
       pages: this.formBuilder.array([]),
       createdDate,
     });
@@ -138,7 +144,7 @@ export class InventoryDailyFormPage implements OnInit {
     this.alertsService.presentLoading().then();
     
     const dailyData = this.formatingFormResults();
-    this.dbRequestsService.setNewDailyInventory(dailyData).then( resp => {
+    this.inventoryReportService.setNewDailyInventory(dailyData).then( resp => {
       this.deleteProgressProcess();
       this.router.navigateByUrl(this.urlBack);
       this.toastsService.savedItemToast(this.savedMsg);
@@ -154,7 +160,7 @@ export class InventoryDailyFormPage implements OnInit {
       store: formResults.store,
       storeName: formResults.storeName,
       observation: '',
-      isNeededcategories: [],
+      isNeededCategories: [],
       isProducedCategories: [],
     };
 
@@ -170,7 +176,7 @@ export class InventoryDailyFormPage implements OnInit {
         page.categories.forEach( category => {
           switch (category.formStyle) {
             case FormStyle.IsNeededOnly:
-              dailyData.isNeededcategories.push({
+              dailyData.isNeededCategories.push({
                 category: category.category,
                 items: category.items
               });
@@ -196,7 +202,7 @@ export class InventoryDailyFormPage implements OnInit {
           }
         });
         if (formResults.pages.length -2 === idxPage && othersCategory.items.length > 0) {
-          dailyData.isNeededcategories.push(othersCategory);
+          dailyData.isNeededCategories.push(othersCategory);
         }
       }
     });
@@ -257,11 +263,11 @@ export class InventoryDailyFormPage implements OnInit {
   //#region LocalStorage
   public setLocalStorageInventory(): any {
     this.inventoryForm.get('createdDate').setValue(Date.now());
-    localStorage.setItem(INVENTORY_LS, JSON.stringify(this.inventoryForm.value))
+    localStorage.setItem(this.localStorageStore, JSON.stringify(this.inventoryForm.value))
   }
 
   private getLocalStorageInventory(): void {
-    const inventoryLS = JSON.parse(localStorage.getItem(INVENTORY_LS));
+    const inventoryLS = JSON.parse(localStorage.getItem(this.localStorageStore));
     let dateControl= Date.now();
     if ( inventoryLS && inventoryLS.createdDate +  1000*60*60*30 >= dateControl) {
       this.cacheInventory = inventoryLS;
@@ -279,7 +285,7 @@ export class InventoryDailyFormPage implements OnInit {
   }
 
   private deleteLocalStorageInventory() {
-    localStorage.removeItem(INVENTORY_LS);
+    localStorage.removeItem(this.localStorageStore);
   }
   //#endregion
 
