@@ -9,6 +9,8 @@ import { AuthService } from '../../../../services/auth/auth.service';
 import { first } from 'rxjs/operators';
 import { InventoryDailyData } from '../../../../models/inventories/inventoryDailyData.model';
 import { FormType } from '../../../../infrastructure/enum/formType.enum';
+import { InventoryStructureService } from '../../../../services/firestore-requests/inventory-structure.service';
+import { StoresName } from '../../../../infrastructure/enum/stores.enum';
 
 @Component({
   selector: 'app-inventory-adm',
@@ -17,7 +19,9 @@ import { FormType } from '../../../../infrastructure/enum/formType.enum';
 })
 export class InventoryAdmPage implements OnInit {
   public tittleToolbar: string = 'Inventory Adm';
-  public storeList: StoreViewModel[];
+
+  public storeList = StoresName;
+  // public storeList: StoreViewModel[];
   public formType = FormType;
 
   private selectedStore: StoreViewModel;
@@ -30,13 +34,14 @@ export class InventoryAdmPage implements OnInit {
   constructor(private router: Router,
     private authService: AuthService,
     private alertsService: AlertsService,
-    private dbRequestsService: DbRequestsService) { }
+    private inventoryStructureService: InventoryStructureService) { }
 
   ngOnInit() {
     this.getStoresList();
   }
 
   private getStoresList(): void {
+    this.storeList = StoresName;
     this.dbRequestsService.getStores().subscribe( dataList => {
       if (dataList) {
         this.storeList =  dataList;

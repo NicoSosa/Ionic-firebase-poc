@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ADMIN_MASIVE_TITLE_TOOLBAR, ADMIN_URL } from '../../constants/adminPageConstants';
 import { MASIVE_OPTIONS } from '../../constants/structureAdminPage';
 import { InventoryStructure } from '../../../../models/inventories/inventoryStructure.model';
-import { DbRequestsService } from '../../../../services/db-requests.service';
 import { ItemOfMasive } from '../../../../models/administration/itemOfMasive.model';
+import { InventoryStructureService } from '../../../../services/firestore-requests/inventory-structure.service';
 
 @Component({
   selector: 'app-adm-masive-changes',
@@ -18,7 +18,7 @@ export class AdmMasiveChangesPage implements OnInit {
   public inventoryStructure: InventoryStructure
   public itemList = [];
 
-  constructor(private dbRequestsService: DbRequestsService) { 
+  constructor(private inventoryStructureService: InventoryStructureService) { 
   }
 
   ngOnInit() {
@@ -26,7 +26,7 @@ export class AdmMasiveChangesPage implements OnInit {
   }
 
   private getData(): void {
-    this.dbRequestsService.getWeeklyStructure().subscribe( struct => {
+    this.inventoryStructureService.getWeeklyStructure().subscribe( struct => {
       this.inventoryStructure = struct[0];
       this.setItemList();
     });

@@ -8,7 +8,7 @@ import { InventoryStructure, DBInventoryStructure } from '../models/inventories/
 import { INITIAL_INVENTORY_STRUCT, INITIAL_DAILY_INVENTORY_STRUCT } from '../infrastructure/constants/inventoryStructure.constant';
 import { AuthService } from './auth/auth.service';
 import { AuthUser } from '../models/auth/authUser.model';
-import { StoresAbv, StoresAbvDescript } from '../infrastructure/enum/storesAbv.enum';
+import { StoresName, StoresAbvDescript } from '../infrastructure/enum/stores.enum';
 import { InventoryDailyData } from '../models/inventories/inventoryDailyData.model';
 
 
@@ -50,89 +50,89 @@ export class DbRequestsService {
 
   constructor(private afs: AngularFirestore,
     private authService: AuthService) { 
-    this.setCollections();
+    // this.setCollections();
   }
 
-  private setCollections(): void {
-    this.weeklyInventoryCollection = this.afs.collection<any>('weeklyInventory',inv => inv.orderBy('createdDate','desc').limit(1));
-    this.dailyInventoryCollection = this.afs.collection<any>('dailyInventory',inv => inv.orderBy('closedDate','desc').limit(1));
-    this.weeklyInventoryStructureCollection = this.afs.collection<any>('weeklyInventoryStructure', is => is.orderBy('dateUpdated','desc').limit(1))
-    this.dailyInventoryStructureCollection = this.afs.collection<any>('dailyInventoryStructure', is => is.orderBy('dateUpdated','desc').limit(1))
-  }
+  // private setCollections(): void {
+  //   this.weeklyInventoryCollection = this.afs.collection<any>('weeklyInventory',inv => inv.orderBy('createdDate','desc').limit(1));
+  //   this.dailyInventoryCollection = this.afs.collection<any>('dailyInventory',inv => inv.orderBy('closedDate','desc').limit(1));
+  //   this.weeklyInventoryStructureCollection = this.afs.collection<any>('weeklyInventoryStructure', is => is.orderBy('dateUpdated','desc').limit(1))
+  //   this.dailyInventoryStructureCollection = this.afs.collection<any>('dailyInventoryStructure', is => is.orderBy('dateUpdated','desc').limit(1))
+  // }
 
-  getStores(): Observable<StoreViewModel[]> {
-    const storeListObservable$ = of(this.storeList);
-    return storeListObservable$;
-  }
+  // getStores(): Observable<StoreViewModel[]> {
+  //   const storeListObservable$ = of(this.storeList);
+  //   return storeListObservable$;
+  // }
 
-  getUserFirestore(uid: string): Observable<AuthUser>{
-    this.userInventory = this.afs.collection<AuthUser>('userInventory').doc(uid).get();
-    return this.userInventory.pipe( map(dbUserData => {
-      if (dbUserData) {
-        return {...dbUserData.data()}
-      }
-      return null;
-    }));
+  // getUserFirestore(uid: string): Observable<AuthUser>{
+  //   this.userInventory = this.afs.collection<AuthUser>('userInventory').doc(uid).get();
+  //   return this.userInventory.pipe( map(dbUserData => {
+  //     if (dbUserData) {
+  //       return {...dbUserData.data()}
+  //     }
+  //     return null;
+  //   }));
 
-  }
+  // }
 
-  getWeeklyStructure(): Observable<InventoryStructure> {
-    return of(this.constInventoryStructure);
-    // if( !this.weeklyInventoryStructure){
-    //   this.weeklyInventoryStructure = this.weeklyInventoryStructureCollection.valueChanges();
-    // }
-    // return this.weeklyInventoryStructure.pipe( map( data => data[0]));
-  }
+  // getWeeklyStructure(): Observable<InventoryStructure> {
+  //   // return of(this.constInventoryStructure);
+  //   if( !this.weeklyInventoryStructure){
+  //     this.weeklyInventoryStructure = this.weeklyInventoryStructureCollection.valueChanges();
+  //   }
+  //   return this.weeklyInventoryStructure.pipe( map( data => data[0]));
+  // }
   
-  getDailyStructure(): Observable<InventoryStructure> {
-    return of(this.constDailyInventoryStructure);
-    // if( !this.dailyInventoryStructure) {
-    //   this.dailyInventoryStructure = this.dailyInventoryStructureCollection.valueChanges();
-    // }
-    // return this.dailyInventoryStructure.pipe( map( data => data[0]));
-  }
+  // getDailyStructure(): Observable<InventoryStructure> {
+  //   // return of(this.constDailyInventoryStructure);
+  //   if( !this.dailyInventoryStructure) {
+  //     this.dailyInventoryStructure = this.dailyInventoryStructureCollection.valueChanges();
+  //   }
+  //   return this.dailyInventoryStructure.pipe( map( data => data[0]));
+  // }
 
-  async updateWeekStructure(inventoryStructure: InventoryStructure) {
-    const dbInventoryStructure: DBInventoryStructure = {
-      ...inventoryStructure,
-      dateUpdated: Date.now(),
-      userUpdated: this.authService.getAuthEmail()
-    }
-    return this.weeklyInventoryStructureCollection.add(dbInventoryStructure)
-  }
+  // async updateWeekStructure(inventoryStructure: InventoryStructure) {
+  //   const dbInventoryStructure: DBInventoryStructure = {
+  //     ...inventoryStructure,
+  //     dateUpdated: Date.now(),
+  //     userUpdated: this.authService.getAuthEmail()
+  //   }
+  //   return this.weeklyInventoryStructureCollection.add(dbInventoryStructure)
+  // }
 
-  async updateDailyStructure(inventoryStructure: InventoryStructure) {
-    const dbInventoryStructure: DBInventoryStructure = {
-      ...inventoryStructure,
-      dateUpdated: Date.now(),
-      userUpdated: this.authService.getAuthEmail()
-    }
-    return this.dailyInventoryStructureCollection.add(dbInventoryStructure)
-  }
+  // async updateDailyStructure(inventoryStructure: InventoryStructure) {
+  //   const dbInventoryStructure: DBInventoryStructure = {
+  //     ...inventoryStructure,
+  //     dateUpdated: Date.now(),
+  //     userUpdated: this.authService.getAuthEmail()
+  //   }
+  //   return this.dailyInventoryStructureCollection.add(dbInventoryStructure)
+  // }
 
-  getLastWeeklyInventoryByAbvName(abvString: string): Observable<InventoryViewModel> {
-    const ArrayObservableOfInventories = this.afs.collection<any>('weeklyInventory',inv => inv.orderBy('createdDate','desc').where('store','==', abvString).limit(1)).valueChanges();
-    return ArrayObservableOfInventories.pipe( map( data => data[0]));
-  }
+  // getLastWeeklyInventoryByAbvName(abvString: string): Observable<InventoryViewModel> {
+  //   const ArrayObservableOfInventories = this.afs.collection<any>('weeklyInventory',inv => inv.orderBy('createdDate','desc').where('store','==', abvString).limit(1)).valueChanges();
+  //   return ArrayObservableOfInventories.pipe( map( data => data[0]));
+  // }
 
-  getLastDailyInventoryByAbvName(abvString: string): Observable<InventoryDailyData[]> {
-    if (!this.dailyInventories) {
-      this.dailyInventories = this.afs.collection<any>('dailyInventory',inv => inv.orderBy('closedDate','desc').where('store','==', abvString).limit(3)).valueChanges();
-    }
-    return this.dailyInventories;
-  }
+  // getLastDailyInventoryByAbvName(abvString: string): Observable<InventoryDailyData[]> {
+  //   if (!this.dailyInventories) {
+  //     this.dailyInventories = this.afs.collection<any>('dailyInventory',inv => inv.orderBy('closedDate','desc').where('store','==', abvString).limit(3)).valueChanges();
+  //   }
+  //   return this.dailyInventories;
+  // }
 
-  async setNewWeeklyInventory(inventory: InventoryViewModel ) {
-    inventory.createdUser = this.authService.getAuthEmail();
-    inventory.createdDate = Date.now();
-    inventory.closedDate = new Date();
-    return this.weeklyInventoryCollection.add(inventory);
-  }
+  // async setNewWeeklyInventory(inventory: InventoryViewModel ) {
+  //   inventory.createdUser = this.authService.getAuthEmail();
+  //   inventory.createdDate = Date.now();
+  //   inventory.closedDate = new Date();
+  //   return this.weeklyInventoryCollection.add(inventory);
+  // }
 
-  async setNewDailyInventory(inventory: InventoryDailyData ) {
-    inventory.createdUser = this.authService.getAuthEmail();
-    inventory.closedDate = new Date();
-    return this.dailyInventoryCollection.add(inventory);
-  }
+  // async setNewDailyInventory(inventory: InventoryDailyData ) {
+  //   inventory.createdUser = this.authService.getAuthEmail();
+  //   inventory.closedDate = new Date();
+  //   return this.dailyInventoryCollection.add(inventory);
+  // }
 
 }

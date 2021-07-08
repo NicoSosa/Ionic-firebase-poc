@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { first } from 'rxjs/operators';
 import { ADMIN_STRUCT_TITLE_TOOLBAR, ADMIN_URL, INV_STRUCT_SAVE } from '../../constants/adminPageConstants';
-import { DbRequestsService } from '../../../../services/db-requests.service';
 import { InventoryStructure, PageInventory, CategoryInventory } from '../../../../models/inventories/inventoryStructure.model';
 import { CHANGE_OPTIONS } from '../../constants/structureAdminPage';
 import { ModalController } from '@ionic/angular';
@@ -11,6 +10,7 @@ import { ToastsService } from '../../../../services/userMsgs/toasts.service';
 import { AlertsService } from '../../../../services/userMsgs/alerts.service';
 import { FormType, FormTypeDescript } from '../../../../infrastructure/enum/formType.enum';
 import { ActivatedRoute } from '@angular/router';
+import { InventoryStructureService } from '../../../../services/firestore-requests/inventory-structure.service';
 
 @Component({
   selector: 'app-adm-struct',
@@ -32,7 +32,7 @@ export class AdmStructPage implements OnInit {
     private modalCtrl: ModalController,
     private alertsService: AlertsService,
     private toastsService: ToastsService,
-    private dbRequestsService: DbRequestsService) { 
+    private inventoryStructureService: InventoryStructureService) { 
 
   }
 
@@ -55,14 +55,14 @@ export class AdmStructPage implements OnInit {
     this.tittleToolbar = `${this.formTypeDescript.get(this.formType)} ${ADMIN_STRUCT_TITLE_TOOLBAR}`;
 
     if (this.formType === FormType.Weekly) {
-      this.dbRequestsService.getWeeklyStructure().subscribe( struct => {
+      this.inventoryStructureService.getWeeklyStructure().subscribe( struct => {
         this.inventoryStructure = struct;
         this.alertsService.dismissLoading()
       });
     }
 
     if (this.formType === FormType.Daily) {
-      this.dbRequestsService.getDailyStructure().subscribe( struct => {
+      this.inventoryStructureService.getDailyStructure().subscribe( struct => {
         this.inventoryStructure = struct;
         this.alertsService.dismissLoading()
       });
@@ -162,7 +162,7 @@ export class AdmStructPage implements OnInit {
 
     this.alertsService.presentLoading();
     if (this.formType === FormType.Weekly) {
-      this.dbRequestsService.updateWeekStructure(this.inventoryStructure).then(resp => {
+      this.inventoryStructureService.updateWeekStructure(this.inventoryStructure).then(resp => {
         this.toastsService.savedItemToast(this.savedMsg);
       }
       ).catch(err => {
@@ -171,7 +171,7 @@ export class AdmStructPage implements OnInit {
       }).finally( () => this.alertsService.dismissLoading() );
     }
     if (this.formType === FormType.Daily) {
-      this.dbRequestsService.updateDailyStructure(this.inventoryStructure).then(resp => {
+      this.inventoryStructureService.updateDailyStructure(this.inventoryStructure).then(resp => {
         this.toastsService.savedItemToast(this.savedMsg);
       }).catch(err => {
         this.toastsService.errorToast(err.msg)

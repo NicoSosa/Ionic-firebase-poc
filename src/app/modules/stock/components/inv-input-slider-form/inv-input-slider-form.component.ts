@@ -15,7 +15,7 @@ export class InvInputSliderFormComponent implements OnInit {
   @Input() itsDaily: boolean;
   @Output() setLS = new EventEmitter<boolean>();
   @Output() endLoading = new EventEmitter<boolean>();
-  rangeStep = 0.5;
+  rangeStep: number;
 
   public categoryIdx = -1;
 
@@ -69,6 +69,7 @@ export class InvInputSliderFormComponent implements OnInit {
 
   private pushCategoryItem(item: ItemInventory, pageIdx: number, categoryIdx: number, itemIdx: number): void {
     let quant = 0;
+    this.rangeStep = item.steps;
     let slidVal = item.slid;
     if (slidVal > 6 && this.itsDaily) {slidVal = 6 };
     if(this.cacheInventory){ quant = this.getQuantityFromCache(pageIdx, categoryIdx, itemIdx);}
@@ -76,6 +77,9 @@ export class InvInputSliderFormComponent implements OnInit {
       id: item.id,
       name: item.name,
       showName: item.showName,
+      categoryId: item.categoryId,
+      unit: item.unit,
+      steps: item.steps,
       slid: slidVal,
       quantity: quant,
       rangeQuantity: quant,

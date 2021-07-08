@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { ADMIN_ITEM_TITLE_TOOLBAR, ADMIN_URL, INV_STRUCT_SAVE } from '../../constants/adminPageConstants';
-import { DbRequestsService } from '../../../../services/db-requests.service';
-import { InventoryStructure } from '../../../../models/inventories/inventoryStructure.model';
+import { InventoryStructure, ItemInventory } from '../../../../models/inventories/inventoryStructure.model';
 import { ItemOfAdministration } from '../../../../models/administration/itemOfAdministration.model';
 import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
 import { ModalController } from '@ionic/angular';
 import { ItemModalComponent } from '../../modals/item-modal/item-modal.component';
 import { ToastsService } from 'src/app/services/userMsgs/toasts.service';
 import { AlertsService } from '../../../../services/userMsgs/alerts.service';
+import { InventoryStructureService } from '../../../../services/firestore-requests/inventory-structure.service';
 
 @Component({
   selector: 'app-adm-items',
@@ -29,7 +29,7 @@ export class AdmItemsPage implements OnInit {
     private alertsService: AlertsService,
     private formBuilder: FormBuilder,
     private toastsService: ToastsService,
-    private dbRequestsService: DbRequestsService) { }
+    private inventoryStructureService: InventoryStructureService) { }
 
   ngOnInit() {
     this.generateFilterForm();
@@ -38,7 +38,7 @@ export class AdmItemsPage implements OnInit {
   }
 
   private getData(): void {
-    this.dbRequestsService.getWeeklyStructure().subscribe( struct => {
+    this.inventoryStructureService.getWeeklyStructure().subscribe( struct => {
       this.inventoryStructure = struct[0];
       this.setItemList();
       this.filterItems();
@@ -143,12 +143,15 @@ export class AdmItemsPage implements OnInit {
     if (data && data.isDirty) {
       const idCat = data.itemForm.idxCategory;
       const idPag = data.itemForm.idxPage;
-      const dataItem = {
+      const dataItem: ItemInventory = {
         id: data.itemForm.id,
         name: data.itemForm.name,
-        slid: data.itemForm.slid,
         showName: data.itemForm.showName,
-        unit: data.itemForm.unit
+        categoryId: data.itemForm.categoryId,
+        unit: data.itemForm.unit,
+        waste: data.itemForm.waste,
+        slid: data.itemForm.slid,
+        steps: data.itemForm.steps,
       }
 
       if( data.isNew) {
@@ -169,14 +172,17 @@ export class AdmItemsPage implements OnInit {
             this.inventoryStructure.pages[item.idxPage].categories[item.idxCategory].items[idxItem] = {
               id: dataItem.id,
               name: dataItem.name,
-              slid: dataItem.slid,
               showName: dataItem.showName,
-              unit: dataItem.unit
+              categoryId: dataItem.categoryId,
+              unit: dataItem.unit,
+              waste: dataItem.waste,
+              slid: dataItem.slid,
+              steps: dataItem.steps
             }
           }
         }
       }
-      this.dbRequestsService.updateWeekStructure(this.inventoryStructure).then(resp => {
+      this.inventoryStructureService.updateWeekStructure(this.inventoryStructure).then(resp => {
         this.toastsService.savedItemToast(this.savedMsg);
       }
       ).catch(err => this.toastsService.errorToast(err.msg))
