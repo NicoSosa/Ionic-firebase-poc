@@ -21,7 +21,7 @@
   <ion-row>
     <ion-col><b>Items Needed: </b></ion-col>
   </ion-row>
-  <span *ngFor="let category of inventory.isNeededcategories">
+  <span *ngFor="let category of inventory.isNeededCategories">
     <ion-row>
       <ion-col size="1"></ion-col>
       <ion-col><b>{{category.category}}</b></ion-col>
@@ -57,13 +57,8 @@
   <ion-row>
     <ion-col><b>Observation: </b> {{inventory.observation}}</ion-col>
   </ion-row>
-  <span *ngFor="let page of inventory.pages">
+  <span *ngFor="let category of inventory.weeklyReport">
     <br>
-    <ion-row *ngIf="!(page.name === 'Final page')">
-      <ion-col size="1"></ion-col>
-      <ion-col><b>{{page.name | uppercase}}</b></ion-col>
-    </ion-row>
-    <span *ngFor="let category of page.categories">
       <ion-row>
         <ion-col size="1"></ion-col>
         <ion-col><b>{{category.category}}</b></ion-col>
@@ -81,5 +76,4 @@
         </ion-row> -->
       </span>
     </span>
-  </span>
 </div>

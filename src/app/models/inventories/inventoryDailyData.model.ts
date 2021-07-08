@@ -6,22 +6,18 @@ export interface InventoryDailyData {
     observation: string;
     isNeededCategories?: CategoryDailyData[];
     isProducedCategories?: CategoryDailyData[];
-    weeklyReport?: PagesDailyData[];
+    weeklyReport?: CategoryDailyData[];
 }
 
 interface CategoryDailyData {
     category: string;
     items: ItemInventoryDailyData[];
 }
-
-interface PagesDailyData {
-    name: string;
-    categories: CategoryDailyData[];
-}
 interface ItemInventoryDailyData {
     id: string;
     name: string;
     showName: string;
+    unit?:string;
     waste?: number;
     isNeeded?: boolean;
     quantity?: number;

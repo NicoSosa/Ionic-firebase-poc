@@ -16,7 +16,7 @@ import { InventoryStructureService } from 'src/app/services/firestore-requests/i
 import { InventoryReportService } from 'src/app/services/firestore-requests/inventory-report.service';
 import { InventoryFormResult } from 'src/app/models/inventories/inventoryFormResult.model';
 import { InventoryWeeklyData } from 'src/app/models/inventories/inventoryWeeklyData.model';
-import { PagesWeeklyData, CategoryWeeklyData } from '../../../../models/inventories/inventoryWeeklyData.model';
+import { CategoryWeeklyData } from '../../../../models/inventories/inventoryWeeklyData.model';
 
 const INVENTORY_LS ='inventoryLocalStorage'
 
@@ -71,19 +71,12 @@ export class InventoryWeeklyFormPage implements OnInit {
         this.slidesButtonStatus[1] = { active: true, text: struct.pages[1].name, lastPage: false}
       struct.pages.forEach( (page) => this.pushPageInv(page) )
       this.pushFinalPage();
-      // this.slidesButtonStatus[0] = { active: false, text: '', lastPage: false }
-      //   this.slidesButtonStatus[1] = { active: true, text: struct.pages[1].name, lastPage: false}
-      // struct.pages.forEach( (page, pageIdx) => this.pushPageInv(page, pageIdx) )
-      // this.pushFinalPage();
-      // this.tittleToolbar = `${this.invTitleName} - ${this.inventoryStructure.pages[0].name || ''}`;
     });
   }
 
   private getStore(): void {
     this.actRoute.params.subscribe( params => {
-      // this.storeInv.setValue(params.id);
       this.localStorageStore = params.id+INVENTORY_LS;
-      // this.cacheInventory = this.getLocalStorageInventory();
 
       this.storeAbv = params.id;
       this.selectedStore = StoresName[this.storeAbv];
@@ -149,12 +142,14 @@ export class InventoryWeeklyFormPage implements OnInit {
 
     const weeklyData = this.formatingFormResults();
     console.log(weeklyData);
-    // this.inventoryReportService.setNewWeeklyInventory(weeklyData).then( resp => {
-    //   this.deleteProgressProcess();
-    //   this.router.navigateByUrl(this.urlBack);
-    //   this.toastsService.savedItemToast(this.savedMsg);
-    // }).catch( err => this.toastsService.errorToast(err.msg))
-    //   .finally( () => this.closeLoading());
+    this.inventoryReportService.setNewWeeklyInventory(weeklyData).then( resp => {
+      this.deleteProgressProcess();
+      this.router.navigateByUrl(this.urlBack);
+      this.toastsService.savedItemToast(this.savedMsg);
+    }).catch( err => 
+      { console.log(err);
+        this.toastsService.errorToast(err.msg)})
+      .finally( () => this.closeLoading());
   }
   
   private formatingFormResults() {
@@ -183,9 +178,9 @@ export class InventoryWeeklyFormPage implements OnInit {
             items: categoryData.items.map(item => { return {
               id: item.id,
               name: item.name,
-              waste: item.waste,
               quantity: item.quantity,
               showName: item.showName,
+              unit: item.unit,
             }})
           }
           weeklyData.weeklyReport.push(categoryWeeklyData);

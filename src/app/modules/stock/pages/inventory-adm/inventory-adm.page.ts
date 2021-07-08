@@ -67,6 +67,8 @@ export class InventoryAdmPage implements OnInit {
         this.dailyInventory = inv[0] 
         let date = inv[0].closedDate;
         this.dailyDate = Object(date).seconds*1000;
+      } else {
+        this.dailyInventory = null;
       }
     });
     this.inventoryReportService.getLastWeeklyInventoryByAbvName(this.selectedStore).subscribe(inv => {
@@ -74,6 +76,8 @@ export class InventoryAdmPage implements OnInit {
         this.weeklyInventory = inv[0] 
         let date = inv[0].closedDate;
         this.weeklyDate = Object(date).seconds*1000;
+      } else {
+        this.weeklyInventory= null;
       }
     });
   }

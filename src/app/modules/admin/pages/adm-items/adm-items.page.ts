@@ -149,7 +149,6 @@ export class AdmItemsPage implements OnInit {
         showName: data.itemForm.showName,
         categoryId: data.itemForm.categoryId,
         unit: data.itemForm.unit,
-        waste: data.itemForm.waste,
         slid: data.itemForm.slid,
         steps: data.itemForm.steps,
       }
@@ -175,7 +174,6 @@ export class AdmItemsPage implements OnInit {
               showName: dataItem.showName,
               categoryId: dataItem.categoryId,
               unit: dataItem.unit,
-              waste: dataItem.waste,
               slid: dataItem.slid,
               steps: dataItem.steps
             }

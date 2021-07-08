@@ -15,7 +15,7 @@ export class InvInputSliderFormComponent implements OnInit {
   @Input() itsDaily: boolean;
   @Output() setLS = new EventEmitter<boolean>();
   @Output() endLoading = new EventEmitter<boolean>();
-  rangeStep: number;
+  rangeStep: number[] = [];
 
   public categoryIdx = -1;
 
@@ -69,8 +69,14 @@ export class InvInputSliderFormComponent implements OnInit {
 
   private pushCategoryItem(item: ItemInventory, pageIdx: number, categoryIdx: number, itemIdx: number): void {
     let quant = 0;
-    this.rangeStep = item.steps;
+    let itemStep = item.steps;
     let slidVal = item.slid;
+
+    if ( slidVal > 8) { itemStep = 1 }
+    if ( slidVal <= 8) { itemStep = 0.5 }
+    if ( slidVal <= 5) { itemStep = 0.25 }
+    if ( slidVal <= 2) { itemStep = 0.1 }
+    this.rangeStep.push(itemStep);
     if (slidVal > 6 && this.itsDaily) {slidVal = 6 };
     if(this.cacheInventory){ quant = this.getQuantityFromCache(pageIdx, categoryIdx, itemIdx);}
     this.categoryItems.push( this.formBuilder.group({
@@ -79,7 +85,7 @@ export class InvInputSliderFormComponent implements OnInit {
       showName: item.showName,
       categoryId: item.categoryId,
       unit: item.unit,
-      steps: item.steps,
+      steps: itemStep,
       slid: slidVal,
       quantity: quant,
       rangeQuantity: quant,
@@ -100,12 +106,18 @@ export class InvInputSliderFormComponent implements OnInit {
   controlInput(itemIdx) {
     const itemControl = this.categoryItems.controls[itemIdx] as FormControl;
     let inputValue = itemControl.get('quantity').value || 0;
-
+    
     const decimalPart = inputValue % 1;
-    if (decimalPart !== 0.5 && decimalPart !== 0) {
+    const milecimalPart = inputValue %100
+    if (decimalPart !== 0.5 && decimalPart !== 0 && this.rangeStep[itemIdx] >= 0.5) {
       inputValue = Math.round(inputValue);
     }
-    
+
+    if (this.rangeStep[itemIdx] <= 0.1 && milecimalPart !== 0) {
+      inputValue =  Math.round(inputValue*10)/10;
+    }
+
+
     itemControl.get('rangeQuantity').setValue(inputValue);
     itemControl.get('quantity').setValue(inputValue);
 
@@ -114,7 +126,7 @@ export class InvInputSliderFormComponent implements OnInit {
 
   public rangeChange(itemIdx): void {
     const itemControl = this.categoryItems.controls[itemIdx] as FormControl;
-    const rangeValue = itemControl.get('rangeQuantity').value;
+    const rangeValue = (itemControl.get('rangeQuantity').value);
     itemControl.get('quantity').setValue(rangeValue);
     
     this.setLocalStorageInventory();
@@ -128,10 +140,12 @@ export class InvInputSliderFormComponent implements OnInit {
     const itemControl = this.categoryItems.controls[itemIdx] as FormControl;
     const inputValue = itemControl.get('quantity').value;
     if(inputValue > 0) {
-      itemControl.get('rangeQuantity').setValue(inputValue - this.rangeStep);
-      itemControl.get('quantity').setValue(inputValue - this.rangeStep);
+      let value = Number(inputValue - this.rangeStep[itemIdx]);
+      itemControl.get('rangeQuantity').setValue(value);
+      itemControl.get('quantity').setValue(value);
       this.setLocalStorageInventory();
     }
+    this.controlInput(itemIdx);
   }
 
   plusQuant(itemIdx) {
@@ -139,10 +153,12 @@ export class InvInputSliderFormComponent implements OnInit {
     const inputValue = itemControl.get('quantity').value;
     const slid = itemControl.get('slid').value;
     if(inputValue < slid) {
-      itemControl.get('rangeQuantity').setValue(inputValue + this.rangeStep);
-      itemControl.get('quantity').setValue(inputValue + this.rangeStep);
+      let value = Number(inputValue + this.rangeStep[itemIdx]);
+      itemControl.get('rangeQuantity').setValue(value);
+      itemControl.get('quantity').setValue(value);
       this.setLocalStorageInventory();
     }
+    this.controlInput(itemIdx);
   }
 
   private getQuantityFromCache(pageIdx: number, categoryIdx: number, itemIdx: number) {

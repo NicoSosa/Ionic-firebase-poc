@@ -52,7 +52,7 @@
                   </ion-button>
                 </ion-col>
                 <ion-col  size="5">
-                  <ion-range min="0" [max]="item.value.slid" [step]="rangeStep" snaps="true" formControlName="rangeQuantity" debounce="100" (ionChange)="rangeChange(itemIdx)">
+                  <ion-range min="0" [max]="item.value.slid" [step]="rangeStep[itemIdx]" snaps="true" formControlName="rangeQuantity" debounce="100" (ionChange)="rangeChange(itemIdx)">
                     <ion-label slot="start">0</ion-label>
                     <ion-label slot="end">{{item.value.slid}}</ion-label>
                   </ion-range>

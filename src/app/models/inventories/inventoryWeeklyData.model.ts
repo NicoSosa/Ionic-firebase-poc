@@ -7,11 +7,6 @@ export interface InventoryWeeklyData {
     weeklyReport?: CategoryWeeklyData[];
 }
 
-export interface PagesWeeklyData {
-    name: string;
-    categories: CategoryWeeklyData[];
-}
-
 export interface CategoryWeeklyData {
     category: string;
     items: ItemInventoryWeeklyData[];
@@ -21,7 +16,7 @@ interface ItemInventoryWeeklyData {
     id: string;
     name: string;
     showName: string;
-    waste?: number;
+    unit?: string;
     isNeeded?: boolean;
     quantity?: number;
 }

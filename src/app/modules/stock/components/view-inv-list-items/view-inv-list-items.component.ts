@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { InventoryDailyData } from '../../../../models/inventories/inventoryDailyData.model';
+import { InventoryWeeklyData } from '../../../../models/inventories/inventoryWeeklyData.model';
 
 @Component({
   selector: 'app-view-inv-list-items',
