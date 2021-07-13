@@ -1,10 +1,9 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component } from '@angular/core';
 import { AuthService } from './services/auth/auth.service';
 import { ToastsService } from './services/userMsgs/toasts.service';
 import { Router } from '@angular/router';
-import { ADMIN_MAIL, ADMIN_MENU, USER_MENU } from './infrastructure/constants/sidebarMenu.constants';
+import { ADMIN_MENU, USER_MENU } from './infrastructure/constants/sidebarMenu.constants';
 import { AuthUser } from './models/auth/authUser.model';
-import { DbRequestsService } from './services/db-requests.service';
 import { AlertsService } from './services/userMsgs/alerts.service';
 import { InventoryStructureService } from './services/firestore-requests/inventory-structure.service';
 import { InventoryUsersService } from './services/firestore-requests/inventory-users.service';

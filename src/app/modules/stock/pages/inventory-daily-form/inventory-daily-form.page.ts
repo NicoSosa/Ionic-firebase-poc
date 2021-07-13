@@ -62,13 +62,13 @@ export class InventoryDailyFormPage implements OnInit {
   //#region - Get Data
   private getInventoryStruct() {
     this.inventoryStructureService.getLastDailyInventoryStructure(this.selectedStore).subscribe( struct => {
-      if( struct ){
+      if( struct && !this.inventoryStructure ){
         this.inventoryStructure = struct;
         this.tittleToolbar = `${this.invTitleName} - ${struct.pages[0].name}`;
         this.slidesButtonStatus[0] = { active: false, text: '', lastPage: false }
           this.slidesButtonStatus[1] = { active: true, text: struct.pages[1].name, lastPage: false}
         struct.pages.forEach( (page) => this.pushPageInv(page) )
-        this.pushFinalPage();
+        this.pushFinalPage(); 
       } else {
       }
     });

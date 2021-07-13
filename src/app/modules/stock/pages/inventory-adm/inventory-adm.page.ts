@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { InventoryViewModel } from '../../../../models/inventories/inventoryView.Model';
 import { AlertsService } from '../../../../services/userMsgs/alerts.service';
@@ -7,7 +7,7 @@ import { AuthService } from '../../../../services/auth/auth.service';
 import { first } from 'rxjs/operators';
 import { InventoryDailyData } from '../../../../models/inventories/inventoryDailyData.model';
 import { FormType } from '../../../../infrastructure/enum/formType.enum';
-import { StoreAbv, StoresName, StoresAbvDescript } from '../../../../infrastructure/enum/stores.enum';
+import { StoreAbv, StoresName, StoresAbvDescript, StoreName, StoresNameDescript } from '../../../../infrastructure/enum/stores.enum';
 import { InventoryReportService } from '../../../../services/firestore-requests/inventory-report.service';
 import { InventoryUsersService } from '../../../../services/firestore-requests/inventory-users.service';
 import { STORES_NAME_LIST } from 'src/app/infrastructure/constants/storeList.constants';
@@ -18,18 +18,20 @@ import { InventoryWeeklyData } from 'src/app/models/inventories/inventoryWeeklyD
   templateUrl: './inventory-adm.page.html',
   styleUrls: ['./inventory-adm.page.scss'],
 })
-export class InventoryAdmPage implements OnInit {
-  public tittleToolbar: string = 'Inventory Adm';
+export class InventoryAdmPage implements OnInit, OnDestroy {
+  public tittleToolbar: string = 'Inventory';
 
   public storeList = STORES_NAME_LIST;
   private selectedStore: StoresName = StoresName.RVS;
   private storeAbv: StoreAbv = StoresAbvDescript.get(this.selectedStore);
+  public storeName: StoreName;
   public formType = FormType;
 
   public weeklyInventory: InventoryWeeklyData;
   public dailyInventory: InventoryDailyData;
   public weeklyDate: number;
   public dailyDate: number;
+  public adminUser: boolean = false;
 
   chartOpen: boolean[] = [true,true,true];  
 
@@ -40,7 +42,41 @@ export class InventoryAdmPage implements OnInit {
     private inventoryUsersService: InventoryUsersService) { }
 
   ngOnInit() {
-    this.changeSelectedInventory();
+    this.initialProcess();
+  }
+
+  ngOnDestroy(): void {
+  }
+
+  async initialProcess() {
+    let userAuth = await this.authService.authData().pipe(first()).toPromise();
+    if (userAuth) {
+      let userDb = await this.inventoryUsersService.getUserFirestore(userAuth.uid).pipe(first()).toPromise();
+      if (userDb) {
+        if (userDb.isInventoryAdmin || userDb.displayName === 'empanadus') {
+          this.adminUser = true;
+        } else {
+          this.adminUser = false;
+          switch (userDb.displayName) {
+            case 'HWD':
+              this.selectedStore = StoresName.HWD;
+              break;
+            case 'LGE':
+              this.selectedStore = StoresName.LGE;  
+            break;
+            case 'RVS':
+              this.selectedStore = StoresName.RVS;
+            break;
+            
+            default:
+            break;
+          }
+          this.storeAbv = StoresAbvDescript.get(this.selectedStore);
+          this.storeName = StoresNameDescript.get(this.selectedStore);
+        }
+        this.changeSelectedInventory();
+      }
+    }
   }
 
   segmentChanged(event): void{

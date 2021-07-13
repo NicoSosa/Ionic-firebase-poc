@@ -4,10 +4,8 @@ import { FormArray, FormBuilder, FormGroup, FormControl } from '@angular/forms';
 import { ViewChild } from '@angular/core';
 import { IonSlides } from '@ionic/angular';
 import { ActivatedRoute, Router } from '@angular/router';
-import { DbRequestsService } from '../../../../services/db-requests.service';
 import { INVENTORY_SAVE_MSG, STOCK_URL, WEEK_INVENTORY_TITLE_NAME } from '../../constants/inventoryConstants';
 import { InventoryStructure, PageInventory } from '../../../../models/inventories/inventoryStructure.model';
-import { StoreViewModel } from '../../../../models/stores/storeView.model';
 import { ToastsService } from '../../../../services/userMsgs/toasts.service';
 import { AlertsService } from '../../../../services/userMsgs/alerts.service';
 import { FormStyle } from '../../../../infrastructure/enum/formStyle.enum';
@@ -65,12 +63,14 @@ export class InventoryWeeklyFormPage implements OnInit {
   //#region - Get Data
   private getInventoryStruct() {
     this.inventoryStructureService.getLastWeeklyInventoryStructure(this.selectedStore).subscribe( struct => {
-      this.inventoryStructure = struct;
-      this.tittleToolbar = `${this.invTitleName} - ${struct.pages[0].name}`;
-      this.slidesButtonStatus[0] = { active: false, text: '', lastPage: false }
-        this.slidesButtonStatus[1] = { active: true, text: struct.pages[1].name, lastPage: false}
-      struct.pages.forEach( (page) => this.pushPageInv(page) )
-      this.pushFinalPage();
+      if(!this.inventoryStructure) {
+        this.inventoryStructure = struct;
+        this.tittleToolbar = `${this.invTitleName} - ${struct.pages[0].name}`;
+        this.slidesButtonStatus[0] = { active: false, text: '', lastPage: false }
+          this.slidesButtonStatus[1] = { active: true, text: struct.pages[1].name, lastPage: false}
+        struct.pages.forEach( (page) => this.pushPageInv(page) )
+        this.pushFinalPage();
+      }
     });
   }
 

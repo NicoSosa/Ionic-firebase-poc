@@ -69,27 +69,43 @@ export class InvInputSliderFormComponent implements OnInit {
 
   private pushCategoryItem(item: ItemInventory, pageIdx: number, categoryIdx: number, itemIdx: number): void {
     let quant = 0;
-    let itemStep = item.steps;
-    let slidVal = item.slid;
-
-    if ( slidVal > 8) { itemStep = 1 }
-    if ( slidVal <= 8) { itemStep = 0.5 }
-    if ( slidVal <= 5) { itemStep = 0.25 }
-    if ( slidVal <= 2) { itemStep = 0.1 }
-    this.rangeStep.push(itemStep);
-    if (slidVal > 6 && this.itsDaily) {slidVal = 6 };
     if(this.cacheInventory){ quant = this.getQuantityFromCache(pageIdx, categoryIdx, itemIdx);}
-    this.categoryItems.push( this.formBuilder.group({
-      id: item.id,
-      name: item.name,
-      showName: item.showName,
-      categoryId: item.categoryId,
-      unit: item.unit,
-      steps: itemStep,
-      slid: slidVal,
-      quantity: quant,
-      rangeQuantity: quant,
-    }));
+    if (item.isSwitch) {
+      this.categoryItems.push( this.formBuilder.group({
+        id: item.id,
+        name: item.name,
+        showName: item.showName,
+        categoryId: item.categoryId,
+        unit: item.unit,
+        isSwitch: item.isSwitch,
+        steps: 1,
+        slid: 1,
+        quantity: quant,
+        rangeQuantity: quant,
+      }));
+    } else {
+      let itemStep = item.steps;
+      let slidVal = item.slid;
+  
+      if ( slidVal > 8) { itemStep = 1 }
+      if ( slidVal <= 8) { itemStep = 0.5 }
+      if ( slidVal <= 5) { itemStep = 0.25 }
+      if ( slidVal <= 2) { itemStep = 0.1 }
+      this.rangeStep.push(itemStep);
+      if (slidVal > 6 && this.itsDaily) {slidVal = 6 };
+      if(this.cacheInventory){ quant = this.getQuantityFromCache(pageIdx, categoryIdx, itemIdx);}
+      this.categoryItems.push( this.formBuilder.group({
+        id: item.id,
+        name: item.name,
+        showName: item.showName,
+        categoryId: item.categoryId,
+        unit: item.unit,
+        steps: itemStep,
+        slid: slidVal,
+        quantity: quant,
+        rangeQuantity: quant,
+      }));
+    }
   }
 
 
@@ -159,6 +175,18 @@ export class InvInputSliderFormComponent implements OnInit {
       this.setLocalStorageInventory();
     }
     this.controlInput(itemIdx);
+  }
+
+  changeCheckNeeded(itemIdx){
+    const itemControl = this.categoryItems.controls[itemIdx] as FormControl;
+    const rangeValue = (itemControl.get('rangeQuantity').value);
+    if(rangeValue) {
+      itemControl.get('quantity').setValue(1);
+    } else {
+      itemControl.get('quantity').setValue(0);
+    }
+    
+    this.setLocalStorageInventory();
   }
 
   private getQuantityFromCache(pageIdx: number, categoryIdx: number, itemIdx: number) {

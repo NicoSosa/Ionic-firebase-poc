@@ -29,6 +29,7 @@ export interface ItemInventory {
     waste?: number;
     slid?: number;
     steps?: number;
+    isSwitch?: boolean; // FormStyle
 }
 export interface DBInventoryStructure extends InventoryStructure{
     dateUpdated: number;

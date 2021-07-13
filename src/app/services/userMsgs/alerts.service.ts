@@ -98,7 +98,7 @@ export class AlertsService {
   async warningPermission(store: string) {
     return await this.alertController.create({
       cssClass: 'warning-delete-alert',
-      subHeader: `You can't create an inventory for ${store} with your account.`,
+      subHeader: `You can't create an inventory for this store with your account.`,
       keyboardClose: true,
       backdropDismiss: false,
       header: 'Insufficient permissions',

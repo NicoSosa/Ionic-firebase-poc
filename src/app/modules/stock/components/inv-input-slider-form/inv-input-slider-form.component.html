@@ -29,7 +29,7 @@
           <hr>
           <ion-row class="itemRow" formArrayName="items"> 
             <ion-col size="12" size-sm="12" size-md="12" size-lg="6" size-xl="6" color="light" *ngFor="let item of categoryItems.controls; let itemIdx = index" [formGroupName]="itemIdx">
-              <ion-row class="ion-align-items-center">
+              <ion-row class="ion-align-items-center" *ngIf="!item.value.isSwitch">
                 <ion-col size="3" >
                   {{item.value.showName}}:
                 </ion-col>
@@ -41,7 +41,7 @@
                 <ion-col size="2">
                   <small>{{item.value.unit | titlecase}}</small>
                   <ion-item class="itemInput">
-                    <ion-input clearOnEdit="true" type="number" inputmode="decimal" formControlName="quantity" (ionChange)="inputChange(itemIdx)" (ionBlur)="controlInput(itemIdx)"></ion-input>
+                    <ion-input clearOnEdit="true" type="text" inputmode="decimal" formControlName="quantity" (ionChange)="inputChange(itemIdx)" (ionBlur)="controlInput(itemIdx)"></ion-input>
                     <!-- <ion-input clearOnEdit="true" type="number" enterkeyhint="next" inputmode="decimal" formControlName="quantity" (ionChange)="inputChange(itemIdx)"></ion-input> -->
                   </ion-item>                      
                 </ion-col>
@@ -57,6 +57,23 @@
                     <ion-label slot="end">{{item.value.slid}}</ion-label>
                   </ion-range>
                 </ion-col>
+              </ion-row>
+              <ion-row class="ion-align-items-center" *ngIf="item.value.isSwitch">
+                  <ion-col size="3">
+                    {{item.value.showName}}:
+                  </ion-col>
+                  <ion-col size="1"></ion-col>
+                  <ion-col size="2">
+                    <small>{{item.value.unit | titlecase}}</small>
+                    <ion-item class="itemInput">
+                      <ion-input clearOnEdit="true" type="number" inputmode="decimal" formControlName="quantity" disabled></ion-input>
+                    </ion-item>                      
+                  </ion-col>
+                  <ion-col size="1"></ion-col>
+                  <ion-col size="2" class="unitCol" >
+                    <ion-toggle color="primary" formControlName="rangeQuantity" mode="ios" (ionChange)="changeCheckNeeded(itemIdx)"></ion-toggle>
+                  </ion-col>
+                  <ion-col size="1"></ion-col>
               </ion-row>
             </ion-col>
           </ion-row>
