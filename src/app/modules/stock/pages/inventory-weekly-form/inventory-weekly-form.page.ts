@@ -141,7 +141,7 @@ export class InventoryWeeklyFormPage implements OnInit {
     this.alertsService.presentLoading().then();
 
     const weeklyData = this.formatingFormResults();
-    console.log(weeklyData);
+    // console.log(weeklyData);
     this.inventoryReportService.setNewWeeklyInventory(weeklyData).then( resp => {
       this.deleteProgressProcess();
       this.router.navigateByUrl(this.urlBack);
@@ -203,6 +203,11 @@ export class InventoryWeeklyFormPage implements OnInit {
   }
 
   private deleteProgressProcess(): void {
+    this.slides.slideTo(0).then(() => {
+      this.slides.getActiveIndex().then( activeIdx => {
+        this.updateSlideButton(activeIdx);
+      })
+    });
     this.pagesInv.controls.forEach( page => {
       const pages = page.get('categories') as FormArray;
       try {
