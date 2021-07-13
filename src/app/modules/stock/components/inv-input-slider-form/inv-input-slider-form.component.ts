@@ -177,6 +177,19 @@ export class InvInputSliderFormComponent implements OnInit {
     this.controlInput(itemIdx);
   }
 
+  switchInputChange(itemIdx) {
+    const itemControl = this.categoryItems.controls[itemIdx] as FormControl;
+    const inputValue = itemControl.get('quantity').value;
+
+    if( (inputValue == 1) ) {
+      itemControl.get('rangeQuantity').setValue(1);
+      itemControl.get('quantity').setValue(1);
+    } else {
+      itemControl.get('rangeQuantity').setValue(0);
+      itemControl.get('quantity').setValue(0);
+    }
+  }
+
   changeCheckNeeded(itemIdx){
     const itemControl = this.categoryItems.controls[itemIdx] as FormControl;
     const rangeValue = (itemControl.get('rangeQuantity').value);

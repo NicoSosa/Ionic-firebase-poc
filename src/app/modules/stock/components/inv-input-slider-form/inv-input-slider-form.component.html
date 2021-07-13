@@ -66,7 +66,7 @@
                   <ion-col size="2">
                     <small>{{item.value.unit | titlecase}}</small>
                     <ion-item class="itemInput">
-                      <ion-input clearOnEdit="true" type="number" inputmode="decimal" formControlName="quantity" disabled></ion-input>
+                      <ion-input clearOnEdit="true" type="text" formControlName="quantity" (ionChange)="switchInputChange(itemIdx)"></ion-input>
                     </ion-item>                      
                   </ion-col>
                   <ion-col size="1"></ion-col>
