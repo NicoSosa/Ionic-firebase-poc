@@ -23,10 +23,8 @@ interface UrlButton {
 };
 
 export const ADMIN_PAGE_CARDS: AdminPageCard[] = [
-    { title: 'Inventory Struct', description: 'Manage the inventory structure', description2:'Create, order, delete or update Pages and Categories', urlButtons: [{url: 'structure/weekly', description: 'Weekly'}, {url: 'structure/daily', description: 'Daily'}], icon: 'clipboard' },
-    // { title: 'Inventory Items', description: 'Manage the inventory items',  description2: 'Create, delete, update Items. Change Pages and Category of an Item', url: 'items', icon: 'reader' },
+    { title: 'Inventory Struct', description: 'Manage the inventory structure', description2:'Create, order, delete or update Pages and Categories', urlButtons: [{url: 'structure/daily', description: 'Daily'},{url: 'structure/weekly', description: 'Weekly'},], icon: 'clipboard' },
     { title: 'Inventory Items', description: 'Manage the inventory items',  description2: 'Create, delete, update Items. Change Pages and Category of an Item', url: 'items', icon: 'pricetag' },
     { title: 'Masive Changes', description: 'Create, Delete or move items massively', url: 'masive-changes', icon: 'pricetags' }, 
-    // { title: 'Stores', description: 'Create, Delete or update Stores', url: 'stores', icon: 'storefront' },   
     { title: 'Users', description: 'Create, Delete or update Users', url: 'users', icon: 'people' },   
 ];

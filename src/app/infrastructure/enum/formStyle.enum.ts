@@ -7,9 +7,12 @@ export enum FormStyle {
     Final = 5,
 }
 
-const FormStyleDescript = new Map<number, string> ([
-    [FormStyle.InputPlusSlider ,'En Progreso'], // 0
-    [FormStyle.OnlyInput ,'Entregado'], // 1
-    [FormStyle.IsNeededInput ,'Cancelado'], // 2
+export const FormStyleDescript = new Map<number, string> ([
+    [FormStyle.InputPlusSlider ,'Slider'], // 0
+    [FormStyle.OnlyInput ,'Only Input'], // 1
+    [FormStyle.IsNeededInput ,'Is Needed Input'], // 2
+    [FormStyle.IsNeededAndHide ,'Is Needed And Hide'], // 2
+    [FormStyle.IsNeededOnly ,'Is Needed Only'], // 2
+    [FormStyle.Final ,'Final'], // 2
 ]);
 

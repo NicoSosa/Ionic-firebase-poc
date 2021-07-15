@@ -141,8 +141,14 @@ export class InvInputSliderFormComponent implements OnInit {
   }
 
   public rangeChange(itemIdx): void {
+
     const itemControl = this.categoryItems.controls[itemIdx] as FormControl;
-    const rangeValue = (itemControl.get('rangeQuantity').value);
+    let rangeValue = (itemControl.get('rangeQuantity').value);
+    const milecimalPart = rangeValue %100
+    if (this.rangeStep[itemIdx] <= 0.1 && milecimalPart !== 0) {
+      rangeValue =  Math.round(rangeValue*10)/10;
+    }
+
     itemControl.get('quantity').setValue(rangeValue);
     
     this.setLocalStorageInventory();

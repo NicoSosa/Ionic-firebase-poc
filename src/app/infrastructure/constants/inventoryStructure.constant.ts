@@ -100,7 +100,7 @@ const UTILITIES_AND_CLEANING: CategoryInventory = {
 };
 
 export const INITIAL_INVENTORY_STRUCT: InventoryStructure  = {
-    store: StoresName.RVS,
+    store: StoresName.HWD,
     pages: [{
         name: 'Empanadas',
         categories: [EMPANADAS,FILLINGS]

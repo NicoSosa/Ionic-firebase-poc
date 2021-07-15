@@ -11,6 +11,7 @@ import { AlertsService } from '../../../../services/userMsgs/alerts.service';
 import { FormType, FormTypeDescript } from '../../../../infrastructure/enum/formType.enum';
 import { ActivatedRoute } from '@angular/router';
 import { InventoryStructureService } from '../../../../services/firestore-requests/inventory-structure.service';
+import { FormStyleDescript } from 'src/app/infrastructure/enum/formStyle.enum';
 
 @Component({
   selector: 'app-adm-struct',
@@ -25,6 +26,7 @@ export class AdmStructPage implements OnInit {
   public changesOptions = CHANGE_OPTIONS;
 
   public inventoryStructure: InventoryStructure;
+  public formStyleDescript = FormStyleDescript;
   private formType: FormType;
   private formTypeDescript = FormTypeDescript;
 

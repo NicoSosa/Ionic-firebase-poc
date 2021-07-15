@@ -26,6 +26,10 @@
             <ion-label>
               {{category.category}} <small> ({{ category.items.length }} items)</small>
             </ion-label>
+            <ion-label>
+            <small> {{ formStyleDescript.get(category.formStyle) }} - {{category.formStyle}}</small>
+            </ion-label>
+
             <ion-chip color="tertiary" (click)="openCategoryModal(i,j)" slot="end">
               <ion-label>
                   <ion-icon name="create-outline" size="large"></ion-icon>
@@ -63,7 +67,7 @@
         <ion-reorder-group [disabled]="!changesOptions[2].active" (ionItemReorder)="reorderCategories($event, i)" >
           <ion-item *ngFor="let category of page.categories; let j = index">
             <ion-label>
-              {{category.category}} <small> ({{ category.items.length }} items)</small>
+              {{category.category}} <small> ({{ category.items.length }} items) </small>
             </ion-label>
             <ion-reorder slot="end"></ion-reorder> 
           </ion-item>
