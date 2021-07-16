@@ -176,6 +176,10 @@ export class InvInputSliderFormComponent implements OnInit {
       if (this.rangeStep[itemIdx] === 0.25 && decimalPart === 0) {
         rangeValue = `${rangeValue}.00`;
       }
+
+      if( Number(rangeValue) === 0) {
+        rangeValue = 0;
+      }
       
       itemControl.get('quantity').setValue(rangeValue);
       
