@@ -19,21 +19,6 @@
     <ion-col><b>Observation: </b> {{inventory.observation}}</ion-col>
   </ion-row>
   <ion-row>
-    <ion-col><b>Items Needed: </b></ion-col>
-  </ion-row>
-  <span *ngFor="let category of inventory.isNeededCategories">
-    <ion-row>
-      <ion-col size="1"></ion-col>
-      <ion-col><b>{{category.category}}</b></ion-col>
-    </ion-row>
-    <span *ngFor="let item of category.items">
-      <ion-row *ngIf="item.isNeeded">
-        <ion-col size="3"></ion-col>
-        <ion-col size="9">{{item.name}}</ion-col>
-      </ion-row>
-    </span>
-  </span>
-  <ion-row>
     <ion-col><b>Items Produced: </b></ion-col>
   </ion-row>
   <span *ngFor="let category of inventory.isProducedCategories">
@@ -45,6 +30,25 @@
       <ion-row *ngIf="item.quantity >0">
         <ion-col size="3"></ion-col>
         <ion-col size="9">{{item.name}}: {{item.quantity}}</ion-col>
+      </ion-row>
+    </span>
+  </span>
+  <ion-row>
+    <ion-col><b>Items Needed: </b></ion-col>
+  </ion-row>
+  <span *ngFor="let category of inventory.isNeededCategories">
+    <ion-row>
+      <ion-col size="1"></ion-col>
+      <ion-col><b>{{category.category}}</b></ion-col>
+    </ion-row>
+    <span *ngFor="let item of category.items">
+      <ion-row *ngIf="item.isNeeded && !(category.category === 'Other Items')">
+        <ion-col size="3"></ion-col>
+        <ion-col size="9">{{item.name}}</ion-col>
+      </ion-row>
+      <ion-row *ngIf="item.isNeeded && category.category === 'Other Items'">
+        <ion-col size="3"></ion-col>
+        <ion-col size="9">{{item.name}} - ({{ (item.category) }})</ion-col>
       </ion-row>
     </span>
   </span>

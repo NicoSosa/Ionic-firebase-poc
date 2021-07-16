@@ -28,7 +28,7 @@ export class InvInputSliderFormComponent implements OnInit {
   private generateCategoryForm(): void {
     let nameCategory = this.pageCategory.category;
     if (this.itsDaily) {
-      nameCategory = `${this.pageCategory.category} ready`;
+      nameCategory = `${this.pageCategory.category}`;
     }
     this.categoryForm.push(
       this.formBuilder.group({

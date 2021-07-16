@@ -17,6 +17,7 @@ interface ItemInventoryDailyData {
     id: string;
     name: string;
     showName: string;
+    category?: string
     unit?:string;
     waste?: number;
     isNeeded?: boolean;

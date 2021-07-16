@@ -11,7 +11,7 @@ const EMPANADAS: CategoryInventory = {
 };
 
 const FILLINGS: CategoryInventory = {
-    category: 'Fillings',
+    category: 'Food Pans',
     id: 1,
     formStyle: FormStyle.InputPlusSlider,
     unit: 'Food Pans',
@@ -99,6 +99,43 @@ const UTILITIES_AND_CLEANING: CategoryInventory = {
     items: []
 };
 
+// RIVERSIDE
+// export const INITIAL_DAILY_INVENTORY_STRUCT: InventoryStructure = {
+//     store: StoresName.RVS,
+//     pages: [{
+//         name: 'Empanadas',
+//         categories: [EMPANADAS,FILLINGS]
+//     },
+//     {
+//         name: 'Dessert & Drinks',
+//         categories: [GELATO, ALFAJORES, SOUPS]
+//     },
+//     {
+//     name: 'Others Items',
+//         itsOther: true,
+//         categories: [COFFEE_AND_TEAS, MEAT, DAIRY, FRUITS_AND_VEGETABLES, OTHERS, SPICES_DRY_CANNED_AND_BAKING, BEVERAGES, UTILITIES_AND_CLEANING]
+//     }]
+// };
+
+// LA GRANGE & HOMEWOOD
+export const INITIAL_DAILY_INVENTORY_STRUCT: InventoryStructure = {
+    store: StoresName.HWD,
+    pages: [{
+        name: 'Empanadas',
+        categories: [FILLINGS]
+    },
+    {
+        name: 'Raw materials',
+        categories: [FRUITS_AND_VEGETABLES]
+    },
+    {
+    name: 'Others Items',
+        itsOther: true,
+        categories: [EMPANADAS, GELATO, ALFAJORES, SOUPS, COFFEE_AND_TEAS, MEAT, DAIRY, OTHERS, SPICES_DRY_CANNED_AND_BAKING, BEVERAGES, UTILITIES_AND_CLEANING]
+    }]
+}
+
+
 export const INITIAL_INVENTORY_STRUCT: InventoryStructure  = {
     store: StoresName.HWD,
     pages: [{
@@ -122,20 +159,3 @@ export const INITIAL_INVENTORY_STRUCT: InventoryStructure  = {
         categories: [SPICES_DRY_CANNED_AND_BAKING, BEVERAGES, UTILITIES_AND_CLEANING],
     }],
 };
-
-export const INITIAL_DAILY_INVENTORY_STRUCT: InventoryStructure = {
-    store: StoresName.HWD,
-    pages: [{
-        name: 'Empanadas',
-        categories: [EMPANADAS,FILLINGS]
-    },
-    {
-        name: 'Dessert & Drinks',
-        categories: [GELATO, ALFAJORES, SOUPS]
-    },
-    {
-    name: 'Others Items',
-        itsOther: true,
-        categories: [COFFEE_AND_TEAS, MEAT, DAIRY, FRUITS_AND_VEGETABLES, OTHERS, SPICES_DRY_CANNED_AND_BAKING, BEVERAGES, UTILITIES_AND_CLEANING]
-    }]
-}
