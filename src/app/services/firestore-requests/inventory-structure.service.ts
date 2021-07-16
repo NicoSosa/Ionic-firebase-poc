@@ -30,7 +30,7 @@ export class InventoryStructureService {
   }
 
   getWeeklyStructure(): Observable<InventoryStructure> {
-    return of(this.constInventoryStructure);
+    // return of(this.constInventoryStructure);
     if( !this.weeklyInventoryStructure){
       this.weeklyInventoryStructure = this.weeklyInventoryStructureCollection.valueChanges();
     }
@@ -38,7 +38,7 @@ export class InventoryStructureService {
   }
   
   getDailyStructure(): Observable<InventoryStructure> {
-    return of(this.constDailyInventoryStructure);
+    // return of(this.constDailyInventoryStructure);
     if( !this.dailyInventoryStructure) {
       this.dailyInventoryStructure = this.dailyInventoryStructureCollection.valueChanges();
     }

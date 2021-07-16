@@ -1,36 +1,85 @@
 <!-- <pre>
   {{ inventoryForm.value | json }}
 </pre> -->
+
+
 <span [formGroup]="inventoryForm">
   <span formArrayName="pages">
     <span [formGroupName]="idxPage">
       <span formArrayName="categories">
         <span [formGroupName]="categoryIdx" *ngIf="categoryIdx >= 0">
           <ion-item-divider sticky="true">
-            <ion-col class="categoryTitle" size="8">
-              <ion-label>{{ categoryName.value }}</ion-label>
-            </ion-col>
-            <ion-col size="2">Quantity</ion-col>
-            <ion-col size="2">Units</ion-col>
+              <ion-col class="categoryName" size="12" size-sm="12" size-md="12" size-lg="6" size-xl="6">
+                  <ion-row>
+                    <ion-col size="4">
+                      <ion-label>{{ categoryName.value }}</ion-label>
+                    </ion-col>
+                    <ion-col size="3"></ion-col>
+                    <ion-col size="5">Quantity</ion-col>
+                  </ion-row> 
+              </ion-col>
+              <ion-col class="categoryTitle categoryName" size="12" size-sm="12" size-md="12" size-lg="6" size-xl="6">
+                  <ion-row>
+                    <ion-col size="4">
+                      <ion-label>{{ categoryName.value }}</ion-label>
+                    </ion-col>
+                    <ion-col size="3"></ion-col>
+                    <ion-col size="5">Quantity</ion-col>
+                  </ion-row> 
+              </ion-col>
           </ion-item-divider>
           <hr>
-          <div formArrayName="items">
-            <ion-item color="light" *ngFor="let item of categoryItems.controls; let itemIdx = index" [formGroupName]="itemIdx">
-              <ion-col size="8">
-                {{item.value.showName}}:
-              </ion-col>
-              <ion-col size="2">
-                <ion-item class="itemInput">
-                  <ion-input type="number" inputmode="numeric" formControlName="quantity" (ionChange)="setLocalStorageInventory()"></ion-input>
-                </ion-item>                      
-              </ion-col>
-              <ion-col size="2" class="unitCol">
-              {{item.value.unit}}
-              </ion-col>
-            </ion-item>
-          </div>
+          <ion-row class="itemRow" formArrayName="items"> 
+            <ion-col size="12" size-sm="12" size-md="12" size-lg="6" size-xl="6" color="light" *ngFor="let item of categoryItems.controls; let itemIdx = index" [formGroupName]="itemIdx">
+              <ion-row class="ion-align-items-center" *ngIf="!item.value.isSwitch">
+                <ion-col size="4" >
+                  {{item.value.showName}}:
+                </ion-col>
+                <ion-col size="2"></ion-col>
+                <ion-col class="ion-no-padding" size="1">
+                  <ion-button color="secondary" size="small" (click)="minusQuant(itemIdx)">
+                    <ion-label><ion-icon name="remove-outline"></ion-icon></ion-label>
+                  </ion-button>
+                </ion-col>
+                <ion-col size="2">
+                  <span class="titleSmall">{{item.value.unit | titlecase}}</span>
+                  <ion-item class="itemInput">
+                    <ion-input clearOnEdit="true" type="text" inputmode="decimal" formControlName="quantity" (ionChange)="inputChange(itemIdx)" (ionBlur)="controlInput(itemIdx)"></ion-input>
+                    <!-- <ion-input clearOnEdit="true" type="number" enterkeyhint="next" inputmode="decimal" formControlName="quantity" (ionChange)="inputChange(itemIdx)"></ion-input> -->
+                  </ion-item>                      
+                </ion-col>
+                
+                <ion-col class="ion-no-padding ion-text-left" size="1">
+                  <ion-button color="secondary" size="small" (click)="plusQuant(itemIdx)">
+                    <ion-label><ion-icon name="add-outline"></ion-icon></ion-label>
+                  </ion-button>
+                </ion-col>
+                <!-- <ion-col  size="5">
+                  {{item.value.unit | titlecase}}
+                </ion-col> -->
+              </ion-row>
+              <ion-row class="ion-align-items-center" *ngIf="item.value.isSwitch">
+                  <ion-col size="3">
+                    {{item.value.showName}}:
+                  </ion-col>
+                  <ion-col size="1"></ion-col>
+                  <ion-col size="2">
+                    <span class="titleSmall">{{item.value.unit | titlecase}}</span>
+                    <ion-item class="itemInput">
+                      <ion-input clearOnEdit="true" type="text" formControlName="quantity" (ionChange)="switchInputChange(itemIdx)"></ion-input>
+                    </ion-item>                      
+                  </ion-col>
+                  <ion-col size="1"></ion-col>
+                  <ion-col size="2" class="unitCol" >
+                    <ion-toggle color="primary" formControlName="rangeQuantity" mode="ios" (ionChange)="changeCheckNeeded(itemIdx)"></ion-toggle>
+                  </ion-col>
+                  <ion-col size="1"></ion-col>
+              </ion-row>
+            </ion-col>
+          </ion-row>
         </span>
       </span>
     </span>
   </span>
 </span>
+

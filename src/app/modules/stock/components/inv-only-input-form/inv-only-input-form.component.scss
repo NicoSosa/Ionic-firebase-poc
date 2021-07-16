@@ -1,8 +1,37 @@
-.categoryTitle{
+.categoryName{
   text-align: left; 
+}
+
+.titleSmall{
+  font-size: x-small;
+}
+
+.categoryTitle{
+  border-left: 1px #525252 solid;
+}
+
+ion-icon{
+  margin-bottom: 3px;
+  margin-left: 3px;
+  margin-right: 3px;
+}
+
+ion-slide{
+  overflow-y: scroll;    
+  display: block;    
 }
 
 .unitCol{
   text-align: center;
 }
-  
+
+ion-range {
+  --height: 10px;
+  border: 1px #ccc9c9 solid;
+  border-radius: 10px;
+}
+
+ion-button {
+  width: 10px;
+  height: 25px;
+}

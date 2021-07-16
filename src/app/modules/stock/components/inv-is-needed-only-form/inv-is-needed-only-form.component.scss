@@ -9,3 +9,36 @@
 .unitCol{
 text-align: center;
 }
+
+.itemRow {
+border-bottom: 1px solid #cec8c8;
+}
+
+.titleSmall{
+font-size: x-small;
+}
+
+
+ion-icon{
+margin-bottom: 3px;
+margin-left: 3px;
+margin-right: 3px;
+}
+
+ion-slide{
+overflow-y: scroll;    
+display: block;    
+}
+
+
+
+ion-range {
+--height: 10px;
+border: 1px #ccc9c9 solid;
+border-radius: 10px;
+}
+
+ion-button {
+width: 10px;
+height: 25px;
+}

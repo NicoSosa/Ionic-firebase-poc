@@ -75,12 +75,12 @@ export class InvIsNeededHideFormComponent implements OnInit {
     const itemControl = this.categoryItems.controls[itemIdx];
     const isNeeded: boolean = !itemControl.get('isNeeded').value;
 
-    if (isNeeded) {
-      itemControl.get('quantity').setValue(0);
-      itemControl.get('quantity').disable();
-    } else {
-      itemControl.get('quantity').enable();
-    }
+    // if (isNeeded) {
+    //   itemControl.get('quantity').setValue(0);
+    //   itemControl.get('quantity').disable();
+    // } else {
+    //   itemControl.get('quantity').enable();
+    // }
     this.setLocalStorageInventory();
   }
 

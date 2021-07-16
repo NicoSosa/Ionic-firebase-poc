@@ -24,6 +24,9 @@
             <span *ngIf="pageCategory.formStyle === formStyleEnum.IsNeededInput && pageCategory.items.length > 0">
               <app-inv-is-needed-input-form [inventoryForm]="inventoryForm" [idxPage]="idxPage" [pageCategory]="pageCategory" [cacheInventory]="cacheInventory" (setLS)="setLocalStorageInventory()"></app-inv-is-needed-input-form>
             </span>
+            <span *ngIf="pageCategory.formStyle === formStyleEnum.SliderDown && pageCategory.items.length > 0">
+              <app-inv-slider-down [inventoryForm]="inventoryForm" [idxPage]="idxPage" [pageCategory]="pageCategory" [cacheInventory]="cacheInventory" (setLS)="setLocalStorageInventory()"></app-inv-slider-down>
+            </span>
           </div>
         </ion-list>
       </div>

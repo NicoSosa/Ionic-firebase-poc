@@ -31,7 +31,7 @@
           <hr>
           <ion-row formArrayName="items">
             <ion-col size="12" size-sm="12" size-md="12" size-lg="6" size-xl="6" color="light" *ngFor="let item of categoryItems.controls; let itemIdx = index" [formGroupName]="itemIdx">
-              <ion-row class="ion-align-items-center ion-no-padding">
+              <ion-row class="ion-align-items-center ion-no-padding itemRow">
                 <ion-col size="7">
                   {{item.value.showName}}:
                 </ion-col>

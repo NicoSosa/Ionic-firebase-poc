@@ -16,6 +16,7 @@ import { InvIsNeededHideFormComponent } from './components/inv-is-needed-hide-fo
 import { InvIsNeededOnlyFormComponent } from './components/inv-is-needed-only-form/inv-is-needed-only-form.component';
 import { InventoryViewLastsGeneratedPage } from './pages/inventory-view-lasts-generated/inventory-view-lasts-generated.page';
 import { ViewInvListItemsComponent } from './components/view-inv-list-items/view-inv-list-items.component';
+import { InvSliderDownComponent } from './components/inv-slider-down/inv-slider-down.component';
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import { ViewInvListItemsComponent } from './components/view-inv-list-items/view
     InvIsNeededInputFormComponent,
     InvIsNeededHideFormComponent,
     InvIsNeededOnlyFormComponent,
+    InvSliderDownComponent,
     ViewInvListItemsComponent,
   ],
   imports: [

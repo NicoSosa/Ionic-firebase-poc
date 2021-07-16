@@ -2,8 +2,16 @@
   text-align: left; 
 }
 
+.itemRow {
+border-bottom: 1px solid #cec8c8;
+}
+
+.titleSmall{
+  font-size: x-small;
+}
+
 .categoryTitle{
-  border-left: 1px #525252 solid;
+  border-left: 1px #faf0f0 solid;
 }
 
 ion-icon{
