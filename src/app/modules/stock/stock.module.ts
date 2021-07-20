@@ -17,6 +17,9 @@ import { InvIsNeededOnlyFormComponent } from './components/inv-is-needed-only-fo
 import { InventoryViewLastsGeneratedPage } from './pages/inventory-view-lasts-generated/inventory-view-lasts-generated.page';
 import { ViewInvListItemsComponent } from './components/view-inv-list-items/view-inv-list-items.component';
 import { InvSliderDownComponent } from './components/inv-slider-down/inv-slider-down.component';
+import { ManagInventoryFormService } from './services/manag-inventory-form.service';
+import { InventoryLocalStorageService } from './services/inventory-local-storage.service';
+import { ItemsLogicService } from './services/items-logic.service';
 
 @NgModule({
   declarations: [
@@ -45,6 +48,11 @@ import { InvSliderDownComponent } from './components/inv-slider-down/inv-slider-
     InventoryAdmPage,
     InventoryDailyFormPage,
     InventoryViewLastsGeneratedPage
+  ],
+  providers: [
+    ManagInventoryFormService,
+    InventoryLocalStorageService,
+    ItemsLogicService
   ]
 })
 export class StockModule { }

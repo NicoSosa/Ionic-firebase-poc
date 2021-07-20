@@ -35,7 +35,8 @@ export class InventoryDailyFormPage implements OnInit {
   private selectedStore: StoresName;
   private storeAbv: StoreAbv;
   private storeName: StoreName;
-  
+  public slidePosition: number = 0;
+
   public formStyleEnum = FormStyle;
 
   @ViewChild('slides') slides: IonSlides;
@@ -326,6 +327,7 @@ export class InventoryDailyFormPage implements OnInit {
         this.slidesButtonStatus[1] = { active: true, text: this.pagesInv.controls[idx+1].get('name').value, lastPage: false }
         break;
     }
+    this.slidePosition = idx;
   }
   //#endregion
 

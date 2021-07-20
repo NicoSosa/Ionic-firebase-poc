@@ -6,37 +6,75 @@ ion-footer{
     right: 0;
   }
   
-  ion-icon{
-    margin-bottom: 3px;
-    margin-left: 3px;
-    margin-right: 3px;
-  }
-  
-  ion-slide{
-    overflow-y: scroll;    
-    display: block;    
-  }
-  
-  ion-slides {
-      height: 100%;
-      padding-bottom: 50px;
-    }
-  
-    .swiper-slide {
-      display: block;
-    }
-  
-    .swiper-slide h2 {
-      margin-top: 2.8rem;
-    }
-  
-    .swiper-slide img {
-      max-height: 50%;
-      max-width: 80%;
-      margin: 60px 0 40px;
-      pointer-events: none;
-    }
+ion-icon{
+  margin-bottom: 3px;
+  margin-left: 3px;
+  margin-right: 3px;
+}
 
-    .deleteButton, .saveButton{
-      margin-top: 3%; 
-    }
+ion-slide{
+  overflow-y: scroll;    
+  display: block;    
+}
+
+ion-slides {
+    height: 100%;
+    padding-bottom: 50px;
+  }
+
+.swiper-slide {
+  display: block;
+}
+
+.swiper-slide h2 {
+  margin-top: 2.8rem;
+}
+
+.swiper-slide img {
+  max-height: 50%;
+  max-width: 80%;
+  margin: 60px 0 40px;
+  pointer-events: none;
+}
+
+.deleteButton, .saveButton{
+  margin-top: 3%; 
+}
+
+.categoryName{
+  text-align: left; 
+}
+
+.itemRow {
+border-bottom: 1px solid #cec8c8;
+}
+
+.titleSmall{
+  font-size: x-small;
+}
+
+.categoryTitle{
+  border-left: 1px #faf0f0 solid;
+}
+
+.unitCol{
+  text-align: center;
+}
+
+
+// Slider Components
+ion-range {
+  --height: 10px;
+  border: 1px #ccc9c9 solid;
+  border-radius: 10px;
+}
+
+.minAddButtons {
+  width: 10px;
+  height: 25px;
+}
+
+// Hide Component
+.categoryTitleInHide{
+  text-align: left; 
+}
