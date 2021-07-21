@@ -3,9 +3,86 @@
 </pre> -->
 <span [formGroup]="inventoryForm">
   <span formArrayName="pages">
-    <span [formGroupName]="idxPage">
+    <span [formGroupName]="pageIdx">
       <span formArrayName="categories">
         <span [formGroupName]="categoryIdx" *ngIf="categoryIdx >= 0">
+          <!-- <ion-item-divider sticky="true">
+            <ion-col class="categoryName" size="12" size-sm="12" size-md="12" size-lg="6" size-xl="6">
+                <ion-row>
+                  <ion-col size="4">
+                    <ion-label>{{ categoryName.value }}</ion-label>
+                  </ion-col>
+                  <ion-col size="2"></ion-col>
+                  <ion-col size="6">Quantity</ion-col>
+                </ion-row> 
+            </ion-col>
+            <ion-col class="categoryTitle categoryName" size="12" size-sm="12" size-md="12" size-lg="6" size-xl="6">
+                <ion-row>
+                  <ion-col size="4">
+                    <ion-label>{{ categoryName.value }}</ion-label>
+                  </ion-col>
+                  <ion-col size="2"></ion-col>
+                  <ion-col size="6">Quantity</ion-col>
+                </ion-row> 
+            </ion-col>
+        </ion-item-divider>
+          <ion-virtual-scroll [items]="categoryItems.controls" approxItemHeight="131px" formArrayName="items">
+            <ion-col *virtualItem="let item; let itemIdx = index" size="12" color="light" [formGroupName]="itemIdx">
+              <ion-row class="ion-align-items-center itemRow" *ngIf="!item.value.isSwitch">
+                <ion-col size="4">
+                  {{item.value.showName}}:
+                </ion-col>
+                <ion-col size="2"></ion-col>
+                <ion-col class="ion-no-padding" size="1">
+                  <ion-button color="secondary" size="small" (click)="minusQuant(itemIdx)">
+                    <ion-label><ion-icon name="remove-outline"></ion-icon></ion-label>
+                  </ion-button>
+                </ion-col>
+                
+                <ion-col size="2">
+                  <span class="titleSmall">{{item.value.unit | titlecase}}</span>
+                  <ion-item class="itemInput">
+                    <ion-input clearOnEdit="true" type="text" inputmode="decimal" formControlName="quantity" (ionChange)="controlInput(itemIdx)" (ionBlur)="blurInput(itemIdx)"></ion-input>
+                  </ion-item>                      
+                </ion-col>
+                
+                <ion-col class="ion-no-padding ion-text-left" size="1">
+                  <ion-button color="secondary" size="small" (click)="plusQuant(itemIdx)">
+                    <ion-label><ion-icon name="add-outline"></ion-icon></ion-label>
+                  </ion-button>
+                </ion-col>
+                <ion-col size="4"></ion-col>
+
+                <ion-col  size="8">
+                  <ion-range min="0" [max]="item.value.slid" [step]="item.value.steps" snaps="true" formControlName="rangeQuantity" debounce="100" (ionChange)="rangeChange(itemIdx)">
+                    <ion-label slot="start">0</ion-label>
+                    <ion-label slot="end">{{item.value.slid}}</ion-label>
+                  </ion-range>
+                </ion-col>
+              </ion-row>
+              <ion-row class="ion-align-items-center" *ngIf="item.value.isSwitch">
+                  <ion-col size="3">
+                    {{item.value.showName}}:
+                  </ion-col>
+                  <ion-col size="1"></ion-col>
+                  <ion-col size="2">
+                    <span class="titleSmall">{{item.value.unit | titlecase}}</span>
+                    <ion-item class="itemInput">
+                      <ion-input clearOnEdit="true" type="text" formControlName="quantity" (ionChange)="switchInputChange(itemIdx)"></ion-input>
+                    </ion-item>                      
+                  </ion-col>
+                  <ion-col size="1"></ion-col>
+                  <ion-col size="2" class="unitCol" >
+                    <ion-toggle color="primary" formControlName="rangeQuantity" mode="ios" (ionChange)="changeCheckNeeded(itemIdx)"></ion-toggle>
+                  </ion-col>
+                  <ion-col size="1"></ion-col>
+              </ion-row>
+            </ion-col>
+          </ion-virtual-scroll> -->
+
+
+
+
           <ion-item-divider sticky="true">
               <ion-col class="categoryName" size="12" size-sm="12" size-md="12" size-lg="6" size-xl="6">
                   <ion-row>
@@ -27,20 +104,21 @@
               </ion-col>
           </ion-item-divider>
           <hr>
+
           <ion-row formArrayName="items"> 
             <ion-col size="12" size-sm="12" size-md="12" size-lg="6" size-xl="6" color="light" *ngFor="let item of categoryItems.controls; let itemIdx = index" [formGroupName]="itemIdx">
               <ion-row class="ion-align-items-center itemRow" *ngIf="!item.value.isSwitch">
                 <ion-col size="4" size-sm="4" size-md="3" size-lg="4" size-xl="3">
                   {{item.value.showName}}:
                 </ion-col>
-                <ion-col size="2" size-sm="2" size-md="0" size-lg="2" size-xl="0"></ion-col>
+                <ion-col size="1" size-sm="1" size-md="0" size-lg="1" size-xl="0"></ion-col>
                 <ion-col class="ion-no-padding" size="1" size-sm="1" size-md="1" size-lg="1" size-xl="1">
                   <ion-button color="secondary" size="small" (click)="minusQuant(itemIdx)">
                     <ion-label><ion-icon name="remove-outline"></ion-icon></ion-label>
                   </ion-button>
                 </ion-col>
                 
-                <ion-col size="2" size-sm="2" size-md="2" size-lg="2" size-xl="2">
+                <ion-col size="3" size-sm="3" size-md="2" size-lg="3" size-xl="2">
                   <span class="titleSmall">{{item.value.unit | titlecase}}</span>
                   <ion-item class="itemInput">
                     <ion-input clearOnEdit="true" type="text" inputmode="decimal" formControlName="quantity" (ionChange)="controlInput(itemIdx)" (ionBlur)="blurInput(itemIdx)"></ion-input>
@@ -55,7 +133,7 @@
                 <ion-col size="4" size-sm="4" size-md="0" size-lg="4" size-xl="0"></ion-col>
 
                 <ion-col  size="8" size-sm="8" size-md="4" size-lg="8" size-xl="4">
-                  <ion-range min="0" [max]="item.value.slid" [step]="rangeStep[itemIdx]" snaps="true" formControlName="rangeQuantity" debounce="100" (ionChange)="rangeChange(itemIdx)">
+                  <ion-range min="0" [max]="item.value.slid" [step]="item.value.steps" snaps="true" formControlName="rangeQuantity" debounce="100" (ionChange)="rangeChange(itemIdx)">
                     <ion-label slot="start">0</ion-label>
                     <ion-label slot="end">{{item.value.slid}}</ion-label>
                   </ion-range>
@@ -80,61 +158,6 @@
               </ion-row>
             </ion-col>
           </ion-row>
-          <!-- <ion-row class="itemRow" formArrayName="items"> 
-            <ion-col size="12" size-sm="12" size-md="12" size-lg="6" size-xl="6" color="light" *ngFor="let item of categoryItems.controls; let itemIdx = index" [formGroupName]="itemIdx">
-              <ion-row class="ion-align-items-center" *ngIf="!item.value.isSwitch">
-                <ion-col size="3" >
-                  {{item.value.showName}}:
-                </ion-col>
-                <ion-col class="ion-no-padding" size="1">
-                  <ion-button color="secondary" size="small" (click)="minusQuant(itemIdx)">
-                    <ion-label><ion-icon name="remove-outline"></ion-icon></ion-label>
-                  </ion-button>
-                </ion-col>
-                <ion-col size="2">
-                  <span class="titleSmall">{{item.value.unit | titlecase}}</span>
-                  <ion-item class="itemInput">
-                    <ion-input clearOnEdit="true" type="text" inputmode="decimal" formControlName="quantity"  (ionChange)="controlInput(itemIdx)" (ionBlur)="blurInput(itemIdx)"></ion-input>
-                  </ion-item>                      
-                </ion-col>
-                
-                <ion-col class="ion-no-padding ion-text-left" size="1">
-                  <ion-button color="secondary" size="small" (click)="plusQuant(itemIdx)">
-                    <ion-label><ion-icon name="add-outline"></ion-icon></ion-label>
-                  </ion-button>
-                </ion-col>
-                <ion-col  size="5">
-                  <ion-range min="0" [max]="item.value.slid" [step]="rangeStep[itemIdx]" snaps="true" formControlName="rangeQuantity" debounce="100" (ionChange)="rangeChange(itemIdx)">
-                    <ion-label slot="start">0</ion-label>
-                    <ion-label slot="end">{{item.value.slid}}</ion-label>
-                  </ion-range>
-                </ion-col>
-              </ion-row>
-              <ion-row class="ion-align-items-center" *ngIf="item.value.isSwitch">
-                  <ion-col size="3">
-                    {{item.value.showName}}:
-                  </ion-col>
-                  <ion-col size="1"></ion-col>
-                  <ion-col size="2">
-                    <span class="titleSmall">{{item.value.unit | titlecase}}</span>
-                    <ion-item class="itemInput">
-                      <ion-input clearOnEdit="true" type="text" formControlName="quantity" (ionChange)="switchInputChange(itemIdx)"></ion-input>
-                    </ion-item>                      
-                  </ion-col>
-                  <ion-col size="1"></ion-col>
-                  <ion-col size="2" class="unitCol" >
-                    <ion-toggle color="primary" formControlName="rangeQuantity" mode="ios" (ionChange)="changeCheckNeeded(itemIdx)"></ion-toggle>
-                  </ion-col>
-                  <ion-col size="1"></ion-col>
-              </ion-row>
-            </ion-col>
-          </ion-row> -->
-
-
-
-
-
-
         </span>
       </span>
     </span>

@@ -63,11 +63,6 @@ export class InventoryWeeklyFormPage implements OnInit {
 
   ngOnInit() {
     this.initialProccess();
-    // this.alertsService.presentLoading().then();
-    // this.getStore();
-    // this.getLocalStorageInventory();
-    // this.generateInventoryForm();
-    // this.getInventoryStruct();
   }
 
   private async initialProccess(): Promise<void> {
@@ -104,42 +99,8 @@ export class InventoryWeeklyFormPage implements OnInit {
       this.slidesButtonStatus[1] = { active: true, text: this.inventoryStructure.pages[1].name, lastPage: false}
   }
 
-  //#region - Get Data
-  private getInventoryStruct() {
-    this.inventoryStructureService.getLastWeeklyInventoryStructure(this.selectedStore).subscribe( struct => {
-      if(!this.inventoryStructure) {
-        this.inventoryStructure = struct;
-        this.tittleToolbar = `${this.invTitleName} - ${struct.pages[0].name}`;
-        this.slidesButtonStatus[0] = { active: false, text: '', lastPage: false }
-          this.slidesButtonStatus[1] = { active: true, text: struct.pages[1].name, lastPage: false}
-        // struct.pages.forEach( (page) => this.pushPageInv(page) )
-        // this.pushFinalPage();
-      }
-    });
-  }
-
-  private getStore(): void {
-    this.actRoute.params.subscribe( params => {
-      this.nameOfLocalStorageStore = params.id+INVENTORY_LS;
-
-      this.storeAbv = params.id;
-      this.selectedStore = StoresName[this.storeAbv];
-      this.storeName = StoresNameDescript.get(this.selectedStore);
-      this.invTitleName = ` ${this.storeName}: ${this.invTitleName}`;
-      this.tittleToolbar = `${this.invTitleName} - ${this.inventoryStructure? this.inventoryStructure.pages[0].name : ''}`;
-    });
-  }
-  //#endregion
-
   //#region - Forms Logic
-  private generateInventoryForm(): void {
-    // this.inventoryForm = this.formBuilder.group({
-    //   store: this.selectedStore,
-    //   storeName: this.storeName,
-    //   pages: this.formBuilder.array([]),
-    //   createdDate: '',
-    // });
-  }
+
 
   get pagesInv(): FormArray {
     return this.inventoryForm.get('pages') as FormArray;
@@ -151,24 +112,6 @@ export class InventoryWeeklyFormPage implements OnInit {
   get storeNameInv(): FormControl {
     return this.inventoryForm.get('storeName') as FormControl;
   }
-
-  // private pushFinalPage(): void {
-  //   this.pagesInv.push(
-  //     this.formBuilder.group({
-  //       name: 'Final page',
-  //       observation: '',
-  //     })
-  //   );
-  // }
-
-  // private pushPageInv(pageInventory: PageInventory): void {
-  //   this.pagesInv.push(
-  //     this.formBuilder.group({
-  //       name: pageInventory.name,
-  //       categories: this.formBuilder.array([]),
-  //     })
-  //   );
-  // }
 
   public saveInventory(): void {
     this.alertsService.warningSaveData().then( alert => {
@@ -290,24 +233,9 @@ export class InventoryWeeklyFormPage implements OnInit {
   //#endregion
 
   //#region LocalStorage
-  // public setLocalStorageInventory(): any {
-  //   this.inventoryForm.get('createdDate').setValue(Date.now());
-  //   localStorage.setItem( this.nameOfLocalStorageStore, JSON.stringify(this.inventoryForm.value))
-  // }
-
-  // private getLocalStorageInventory(): void {
-  //   const inventoryLS = JSON.parse(localStorage.getItem( this.nameOfLocalStorageStore));
-  //   let dateControl= Date.now();
-  //   if ( inventoryLS && inventoryLS.createdDate +  1000*60*60*30 >= dateControl) {
-  //     this.cacheInventory = inventoryLS;
-  //   } else {
-  //     this.cacheInventory = null;
-  //   }
-  // }
-
-  // private deleteLocalStorageInventory() {
-  //   localStorage.removeItem( INVENTORY_LS);
-  // }
+  public setLocalStorageInventory(): any {
+    this.inventoryLSService.setLocalStorageInventory(this.inventoryForm, this.nameOfLocalStorageStore);
+  }
   //#endregion
 
   //#region Button Slides

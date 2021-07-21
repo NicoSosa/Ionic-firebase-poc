@@ -6,34 +6,68 @@
 </pre> -->
 <ion-content [formGroup]="inventoryForm" *ngIf="inventoryForm">
   <ion-slides scrollbar="true" [options]="{allowTouchMove: false}" #slides formArrayName="pages">
-    <ion-slide *ngFor="let page of pagesInv.controls; let idxPage = index" [formGroupName]="idxPage">
-      
-      <div *ngIf="idxPage != pagesInv.controls.length - 1 ">
+    <ion-slide *ngFor="let pageForm of pagesInv.controls; let pageIdx = index" [formGroupName]="pageIdx">
+      <!-- Default Searchbar -->
+<ion-searchbar></ion-searchbar>
+
+<!-- Searchbar with cancel button always shown -->
+<ion-searchbar showCancelButton="always"></ion-searchbar>
+
+<!-- Searchbar with cancel button never shown -->
+<ion-searchbar showCancelButton="never"></ion-searchbar>
+
+<!-- Searchbar with cancel button shown on focus -->
+<ion-searchbar showCancelButton="focus"></ion-searchbar>
+
+<!-- Searchbar with danger color -->
+<ion-searchbar color="danger"></ion-searchbar>
+
+<!-- Searchbar with value -->
+<ion-searchbar value="Ionic"></ion-searchbar>
+
+<!-- Searchbar with telephone type -->
+<ion-searchbar type="tel"></ion-searchbar>
+
+<!-- Searchbar with numeric inputmode -->
+<ion-searchbar inputmode="numeric"></ion-searchbar>
+
+<!-- Searchbar disabled -->
+<ion-searchbar disabled="true"></ion-searchbar>
+
+<!-- Searchbar with a cancel button and custom cancel button text -->
+<ion-searchbar showCancelButton="focus" cancelButtonText="Custom Cancel"></ion-searchbar>
+
+<!-- Searchbar with a custom debounce -->
+<ion-searchbar debounce="500"></ion-searchbar>
+
+<!-- Animated Searchbar -->
+<ion-searchbar animated></ion-searchbar>
+
+<!-- Searchbar with a placeholder -->
+<ion-searchbar placeholder="Filter Schedules"></ion-searchbar>
+
+<!-- Searchbar in a Toolbar -->
+<ion-toolbar>
+  <ion-searchbar></ion-searchbar>
+</ion-toolbar>
+      <!-- <div *ngIf="pageIdx != pagesInv.controls.length - 1 ">
         <ion-toolbar class="slide-title">
-          <ion-title>{{page.value.name | titlecase}}</ion-title>
+          <ion-title>{{pageForm.value.name | titlecase}}</ion-title>
         </ion-toolbar>
-        <ion-list class="itemList" formArrayName="categories">
+        <ion-list class="itemList" formArrayName="categories" *ngIf="pageIdx === slidePosition">        
           
-          <!-- <div *ngFor="let pageCategory of inventoryStructure.pages[idxPage].categories; let j = index" >
-            <span *ngIf="pageCategory.formStyle === formStyleEnum.InputPlusSlider && pageCategory.items.length > 0">
-              <app-inv-input-slider-form [inventoryForm]="inventoryForm" [idxPage]="idxPage" [pageCategory]="pageCategory" [cacheInventory]="cacheInventory" (setLS)="setLocalStorageInventory()" (endLoading)="closeLoading()"></app-inv-input-slider-form>
+          <div *ngFor="let categoryStructure of inventoryStructure.pages[pageIdx].categories; let categoryIdx = index" [formGroupName]="categoryIdx">
+            <span *ngIf="categoryStructure.items.length > 0">
+              <span *ngIf="categoryStructure.formStyle === formStyleEnum.InputPlusSlider && categoryStructure.items.length > 0">
+                <app-inv-input-slider-form [inventoryForm]="inventoryForm" [pageIdx]="pageIdx" [categoryIdx]="categoryIdx" (setLS)="setLocalStorageInventory()"></app-inv-input-slider-form>
+              </span> 
             </span>
-            <span *ngIf="pageCategory.formStyle === formStyleEnum.OnlyInput && pageCategory.items.length > 0">
-              <app-inv-only-input-form [inventoryForm]="inventoryForm" [idxPage]="idxPage" [pageCategory]="pageCategory" [cacheInventory]="cacheInventory" (setLS)="setLocalStorageInventory()"></app-inv-only-input-form>
-            </span>
-            <span *ngIf="pageCategory.formStyle === formStyleEnum.IsNeededInput && pageCategory.items.length > 0">
-              <app-inv-is-needed-input-form [inventoryForm]="inventoryForm" [idxPage]="idxPage" [pageCategory]="pageCategory" [cacheInventory]="cacheInventory" (setLS)="setLocalStorageInventory()"></app-inv-is-needed-input-form>
-            </span>
-            <span *ngIf="pageCategory.formStyle === formStyleEnum.Proof && pageCategory.items.length > 0">
-              <app-inv-slider-down [inventoryForm]="inventoryForm" [idxPage]="idxPage" [pageCategory]="pageCategory" [cacheInventory]="cacheInventory" (setLS)="setLocalStorageInventory()"></app-inv-slider-down>
-            </span>
-          </div> -->
+          </div>
         </ion-list>
       </div>
-
-      <div *ngIf="idxPage == pagesInv.controls.length - 1" >
+      <div *ngIf="pageIdx == pagesInv.controls.length - 1" >
         <ion-toolbar class="slide-title">
-          <ion-title>{{page.value.name | titlecase}}</ion-title>
+          <ion-title>{{pageForm.value.name | titlecase}}</ion-title>
         </ion-toolbar>
         <ion-item class="finalTextArea">
           <ion-label>Observations:</ion-label>
@@ -44,8 +78,7 @@
         <ion-button class="deleteButton" color="danger" (click)="deleteProgress()"><ion-icon name="trash-outline"></ion-icon> <span style="padding-left:5px"></span> Clear Form</ion-button>
         <ion-button class="saveButton" color="success" (click)="saveInventory()"><ion-icon name="cloud-upload-outline"></ion-icon> <span style="padding-left:5px"></span> Save Inventory</ion-button>
         
-
-      </div>
+      </div> -->
     </ion-slide>
   </ion-slides>
       <ion-footer>

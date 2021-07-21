@@ -23,10 +23,6 @@ export class ManagInventoryFormService {
   }
 
   public generateAndGetInventoryForm( inventoryStructure: InventoryStructure, selectedStore: StoresName, formType: FormType, cacheInventory: any): FormGroup { 
-    // console.log(inventoryStructure);
-    // console.log('Store: ' + selectedStore);
-    // console.log('Form Type: ' + formType);
-    // console.log(cacheInventory);
     this.formType = formType;
     this.cacheInventory = cacheInventory;
 
@@ -72,11 +68,6 @@ export class ManagInventoryFormService {
   private generateCategoryForm(categoryStructure: CategoryInventory, pageIdx: number, categoryIdx: number): void {
     let nameCategory = categoryStructure.category;
     let categoryForm = this.pagesForm.controls[pageIdx].get('categories') as FormArray;
-    // console.log(nameCategory);
-    // console.log(categoryIdx);
-    // if (this.itsDaily) {
-    //   nameCategory = `${pageCategory.category}`;
-    // }
     categoryForm.push(
       this.formBuilder.group({
         category: nameCategory,
@@ -84,7 +75,6 @@ export class ManagInventoryFormService {
         formStyle: categoryStructure.formStyle,
         items: this.formBuilder.array([]),
       }));
-      // this.categoryIdx = this.categoryForm.length -1;
       categoryStructure.items.forEach( (item, itemIdx) => {
         this.pushCategoryItem(categoryForm, item, pageIdx, categoryIdx, itemIdx)
       });
@@ -115,13 +105,6 @@ export class ManagInventoryFormService {
       let itemStep = item.steps;
       let slidVal = item.slid;
   
-      // if ( slidVal > 8) { itemStep = 1 }
-      // if ( slidVal <= 8) { itemStep = 0.5 }
-      // if ( slidVal <= 5) { itemStep = 0.25 }
-      // if ( slidVal <= 2) { itemStep = 0.1 }
-      // this.rangeStep.push(itemStep);
-      // if (slidVal > 6 && this.itsDaily) {slidVal = 6 };
-      // if(this.cacheInventory){ quant = this.getQuantityFromCache(pageIdx, categoryIdx, itemIdx);}
       itemForm.push( this.formBuilder.group({
         id: item.id,
         name: item.name,
