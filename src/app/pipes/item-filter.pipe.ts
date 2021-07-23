@@ -1,12 +1,12 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { AbstractControl } from '@angular/forms';
 
 @Pipe({
   name: 'itemFilter'
 })
 export class ItemFilterPipe implements PipeTransform {
 
-  transform(itemsForm: FormControl[], filterWord: string, key: string): FormControl[] {
+  transform(itemsForm: AbstractControl[], filterWord: string, key: string): AbstractControl[] {
     if (filterWord === '') {
       return itemsForm;
     }
