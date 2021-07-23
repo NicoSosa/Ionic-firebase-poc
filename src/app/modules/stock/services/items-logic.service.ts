@@ -13,11 +13,10 @@ export class ItemsLogicService {
       let lastLetter = inputValue.slice(inputValue.length - 1);
       let unitAndDecArrays = inputValue.split(".");
       let commaQuant = unitAndDecArrays.length - 1;
-      if( !lastLetter) { 
+      if( !lastLetter || isNaN(Number(inputValue))) { 
         // When all data was erased
         itemControl.get('rangeQuantity').setValue(0);
         itemControl.get('quantity').setValue(0);
-        // this.fromInput = true;
       } else {
         if ((lastLetter === "." || Number(lastLetter) || lastLetter == 0) && commaQuant < 2 ){
           if( unitAndDecArrays[1] && unitAndDecArrays[1].length > 2) { 
@@ -43,29 +42,43 @@ export class ItemsLogicService {
   }
 
   public blurInput(itemControl: FormControl): void {
-    let inputValue = Number(itemControl.get('quantity').value.toString());
+    let inputValue = 0;
+    let isDivisible = itemControl.get('isDivisible').value
+    if (itemControl.get('quantity').value) {
+      inputValue = Number(itemControl.get('quantity').value.toString());
+      if( !inputValue ) {
+        inputValue = 0;
+      } else {
+        if(isDivisible === false) { 
+          inputValue = Math.round(inputValue);
+        }
+      }
+
+    } else {
+      inputValue = 0;
+    }
     itemControl.get('rangeQuantity').setValue(inputValue);
     itemControl.get('quantity').setValue(inputValue);
   }
 
   public rangeChange(itemControl: FormControl): void {
-      const itemStep = Number(itemControl.get('steps').value);
-      let rangeValue = (itemControl.get('rangeQuantity').value);
+    const itemStep = Number(itemControl.get('steps').value);
+    let rangeValue = (itemControl.get('rangeQuantity').value);
 
-      const decimalPart = rangeValue % 1;
-      const milecimalPart = rangeValue %100
-      if ( itemStep == 0.1 && milecimalPart !== 0) {
-        rangeValue =  Math.round(rangeValue*10)/10;
-      }
+    const decimalPart = rangeValue % 1;
+    const milecimalPart = rangeValue %100
+    if ( itemStep == 0.1 && milecimalPart !== 0 || itemStep == 0.2 && milecimalPart !== 0) {
+      rangeValue =  Math.round(rangeValue*10)/10;
+    }
 
-      if ( itemStep === 0.25 && decimalPart === 0.5) {
-        rangeValue = `${rangeValue}0`;
-      }
-      if ( itemStep === 0.25 && decimalPart === 0) {
-        rangeValue = `${rangeValue}.00`;
-      }
-      
-      itemControl.get('quantity').setValue(rangeValue);
+    if ( itemStep === 0.25 && decimalPart === 0.5) {
+      rangeValue = `${rangeValue}0`;
+    }
+    if ( itemStep === 0.25 && decimalPart === 0) {
+      rangeValue = `${rangeValue}.00`;
+    }
+    
+    itemControl.get('quantity').setValue(rangeValue);
   }
 
 
@@ -79,7 +92,7 @@ export class ItemsLogicService {
 
       const decimalPart = value % 1;
       const milecimalPart = value %100
-      if ( itemStep == 0.1 && milecimalPart !== 0) {
+      if ( itemStep == 0.1 && milecimalPart !== 0 || itemStep == 0.2 && milecimalPart !== 0) {
         fixedValue =  Math.round(value*10)/10;
       } else {
         if ( itemStep === 0.25 && decimalPart === 0.5) {
@@ -107,7 +120,7 @@ export class ItemsLogicService {
 
       const decimalPart = value % 1;
       const milecimalPart = value %100
-      if ( itemStep == 0.1 && milecimalPart !== 0) {
+      if ( itemStep == 0.1 && milecimalPart !== 0 || itemStep == 0.2 && milecimalPart !== 0) {
         fixedValue =  Math.round(value*10)/10;
       } else {
         if ( itemStep === 0.25 && decimalPart === 0.5) {

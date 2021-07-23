@@ -151,6 +151,7 @@ export class AdmItemsPage implements OnInit {
         unit: data.itemForm.unit,
         slid: data.itemForm.slid,
         steps: data.itemForm.steps,
+        isDivisible: data.itemForm.isDivisible,
       }
 
       if( data.isNew) {
@@ -175,7 +176,8 @@ export class AdmItemsPage implements OnInit {
               categoryId: dataItem.categoryId,
               unit: dataItem.unit,
               slid: dataItem.slid,
-              steps: dataItem.steps
+              steps: dataItem.steps,
+              isDivisible: dataItem.isDivisible,
             }
           }
         }

@@ -26,10 +26,11 @@ export interface ItemInventory {
     showName: string;
     categoryId: number;
     unit?: string;
+    slid: number;
+    steps: number;
+    isDivisible: boolean
+    isSwitch?: boolean;
     waste?: number;
-    slid?: number;
-    steps?: number;
-    isSwitch?: boolean; // FormStyle
 }
 export interface DBInventoryStructure extends InventoryStructure{
     dateUpdated: number;

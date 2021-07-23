@@ -1,9 +1,15 @@
 .categoryName{
-  text-align: left; 
+  text-align: center; 
 }
 
 .itemRow {
-border-bottom: 1px solid #cec8c8;
+  border-bottom: 1px solid #cec8c8;
+  padding-bottom: 4px
+}
+
+.itemRowSwitch {
+  border-bottom: 1px solid #cec8c8;
+  padding-bottom: 8px
 }
 
 .titleSmall{
@@ -11,7 +17,11 @@ border-bottom: 1px solid #cec8c8;
 }
 
 .categoryTitle{
-  border-left: 1px #faf0f0 solid;
+  border-left: 1px solid #cec8c8;
+}
+
+.itemComp{
+  border-left: 1px solid #cec8c8;
 }
 
 ion-icon{

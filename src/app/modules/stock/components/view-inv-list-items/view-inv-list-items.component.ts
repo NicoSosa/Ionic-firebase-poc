@@ -17,7 +17,7 @@ export class ViewInvListItemsComponent implements OnInit {
 
   ngOnInit() {
     this.initialProcess();
-    console.log(this.inventory);
+    // console.log(this.inventory);
   }
   initialProcess(): void{
     const date = this.inventory.closedDate;

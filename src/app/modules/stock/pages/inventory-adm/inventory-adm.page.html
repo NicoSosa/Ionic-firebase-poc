@@ -2,12 +2,10 @@
 
 <ion-content fullscreen class="ion-padding" scroll-y="true">
     <ion-toolbar color="light" *ngIf="adminUser">
-        (Performance Proof)
-        <br>
         Please select a store
     </ion-toolbar>
 
-    <ion-segment color="dark" (ionChange)="segmentChanged($event)" value="0" *ngIf="adminUser">
+    <ion-segment mode="ios" color="dark" (ionChange)="segmentChanged($event)" value="0" *ngIf="adminUser">
         <ion-segment-button *ngFor="let store of storeList; let i = index" [value]="i">
             <ion-label>{{store}}</ion-label>
         </ion-segment-button>

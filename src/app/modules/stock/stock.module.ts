@@ -20,6 +20,7 @@ import { InvSliderDownComponent } from './components/inv-slider-down/inv-slider-
 import { ManagInventoryFormService } from './services/manag-inventory-form.service';
 import { InventoryLocalStorageService } from './services/inventory-local-storage.service';
 import { ItemsLogicService } from './services/items-logic.service';
+import { PipesModule } from '../../pipes/pipes.module';
 
 @NgModule({
   declarations: [
@@ -42,7 +43,8 @@ import { ItemsLogicService } from './services/items-logic.service';
     ReactiveFormsModule,
     StockRoutingModule,
     SharedModule,
-    NgxChartsModule
+    NgxChartsModule,
+    PipesModule
   ],
   exports: [
     InventoryAdmPage,

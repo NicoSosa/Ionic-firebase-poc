@@ -11,6 +11,8 @@ export class InvInputSliderFormComponent implements OnInit {
   @Input() inventoryForm: FormGroup;
   @Input() pageIdx: number;
   @Input() categoryIdx: number;
+  @Input() filterWord: string;
+  @Input() isDaily: boolean;
   @Output() setLS = new EventEmitter<boolean>();
   private fromInput: boolean;
   private fromAnotherToInput: boolean;
@@ -35,25 +37,22 @@ export class InvInputSliderFormComponent implements OnInit {
     return catForm.get('items') as FormArray;
   }
 
-  public controlInput(itemIdx) {
+  public controlInput(itemControl: FormControl) {
     if(!this.fromAnotherToInput) {
-      const itemControl = this.categoryItems.controls[itemIdx] as FormControl;
       this.itemsLogicService.controlInput(itemControl);
     }
     this.fromAnotherToInput = false;
   }
 
-  public blurInput(itemIdx) {
-    const itemControl = this.categoryItems.controls[itemIdx] as FormControl;
+  public blurInput(itemControl: FormControl) {
     this.itemsLogicService.blurInput(itemControl);
     this.fromInput = true;
     this.fromAnotherToInput = true;
     this.setLocalStorageInventory();
   }
 
-  public rangeChange(itemIdx): void {
+  public rangeChange(itemControl: FormControl): void {
     if( !this.fromInput) {
-      const itemControl = this.categoryItems.controls[itemIdx] as FormControl;
       this.itemsLogicService.rangeChange(itemControl);
       
       this.setLocalStorageInventory();
@@ -62,29 +61,25 @@ export class InvInputSliderFormComponent implements OnInit {
     this.fromInput = false;
   }
 
-  minusQuant(itemIdx) {
-    const itemControl = this.categoryItems.controls[itemIdx] as FormControl;
+  minusQuant(itemControl: FormControl) {
     this.itemsLogicService.minusQuant(itemControl);
     this.setLocalStorageInventory();
     this.fromAnotherToInput = true;
     this.fromInput = true;
   }
 
-  plusQuant(itemIdx) {
-    const itemControl = this.categoryItems.controls[itemIdx] as FormControl;
+  plusQuant(itemControl: FormControl) {
     this.itemsLogicService.plusQuant(itemControl);
     this.setLocalStorageInventory();
     this.fromAnotherToInput = true;
     this.fromInput = true;
   }
 
-  switchInputChange(itemIdx) {
-    const itemControl = this.categoryItems.controls[itemIdx] as FormControl;
+  switchInputChange(itemControl: FormControl) {
     this.itemsLogicService.switchInputChange(itemControl);
   }
 
-  changeCheckNeeded(itemIdx){
-    const itemControl = this.categoryItems.controls[itemIdx] as FormControl;
+  changeCheckNeeded(itemControl: FormControl){
     this.itemsLogicService.changeCheckNeeded(itemControl);
     
     this.setLocalStorageInventory();

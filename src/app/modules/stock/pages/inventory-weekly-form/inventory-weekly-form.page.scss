@@ -20,7 +20,19 @@ ion-slide{
 ion-slides {
     height: 100%;
     padding-bottom: 50px;
-  }
+}
+
+ion-searchbar {
+  width: 50%;
+  margin-right: 3px;
+  margin-top: 5px;
+  text-align: left !important;
+}
+
+.page-title {
+  font-weight: 500;
+  width: 50%;
+}
 
 .swiper-slide {
   display: block;

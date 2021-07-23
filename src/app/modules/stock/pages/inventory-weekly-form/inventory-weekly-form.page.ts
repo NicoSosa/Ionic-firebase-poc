@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, FormControl } from '@angular/forms';
+import { FormArray, FormGroup, FormControl } from '@angular/forms';
 
 import { ViewChild } from '@angular/core';
-import { IonSlides } from '@ionic/angular';
+import { IonSearchbar, IonSlides } from '@ionic/angular';
 import { ActivatedRoute, Router } from '@angular/router';
 import { first } from 'rxjs/operators';
 
@@ -37,6 +37,8 @@ export class InventoryWeeklyFormPage implements OnInit {
   public localStoredInventory: any;
   public nameOfLocalStorageStore: string;
   public inventoryStructure: InventoryStructure;
+  public inventoryForm: FormGroup;
+  public filterWord: string = '';
 
   public storeList = StoresName;
   private selectedStore: StoresName;
@@ -47,13 +49,12 @@ export class InventoryWeeklyFormPage implements OnInit {
   public formStyleEnum = FormStyle;
 
   @ViewChild('slides') slides: IonSlides;
+  @ViewChild('searchBar') searchBar: IonSearchbar;
   public slidesButtonStatus: any[] = [ {active: false,text: '', lastPage: false}, {active: false, text: '', lastPage: false}];
 
-  inventoryForm: FormGroup;
 
   constructor(private router: Router,
     private actRoute: ActivatedRoute,
-    private formBuilder: FormBuilder,
     private toastsService: ToastsService,
     private alertsService: AlertsService,
     private miFormService: ManagInventoryFormService,
@@ -275,9 +276,18 @@ export class InventoryWeeklyFormPage implements OnInit {
         this.slidesButtonStatus[1] = { active: true, text: this.pagesInv.controls[idx+1].get('name').value, lastPage: false }
         break;
     }
+    this.filterWord = '';
+    this.searchBar.getInputElement().then( inputValue =>{
+      inputValue.value = '';
+    });
     this.slidePosition = idx;
   }
   //#endregion
+
+  public filterItems(event) {
+    this.filterWord = event.detail.value;
+  }
+
   closeLoading(): void { 
     this.alertsService.dismissLoading().then()}
 }
