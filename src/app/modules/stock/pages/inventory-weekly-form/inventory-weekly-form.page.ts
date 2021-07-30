@@ -115,14 +115,15 @@ export class InventoryWeeklyFormPage implements OnInit {
   }
 
   public saveInventory(): void {
-    this.alertsService.warningSaveData().then( alert => {
-      alert.present();
-      alert.onDidDismiss().then( value => {
-        if (value.role === 'ok') {
-          this.saveInventoryProcess();
-        }
-      })
-    })
+    this.saveInventoryProcess();
+    // this.alertsService.warningSaveData().then( alert => {
+    //   alert.present();
+    //   alert.onDidDismiss().then( value => {
+    //     if (value.role === 'ok') {
+    //       this.saveInventoryProcess();
+    //     }
+    //   })
+    // })
   }
 
   private saveInventoryProcess(): void {

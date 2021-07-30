@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormGroup, FormControl, FormArray, FormBuilder } from '@angular/forms';
+import { FormGroup, FormControl, FormArray, FormBuilder, AbstractControl } from '@angular/forms';
 
 @Component({
   selector: 'app-inv-is-needed-only-form',
@@ -43,7 +43,7 @@ export class InvIsNeededOnlyFormComponent implements OnInit {
     return catForm.get('items') as FormArray;
   }
 
-  public changeCheckNeeded(itemControl: FormControl): void {
+  public changeCheckNeeded(itemControl): void {
     const isNeeded: boolean = !itemControl.get('isNeeded').value;
     this.setLocalStorageInventory();
   }

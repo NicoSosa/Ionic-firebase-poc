@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { AbstractControl, FormControl } from '@angular/forms';
 
 @Injectable({
   providedIn: 'root'
@@ -8,7 +8,7 @@ export class ItemsLogicService {
 
   constructor() { }
 
-  public controlInput(itemControl: FormControl): void {
+  public controlInput(itemControl: AbstractControl): void {
       let inputValue = itemControl.get('quantity').value.toString();
       let lastLetter = inputValue.slice(inputValue.length - 1);
       let unitAndDecArrays = inputValue.split(".");
@@ -41,7 +41,7 @@ export class ItemsLogicService {
       }      
   }
 
-  public blurInput(itemControl: FormControl): void {
+  public blurInput(itemControl: AbstractControl): void {
     let inputValue = 0;
     let isDivisible = itemControl.get('isDivisible').value
     if (itemControl.get('quantity').value) {
@@ -61,7 +61,7 @@ export class ItemsLogicService {
     itemControl.get('quantity').setValue(inputValue);
   }
 
-  public rangeChange(itemControl: FormControl): void {
+  public rangeChange(itemControl: AbstractControl): void {
     const itemStep = Number(itemControl.get('steps').value);
     let rangeValue = (itemControl.get('rangeQuantity').value);
 
@@ -82,7 +82,7 @@ export class ItemsLogicService {
   }
 
 
-  public minusQuant(itemControl: FormControl): void {
+  public minusQuant(itemControl: AbstractControl): void {
     const inputValue = Number(itemControl.get('quantity').value);
     const itemStep = Number(itemControl.get('steps').value);
     if(inputValue > 0) {
@@ -109,11 +109,10 @@ export class ItemsLogicService {
     }
   }
 
-  public plusQuant(itemControl: FormControl): void {
+  public plusQuant(itemControl: AbstractControl): void {
     const inputValue = Number(itemControl.get('quantity').value);
     const itemStep = Number(itemControl.get('steps').value);
     const slid = itemControl.get('slid').value;
-    if(inputValue < slid) {
       let value = Number(inputValue +  itemStep);
       itemControl.get('rangeQuantity').setValue(value);
       let fixedValue;
@@ -134,10 +133,9 @@ export class ItemsLogicService {
         }
       }
       itemControl.get('quantity').setValue(fixedValue);
-    }
   }
 
-  public switchInputChange(itemControl: FormControl): void {
+  public switchInputChange(itemControl: AbstractControl): void {
     const inputValue = Number(itemControl.get('quantity').value);
     if( (inputValue == 1) ) {
       itemControl.get('rangeQuantity').setValue(1);
@@ -148,7 +146,7 @@ export class ItemsLogicService {
     }
   }
 
-  public changeCheckNeeded(itemControl: FormControl): void {
+  public changeCheckNeeded(itemControl: AbstractControl): void {
     const rangeValue = (itemControl.get('rangeQuantity').value);
     if(rangeValue) {
       itemControl.get('quantity').setValue(1);

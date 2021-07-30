@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormGroup, FormControl, FormArray } from '@angular/forms';
+import { FormGroup, FormControl, FormArray, AbstractControl } from '@angular/forms';
 import { ItemsLogicService } from '../../services/items-logic.service';
 
 @Component({
@@ -37,21 +37,21 @@ export class InvInputSliderFormComponent implements OnInit {
     return catForm.get('items') as FormArray;
   }
 
-  public controlInput(itemControl: FormControl) {
+  public controlInput(itemControl) {
     if(!this.fromAnotherToInput) {
       this.itemsLogicService.controlInput(itemControl);
     }
     this.fromAnotherToInput = false;
   }
 
-  public blurInput(itemControl: FormControl) {
+  public blurInput(itemControl) {
     this.itemsLogicService.blurInput(itemControl);
     this.fromInput = true;
     this.fromAnotherToInput = true;
     this.setLocalStorageInventory();
   }
 
-  public rangeChange(itemControl: FormControl): void {
+  public rangeChange(itemControl): void {
     if( !this.fromInput) {
       this.itemsLogicService.rangeChange(itemControl);
       
@@ -61,25 +61,25 @@ export class InvInputSliderFormComponent implements OnInit {
     this.fromInput = false;
   }
 
-  minusQuant(itemControl: FormControl) {
+  minusQuant(itemControl) {
     this.itemsLogicService.minusQuant(itemControl);
     this.setLocalStorageInventory();
     this.fromAnotherToInput = true;
     this.fromInput = true;
   }
 
-  plusQuant(itemControl: FormControl) {
+  plusQuant(itemControl) {
     this.itemsLogicService.plusQuant(itemControl);
     this.setLocalStorageInventory();
     this.fromAnotherToInput = true;
     this.fromInput = true;
   }
 
-  switchInputChange(itemControl: FormControl) {
+  switchInputChange(itemControl) {
     this.itemsLogicService.switchInputChange(itemControl);
   }
 
-  changeCheckNeeded(itemControl: FormControl){
+  changeCheckNeeded(itemControl){
     this.itemsLogicService.changeCheckNeeded(itemControl);
     
     this.setLocalStorageInventory();
